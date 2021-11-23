@@ -1,0 +1,22 @@
+{
+  "name": "atari-logo-interpreter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n2oneProgrammer/atari-logo-interpreter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n2oneProgrammer/atari-logo-interpreter/issues"
+  },
+  "homepage": "https://github.com/n2oneProgrammer/atari-logo-interpreter#readme",
+  "devDependencies": {
+    "electron": "^16.0.1"
+  }
+}
