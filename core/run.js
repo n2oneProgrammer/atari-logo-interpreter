@@ -9,7 +9,7 @@ export default class Run {
         let lexer = new Lexer(this.fn, text);
         let result = lexer.run();
         if (result.error !== null) {
-            return result.error;
+            return result.error.toString();
         }
         return result.tokens;
     }

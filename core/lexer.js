@@ -1,6 +1,6 @@
 import {
-    strictEqual
-} from "assert";
+    IllegalCharError
+} from "./error.js";
 import Position from "./position.js";
 import Token from "./token.js";
 
@@ -56,7 +56,7 @@ export default class Lexer {
                 this.advance()
                 return {
                     tokens: [],
-                    error: new Error(`Unexpected character: ${char} at ${pos_start}`)
+                    error: new IllegalCharError(pos_start, this.pos, `"${char}"`)
                 }
             }
         }
