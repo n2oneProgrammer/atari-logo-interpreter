@@ -2,15 +2,14 @@ export default class Token {
 
     static DIGITS = "0123456789"
     static LETTERS = "abcdefghijklmnopqrstuvwxyz"
-    static LETTERS_DIGITS = LETTERS + DIGITS + "_"
+    static LETTERS_DIGITS = Token.LETTERS + Token.DIGITS + "_"
     static TYPE = {
         KEYWORD: "KEYWORD",
         IDENTIFIER: "IDENTIFIER",
-        INTEGER: "INTEGER",
+        NUMBER: "NUMBER",
         COLON: "COLON",
         LSQUARE: "LSQUARE",
         RSQUARE: "RSQUARE",
-        NEWLINE: "NEWLINE",
         PLUS: "PLUS",
         MINUS: "MINUS",
         MULTIPLY: "MULTIPLY",
@@ -20,12 +19,12 @@ export default class Token {
         EOF: "EOF"
     }
     static KEYWORDS = {
-        REPEAT: "REPEAT",
-        TO: "TO",
-        END: "END",
-        ED: "ED",
-        TELL: "TELL",
-        ASK: "ASK",
+        REPEAT: "repeat",
+        TO: "to",
+        END: "end",
+        ED: "ed",
+        TELL: "tell",
+        ASK: "ask",
     }
 
     constructor(type, value = null, pos_start = null, pos_end = null) {

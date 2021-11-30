@@ -1,16 +1,16 @@
 export default class Position {
-    constructor(id, line, column, file, ftext) {
+    constructor(id, line, column, fn, ftext) {
         this.id = id;
         this.line = line;
         this.column = column;
-        this.file = file;
+        this.fn = fn;
         this.ftext = ftext;
     }
 
-    advance(ch = null) {
+    advance(char = null) {
         this.id++
         this.column++
-        if (ch === "\n") {
+        if (char === "\n") {
             this.line++
             this.column = 0
         }
@@ -18,6 +18,6 @@ export default class Position {
     }
 
     copy() {
-        return new Position(this.id, this.line, this.column, this.file, this.ftext)
+        return new Position(this.id, this.line, this.column, this.fn, this.ftext)
     }
 }
