@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "start": "electron .",
-        "shell": "node shell.js"
+        "shell": "node shell.js",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --verbose"
     },
     "repository": {
         "type": "git",
@@ -19,9 +20,19 @@
     },
     "homepage": "https://github.com/n2oneProgrammer/atari-logo-interpreter#readme",
     "devDependencies": {
-        "electron": "^16.0.1"
+        "@babel/plugin-transform-modules-commonjs": "^7.16.0",
+        "@types/jest": "^27.0.3",
+        "electron": "^16.0.1",
+        "jest": "^27.4.3"
     },
     "dependencies": {
         "prompt": "^1.2.0"
+    },
+    "env": {
+        "test": {
+            "plugins": [
+                "@babel/plugin-transform-modules-commonjs"
+            ]
+        }
     }
 }
