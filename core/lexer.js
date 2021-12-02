@@ -45,6 +45,12 @@ export default class Lexer {
             } else if (this.char === ")") {
                 tokens.push(new Token(Token.TYPE.RPAREN, null, this.pos))
                 this.advance()
+            } else if (this.char === "[") {
+                tokens.push(new Token(Token.TYPE.LSQUARE, null, this.pos))
+                this.advance()
+            } else if (this.char === "]") {
+                tokens.push(new Token(Token.TYPE.RSQUARE, null, this.pos))
+                this.advance()
             } else if (this.char === ":") {
                 tokens.push(new Token(Token.TYPE.COLON, null, this.pos))
                 this.advance()
