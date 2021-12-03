@@ -47,3 +47,15 @@ export class IllegalCharError extends CustomError {
         super(pos_start, pos_end, 'Illegal Character', desc);
     }
 }
+
+export class ExceptedCharError extends CustomError {
+    constructor(pos_start, pos_end, desc) {
+        super(pos_start, pos_end, 'Excepted Character', desc);
+    }
+}
+
+export class InvalidSyntaxError extends CustomError {
+    constructor(pos_start, pos_end, desc) {
+        super(pos_start, pos_end, 'Invalid Syntax', desc);
+    }
+}
