@@ -1,11 +1,11 @@
 import prompt from 'prompt';
-import Run from './core/run.js';
+import Runner from './core/runner.js';
 
 class Shell {
     constructor() {
         prompt.start();
         this.shell();
-        this.run = new Run("shell");
+        this.run = new Runner("shell");
     }
 
     shell() {

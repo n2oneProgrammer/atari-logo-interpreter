@@ -1,6 +1,6 @@
 import Lexer from "./lexer.js";
 
-export default class Run {
+export default class Runner {
     constructor(fn) {
         this.fn = fn;
     }
