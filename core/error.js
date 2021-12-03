@@ -9,11 +9,11 @@ class CustomError {
     toString() {
         let r = `⚠  ${this.error_name}: ${this.desc}\n`
         r += `   In ${this.pos_start.fn}, at line ${this.pos_start.line + 1}, char: ${this.pos_start.column + 1}\n`
-        r += this.string_with_arrows()
+        r += this.stringWithArrows()
         return r;
     }
 
-    string_with_arrows() {
+    stringWithArrows() {
         let result = ""
 
         let idx_start = Math.max(this.pos_start.ftext.lastIndexOf("\n", this.pos_start.id), 0)

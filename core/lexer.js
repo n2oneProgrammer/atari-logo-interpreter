@@ -92,9 +92,8 @@ export default class Lexer {
         }
         if (Object.values(Token.KEYWORDS).includes(text)) {
             return new Token(Token.TYPE.KEYWORD, text, pos_start, this.pos)
-        } else {
-            return new Token(Token.TYPE.IDENTIFIER, text, pos_start, this.pos)
         }
+        return new Token(Token.TYPE.IDENTIFIER, text, pos_start, this.pos)
     }
 
     makeComment() {
