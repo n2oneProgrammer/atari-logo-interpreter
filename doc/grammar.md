@@ -1,4 +1,4 @@
-# Gramar
+# Grammar
 
 - __statements__:  
     IDENTIFIER __expr__*?  
