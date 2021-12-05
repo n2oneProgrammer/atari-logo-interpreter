@@ -25,6 +25,7 @@ export default class Token {
         ED: "ed",
         TELL: "tell",
         ASK: "ask",
+        WHO: "who",
     }
 
     constructor(type, value = null, pos_start = null, pos_end = null) {
