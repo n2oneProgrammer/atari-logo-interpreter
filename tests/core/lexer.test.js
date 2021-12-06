@@ -27,4 +27,15 @@ describe('Lexer', () => {
         expect(obj).toEqual(data.default[2].lexer);
     })
 
+    it("Correct advance command (save/load)", () => {
+        let lexer = new Lexer("shell", data.default[3].command);
+        let obj = lexer.run();
+        expect(obj).toEqual(data.default[3].lexer);
+    })
+
+    it("Incorrect advance command (save/load)", () => {
+        let lexer = new Lexer("shell", data.default[4].command);
+        let obj = lexer.run();
+        expect(obj).toEqual(data.default[4].lexer);
+    })
 });

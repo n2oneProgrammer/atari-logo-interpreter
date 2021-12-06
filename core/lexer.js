@@ -1,5 +1,6 @@
 import {
-    IllegalCharError
+    IllegalCharError,
+    ExceptedCharError
 } from "./error.js";
 import Position from "./position.js";
 import Token from "./token.js";
@@ -26,7 +27,16 @@ export default class Lexer {
             } else if (Token.DIGITS.indexOf(this.char) !== -1) {
                 tokens.push(this.makeNumber())
             } else if (Token.LETTERS.indexOf(this.char) !== -1) {
-                tokens.push(this.makeIdentifier())
+                let t = this.makeIdentifier()
+                if (Array.isArray(t)) {
+                    tokens.push(...t)
+                } else {
+                    return {
+                        tokens: [],
+                        error: t
+                    }
+                }
+
             } else if (this.char === "+") {
                 tokens.push(new Token(Token.TYPE.PLUS, null, this.pos))
                 this.advance()
@@ -86,14 +96,49 @@ export default class Lexer {
     makeIdentifier() {
         let text = ""
         let pos_start = this.pos.copy()
+        let result = []
         while (Token.LETTERS_DIGITS.indexOf(this.char) !== -1 && this.char !== null) {
             text += this.char
             this.advance()
         }
         if (Object.values(Token.KEYWORDS).includes(text)) {
-            return new Token(Token.TYPE.KEYWORD, text, pos_start, this.pos)
+            result.push(new Token(Token.TYPE.KEYWORD, text, pos_start, this.pos))
+            if (text === Token.KEYWORDS.SAVE || text === Token.KEYWORDS.LOAD) {
+                let t = this.makePath()
+                if (t instanceof ExceptedCharError) {
+                    return t
+                }
+                result.push(t)
+            }
+        } else {
+            result.push(new Token(Token.TYPE.IDENTIFIER, text, pos_start, this.pos))
         }
-        return new Token(Token.TYPE.IDENTIFIER, text, pos_start, this.pos)
+        return result
+    }
+
+    makePath() {
+        let text = ""
+        while (this.char === " " || this.char === "\n" || this.char === "\t") {
+            this.advance()
+        }
+        let pos_start = this.pos.copy()
+        if (this.char === "\"") {
+            this.advance()
+            while (this.char !== "\"") {
+                if (this.char === null) {
+                    return new ExceptedCharError(this.pos, this.pos, "\"")
+                }
+                text += this.char
+                this.advance()
+            }
+            this.advance()
+        } else {
+            while (this.char !== " " && this.char !== "\n" && this.char !== "\t" && this.char !== null) {
+                text += this.char
+                this.advance()
+            }
+        }
+        return new Token(Token.TYPE.PATH, text, pos_start, this.pos)
     }
 
     makeComment() {

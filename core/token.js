@@ -7,6 +7,7 @@ export default class Token {
         KEYWORD: "KEYWORD",
         IDENTIFIER: "IDENTIFIER",
         NUMBER: "NUMBER",
+        PATH: "PATH",
         COLON: "COLON",
         LSQUARE: "LSQUARE",
         RSQUARE: "RSQUARE",
@@ -26,6 +27,8 @@ export default class Token {
         TELL: "tell",
         ASK: "ask",
         WHO: "who",
+        LOAD: "load",
+        SAVE: "save",
     }
 
     constructor(type, value = null, pos_start = null, pos_end = null) {
