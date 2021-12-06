@@ -1,12 +1,16 @@
 # Grammar
 
-- __statements__:  
+- __statements__:
+    __statement__*
+
+- __statement__:
     IDENTIFIER __expr__*?  
     __repeat-expr__  
     __func-def__  
     __ed-expr__  
     __tell-expr__  
     __ask-expr__  
+    __save-load__
   
 - __expr__:  
     __term__ ((PLUS|MINUS) __term__)*?
@@ -39,7 +43,10 @@
     KEYWORD:REPEAT __expr__ LSQUARE __statements__ RSQUARE
 
 - __func-def__:  
-    KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)*? __statements__ KEYWORD:END 
+    KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)*? __statements__ KEYWORD:END
+
+- __save-load__:
+    (KEYWORD:SAVE|KEYWORD:LOAD) PATH
 
 ## Legend
 - `?` - optional
