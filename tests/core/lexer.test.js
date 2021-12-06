@@ -10,7 +10,6 @@ describe('Lexer', () => {
     });
 
     it("Correct command", () => {
-        console.log(data)
         let lexer = new Lexer("test", data.default[0].command);
         let obj = lexer.run();
         expect(obj).toEqual(data.default[0].lexer);
