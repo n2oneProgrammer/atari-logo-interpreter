@@ -48,7 +48,7 @@ export default class Token {
         return this.type == type && this.value == value
     }
 
-    isKeyword() {
-        return this.type == Token.TYPE.KEYWORD
+    isKeyword(value) {
+        return this.type == Token.TYPE.KEYWORD && this.value == value
     }
 }

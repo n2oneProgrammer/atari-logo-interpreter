@@ -4,11 +4,13 @@ import Runner from './core/runner.js';
 class Shell {
     constructor() {
         prompt.start();
-        this.shell();
         this.run = new Runner("shell");
+        this.shell();
     }
 
     shell() {
+        this.execute("REPEAT 5 []")
+        return
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);
             this.shell();
@@ -21,4 +23,4 @@ class Shell {
     }
 }
 
-new Shell(null);
+new Shell();
