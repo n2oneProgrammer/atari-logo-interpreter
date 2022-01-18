@@ -9,7 +9,7 @@ class Shell {
     }
 
     shell() {
-        this.execute("REPEAT 5 []")
+        this.execute("ASK [3 4+2] [LR]")
         return
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);

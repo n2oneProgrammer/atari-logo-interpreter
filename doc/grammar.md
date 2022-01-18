@@ -10,8 +10,7 @@
     __ed-expr__  
     __tell-expr__  
     __ask-expr__  
-    __save-expr__
-    __load-expr__
+    __save-load-expr__
   
 - __expression__:  
     __term__ ((PLUS|MINUS) __term__)*?
@@ -46,11 +45,9 @@
 - __func-def__:  
     KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)*? __statements__ KEYWORD:END
 
-- __save-expr__
-    KEYWORD:SAVE PATH
+- __save-load-expr__
+    (KEYWORD:SAVE|KEYWORD:LOAD) PATH
 
-- __load-expr__:
-    KEYWORD:LOAD PATH
 
 ## Legend
 - `?` - optional

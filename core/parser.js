@@ -5,7 +5,6 @@ import {
 import {
     NumberNode,
     ListNode,
-    BinaryOperationNode,
     UnaryOperationNode,
     VarNode,
     RepeatNode,
@@ -23,6 +22,7 @@ import {
     ParserResult
 } from "./utilities/parser.js";
 
+
 export default class Pareser extends ParserAbstraction {
 
     statments() {
@@ -30,17 +30,7 @@ export default class Pareser extends ParserAbstraction {
         let statments = []
         let pos_start = this.current_token.pos_start.copy()
 
-        let statment = this.statment()
-        if (statment == null) {
-            return res.failure(
-                new InvalidSyntaxError(
-                    this.current_token.pos_start,
-                    this.current_token.pos_end,
-                    `Excepted 'statment'`
-                )
-            )
-        }
-        statment = res.register(statment)
+        let statment = res.register(this.statment())
         if (res.error !== null)
             return res
         statments.push(statment)
@@ -52,6 +42,9 @@ export default class Pareser extends ParserAbstraction {
                 break
             }
             let statment = res.register(this.statment())
+            if (res.error !== null) {
+                return res
+            }
             statments.push(statment)
         }
         return res.success(
@@ -94,8 +87,7 @@ export default class Pareser extends ParserAbstraction {
         if (this.current_token.isKeyword(Token.KEYWORDS.REPEAT)) {
             res.register_advance()
             this.advance()
-            let a = this.repeatExpr()
-            let node = res.register(a)
+            let node = res.register(this.repeatExpr())
             if (res.error !== null)
                 return res
 
@@ -113,17 +105,52 @@ export default class Pareser extends ParserAbstraction {
         }
 
         if (this.current_token.isKeyword(Token.KEYWORDS.SAVE) || this.current_token.isKeyword(Token.KEYWORDS.LOAD)) {
-            // TODO:
+            res.register_advance()
+            this.advance()
+            let node = res.register(this.saveLoadExpr())
+
+            if (res.error !== null)
+                return res
+            return res.success(node)
         }
 
+        if (this.current_token.type === Token.TYPE.IDENTIFIER) {
+            let t = this.current_token
+            res.register_advance()
+            this.advance()
+
+            let args = []
+            let expr = res.try_register(this.expression())
+            if (expr === null) {
+                this.reverse(res.to_reverse_count + 1)
+            } else {
+                while (expr !== null) {
+                    args.push(expr)
+                    expr = res.try_register(this.expression())
+                }
+                this.reverse(res.to_reverse_count)
+            }
+            return res.success(
+                new CallNode(t, args)
+            )
+
+        }
+
+        return res.failure(
+            new InvalidSyntaxError(
+                this.current_token.pos_start,
+                this.current_token.pos_end,
+                `Excepted ED, TELL, ASK, REPEAT, TO, SAVE, LOAD or identyfier`
+            )
+        )
     }
 
     expression() {
-        return this.bin_op(this.term.bind(this), (Token.TYPE.PLUS, Token.TYPE.MINUS))
+        return this.bin_op(this.term.bind(this), [Token.TYPE.PLUS, Token.TYPE.MINUS])
     }
 
     term() {
-        return this.bin_op(this.factor.bind(this), (Token.TYPE.DIVDE, Token.TYPE.MULTIPLY))
+        return this.bin_op(this.factor.bind(this), [Token.TYPE.DIVDE, Token.TYPE.MULTIPLY])
     }
 
     factor() {
@@ -137,7 +164,7 @@ export default class Pareser extends ParserAbstraction {
             if (res.error !== null)
                 return res
             return res.success(
-                new UnaryOpNode(t, factor)
+                new UnaryOperationNode(t, factor)
             )
         }
         return this.atom()
@@ -178,8 +205,6 @@ export default class Pareser extends ParserAbstraction {
             let node = res.register(this.expression())
             if (res.error !== null)
                 return res
-            res.register_advance()
-            this.advance()
             if (this.current_token.type !== Token.TYPE.RPAREN) {
                 return res.failure(
                     new ExceptedCharError(
@@ -197,8 +222,17 @@ export default class Pareser extends ParserAbstraction {
         if (t.isKeyword(Token.KEYWORDS.WHO)) {
             res.register_advance()
             this.advance()
-            return res.success(new NumberNode(t)) //TODO: fix it
+            return res.success(new VarNode(t))
         }
+
+        return res.failure(
+            new InvalidSyntaxError(
+                this.current_token.pos_start,
+                this.current_token.pos_end,
+                `Excepted 'number', 'identifier', '(' or ':'`
+            )
+        )
+
     }
 
     edExpr() {
@@ -240,6 +274,7 @@ export default class Pareser extends ParserAbstraction {
                 )
             )
         }
+
         return res.success(
             new EdNode(tokens)
         )
@@ -264,35 +299,26 @@ export default class Pareser extends ParserAbstraction {
                 }
 
                 expr = res.register(this.expression())
-                if (res.error !== null)
-                    return res.failure(
-                        new InvalidSyntaxError(
-                            this.current_token.pos_start,
-                            this.current_token.pos_end,
-                            "Excepted Expression"
-                        )
-                    )
+                if (res.error !== null) {
+                    return res
+                }
+
                 nodes.push(expr)
             }
-            res.register_advance()
-            this.advance()
+
             return res.success(
                 new TellNode(nodes)
             )
-        }
+        } else {
+            let expr = res.register(this.expression())
+            if (res.error !== null) {
+                return res
+            }
 
-        expr = res.register(this.expression())
-        if (res.error !== null)
-            return res.failure(
-                new InvalidSyntaxError(
-                    this.current_token.pos_start,
-                    this.current_token.pos_end,
-                    "Excepted Expression"
-                )
+            return res.success(
+                new TellNode([expr])
             )
-        return res.success(
-            new TellNode([expr])
-        )
+        }
     }
 
     askExpr() {
@@ -321,15 +347,10 @@ export default class Pareser extends ParserAbstraction {
                 )
             }
 
-            expr = res.register(this.expression())
-            if (res.error !== null)
-                return res.failure(
-                    new InvalidSyntaxError(
-                        this.current_token.pos_start,
-                        this.current_token.pos_end,
-                        "Excepted Expression"
-                    )
-                )
+            let expr = res.register(this.expression())
+            if (res.error !== null) {
+                return res
+            }
             nodes.push(expr)
         }
         res.register_advance()
@@ -350,8 +371,7 @@ export default class Pareser extends ParserAbstraction {
         let body = res.register(this.statments())
         if (res.error !== null)
             return res
-        res.register_advance()
-        this.advance()
+
         if (this.current_token.type !== Token.TYPE.RSQUARE) {
             return res.failure(
                 new ExceptedCharError(
@@ -371,14 +391,9 @@ export default class Pareser extends ParserAbstraction {
         let res = new ParserResult()
 
         let numberNode = res.register(this.expression())
-        if (res.error !== null)
-            return res.failure(
-                new InvalidSyntaxError(
-                    this.current_token.pos_start,
-                    this.current_token.pos_end,
-                    "Excepted Expression"
-                )
-            )
+        if (res.error !== null) {
+            return res
+        }
 
         if (this.current_token.type !== Token.TYPE.LSQUARE) {
             return res.failure(
@@ -466,8 +481,27 @@ export default class Pareser extends ParserAbstraction {
 
     }
 
-    saveExpr() {}
+    saveLoadExpr() {
+        let res = new ParserResult()
+        let t = this.current_token
 
-    loadExpr() {}
+        res.register_advance()
+        this.advance()
+
+        if (this.current_token.type !== Token.TYPE.PATH) {
+            return res.failure(
+                new InvalidSyntaxError(
+                    this.current_token.pos_start,
+                    this.current_token.pos_end,
+                    "Excepted Path"
+                )
+            )
+        }
+
+        return res.success(
+            new SaveLoadNode(t, this.current_token)
+        )
+
+    }
 
 }

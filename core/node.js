@@ -108,7 +108,7 @@ export class AskNode {
         this.body = body;
 
         this.pos_start = nodes[0].pos_start;
-        this.pos_end = body[body.length - 1].pos_end;
+        this.pos_end = body.pos_end;
     }
 }
 
