@@ -1,8 +1,9 @@
-import Lexer from "./lexer.js";
-import Parser from "./parser.js";
-import TokenPrinter from "./tools/tokenPrinter.js";
+const Lexer = require("./lexer.js");
+const Parser = require("./parser.js");
+const TokenPrinter = require("./tools/tokenPrinter.js");
 
-export default class Runner {
+
+module.exports = class Runner {
     constructor(fn) {
         this.fn = fn;
     }

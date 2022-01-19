@@ -1,4 +1,4 @@
-export default class Position {
+module.exports = class Position {
     constructor(id, line, column, fn, ftext) {
         this.id = id;
         this.line = line;

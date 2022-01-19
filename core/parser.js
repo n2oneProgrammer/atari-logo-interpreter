@@ -1,5 +1,8 @@
-import { InvalidSyntaxError, ExceptedCharError } from "./error.js";
-import {
+const {
+    InvalidSyntaxError,
+    ExceptedCharError
+} = require("./error.js");
+const {
     NumberNode,
     ListNode,
     UnaryOperationNode,
@@ -10,12 +13,15 @@ import {
     AskNode,
     TellNode,
     EdNode,
-    SaveLoadNode,
-} from "./node.js";
-import Token from "./token.js";
-import { ParserAbstraction, ParserResult } from "./utilities/parser.js";
+    SaveLoadNode
+} = require("./node.js");
+const Token = require("./token.js");
+const {
+    ParserAbstraction,
+    ParserResult
+} = require("./utilities/parser.js");
 
-export default class Pareser extends ParserAbstraction {
+module.exports = class Pareser extends ParserAbstraction {
     statments() {
         let res = new ParserResult();
         let statments = [];

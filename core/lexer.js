@@ -1,11 +1,11 @@
-import {
+const {
     IllegalCharError,
     ExceptedCharError
-} from "./error.js";
-import Position from "./position.js";
-import Token from "./token.js";
+} = require("./error.js");
+const Position = require("./position.js");
+const Token = require("./token.js");
 
-export default class Lexer {
+module.exports = class Lexer {
     constructor(fn, text) {
         this.rules = fn;
         this.text = text.toLowerCase();

@@ -1,4 +1,4 @@
-export default class Token {
+module.exports = class Token {
     static DIGITS = "0123456789";
     static LETTERS = "abcdefghijklmnopqrstuvwxyz";
     static LETTERS_DIGITS = Token.LETTERS + Token.DIGITS + "_";

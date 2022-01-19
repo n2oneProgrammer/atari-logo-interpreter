@@ -1,12 +1,13 @@
-import Token from "../token.js";
-import {
+const Token = require("../token.js");
+const {
     InvalidSyntaxError
-} from "../error.js";
-import {
+} = require("../error.js");
+const {
     BinaryOperationNode
-} from "../node.js";
+} = require("../node.js");
 
-export class ParserAbstraction {
+
+class ParserAbstraction {
     constructor(tokens) {
         this.tokens = tokens;
         this.index = -1;
@@ -59,7 +60,7 @@ export class ParserAbstraction {
     }
 }
 
-export class ParserResult {
+class ParserResult {
     constructor() {
         this.error = null;
         this.node = null;
@@ -98,4 +99,9 @@ export class ParserResult {
         }
         return this;
     }
+}
+
+module.exports = {
+    ParserAbstraction,
+    ParserResult
 }

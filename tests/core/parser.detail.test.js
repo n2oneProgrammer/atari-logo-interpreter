@@ -1,9 +1,9 @@
-import Lexer from '../../core/lexer';
-import Parser from '../../core/parser';
-import {
+const Lexer = require('../../core/lexer');
+const Parser = require('../../core/parser');
+const {
     ParserResult
-} from '../../core/utilities/parser';
-import {
+} = require('../../core/utilities/parser');
+const {
     ListNode,
     RepeatNode,
     TellNode,
@@ -12,7 +12,7 @@ import {
     FunctionNode,
     CallNode,
     AskNode
-} from '../../core/node';
+} = require('../../core/node');
 
 
 describe('Parser Detail', () => {

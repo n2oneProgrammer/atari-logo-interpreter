@@ -1,6 +1,6 @@
-import Token from "../token.js";
+const Token = require("../token.js");
 
-export default class TokenPrinter {
+module.exports = class TokenPrinter {
     static toString(tokens) {
         let str = "";
         for (let i = 0; i < tokens.length; i++) {

@@ -1,22 +1,21 @@
-import Lexer from '../../core/lexer';
-import Parser from '../../core/parser';
-import {
+const Lexer = require('../../core/lexer');
+const Parser = require('../../core/parser');
+const {
     ParserResult
-} from '../../core/utilities/parser';
-import {
+} = require('../../core/utilities/parser');
+const {
     ListNode,
     RepeatNode,
     EdNode,
     BinaryOperationNode,
-    NumberNode,
     CallNode,
     AskNode
-} from '../../core/node';
+} = require('../../core/node');
+const {
+    InvalidSyntaxError,
+    ExceptedCharError
+} = require('../../core/error');
 
-import {
-    ExceptedCharError,
-    InvalidSyntaxError
-} from '../../core/error';
 
 describe('Parser', () => {
 

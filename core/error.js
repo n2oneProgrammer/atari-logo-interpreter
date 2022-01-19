@@ -47,20 +47,26 @@ class CustomError {
     }
 }
 
-export class IllegalCharError extends CustomError {
+class IllegalCharError extends CustomError {
     constructor(pos_start, pos_end, desc) {
         super(pos_start, pos_end, "Illegal Character", desc);
     }
 }
 
-export class ExceptedCharError extends CustomError {
+class ExceptedCharError extends CustomError {
     constructor(pos_start, pos_end, desc) {
         super(pos_start, pos_end, "Excepted Character", desc);
     }
 }
 
-export class InvalidSyntaxError extends CustomError {
+class InvalidSyntaxError extends CustomError {
     constructor(pos_start, pos_end, desc) {
         super(pos_start, pos_end, "Invalid Syntax", desc);
     }
 }
+
+module.exports = {
+    IllegalCharError,
+    ExceptedCharError,
+    InvalidSyntaxError
+};

@@ -1,5 +1,5 @@
-import prompt from 'prompt';
-import Runner from './core/runner.js';
+const prompt = require('prompt');
+const Runner = require('./core/runner.js');
 
 class Shell {
     constructor() {
