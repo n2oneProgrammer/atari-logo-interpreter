@@ -8,7 +8,9 @@ import {
     RepeatNode,
     EdNode,
     BinaryOperationNode,
-    NumberNode
+    NumberNode,
+    CallNode,
+    AskNode
 } from '../../core/node';
 
 import {
@@ -17,19 +19,6 @@ import {
 } from '../../core/error';
 
 describe('Parser', () => {
-
-    it("Repeat valid", () => {
-        let result = new Lexer("test", "REPEAT 5 [ED xd]").run();
-        let parser = new Parser(result.tokens).run();
-        expect(parser).toBeInstanceOf(ParserResult);
-        expect(parser.node).toBeInstanceOf(ListNode);
-        expect(parser.node.nodes.length).toBe(1);
-        expect(parser.node.nodes[0]).toBeInstanceOf(RepeatNode);
-        expect(parser.node.nodes[0].numberNode.token.value).toBe("5");
-        expect(parser.node.nodes[0].body).toBeInstanceOf(ListNode);
-        expect(parser.node.nodes[0].body.nodes.length).toBe(1);
-        expect(parser.node.nodes[0].body.nodes[0]).toBeInstanceOf(EdNode);
-    })
 
     it("Repeat invalid", () => {
         let result = new Lexer("test", "REPEAT 5 []").run();
@@ -77,6 +66,22 @@ describe('Parser', () => {
         expect(parser.node.nodes[0].numberNode.left.right.left).toBeInstanceOf(BinaryOperationNode)
     })
 
+    it("CL FW 40 49 ASK [0] [LR FW 10]", () => {
 
+        let result = new Lexer("test", "CL FW 40 49 ASK [0] [LR FW 10]").run();
+        let parser = new Parser(result.tokens).run();
 
+        expect(parser).toBeInstanceOf(ParserResult);
+        expect(parser.node).toBeInstanceOf(ListNode);
+        expect(parser.node.nodes.length).toBe(3);
+
+        expect(parser.node.nodes[0]).toBeInstanceOf(CallNode);
+        expect(parser.node.nodes[0].args.length).toBe(0);
+        expect(parser.node.nodes[1]).toBeInstanceOf(CallNode);
+        expect(parser.node.nodes[1].args.length).toBe(2);
+
+        expect(parser.node.nodes[2]).toBeInstanceOf(AskNode);
+        expect(parser.node.nodes[2].nodes.length).toBe(1);
+        expect(parser.node.nodes[2].body.nodes.length).toBe(2);
+    })
 });

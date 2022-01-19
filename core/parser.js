@@ -105,8 +105,6 @@ export default class Pareser extends ParserAbstraction {
         }
 
         if (this.current_token.isKeyword(Token.KEYWORDS.SAVE) || this.current_token.isKeyword(Token.KEYWORDS.LOAD)) {
-            res.register_advance()
-            this.advance()
             let node = res.register(this.saveLoadExpr())
 
             if (res.error !== null)
@@ -128,7 +126,7 @@ export default class Pareser extends ParserAbstraction {
                     args.push(expr)
                     expr = res.try_register(this.expression())
                 }
-                this.reverse(res.to_reverse_count)
+                this.reverse(res.to_reverse_count + 1)
             }
             return res.success(
                 new CallNode(t, args)
@@ -242,9 +240,15 @@ export default class Pareser extends ParserAbstraction {
             tokens.push(this.current_token)
         } else if (this.current_token.type === Token.TYPE.LSQUARE) {
 
-            while (this.current_token.type !== Token.TYPE.RSQUARE) {
+            while (true) {
                 res.register_advance()
                 this.advance()
+
+                if (this.current_token.type === Token.TYPE.RSQUARE) {
+                    break
+                }
+
+
                 if (this.current_token.type === Token.TYPE.EOF) {
                     return res.failure(
                         new ExceptedCharError(
@@ -298,7 +302,7 @@ export default class Pareser extends ParserAbstraction {
                     )
                 }
 
-                expr = res.register(this.expression())
+                let expr = res.register(this.expression())
                 if (res.error !== null) {
                     return res
                 }

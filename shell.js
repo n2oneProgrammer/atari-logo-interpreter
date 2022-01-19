@@ -9,7 +9,7 @@ class Shell {
     }
 
     shell() {
-        this.execute("ASK [3 4+2] [LR]")
+        this.execute("TO func :xd :cos RT :xd FW 100 LR FW 100 END")
         return
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);

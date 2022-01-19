@@ -42,7 +42,7 @@ export class VarNode {
             if (contextNode.token === token) {
                 contextNode = null
             }
-        self.contextNode = contextNode
+        this.contextNode = contextNode
 
         this.pos_start = token.pos_start;
         this.pos_end = token.pos_end;
