@@ -9,7 +9,8 @@ class Shell {
     }
 
     shell() {
-        this.execute("TO func :xd :cos RT :xd FW 100 LR FW 100 END")
+        //TODO: Remove debug
+        this.execute("TELL 3 FW 100")
         return
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);

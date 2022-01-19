@@ -318,6 +318,7 @@ export default class Pareser extends ParserAbstraction {
             if (res.error !== null) {
                 return res
             }
+            this.reverse(1)
 
             return res.success(
                 new TellNode([expr])
