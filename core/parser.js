@@ -183,7 +183,7 @@ export default class Pareser extends ParserAbstraction {
             res.register_advance()
             this.advance()
             t = this.current_token
-            if (t !== Token.TYPE.IDENTIFIER) {
+            if (t.type !== Token.TYPE.IDENTIFIER) {
                 return res.failure(
                     new InvalidSyntaxError(
                         this.current_token.pos_start,
@@ -468,7 +468,7 @@ export default class Pareser extends ParserAbstraction {
         if (res.error !== null)
             return res
 
-        if (this.current_token.isKeyword(Token.KEYWORDS.END)) {
+        if (!this.current_token.isKeyword(Token.KEYWORDS.END)) {
             return res.failure(
                 new InvalidSyntaxError(
                     this.current_token.pos_start,
