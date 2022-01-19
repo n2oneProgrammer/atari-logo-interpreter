@@ -25,14 +25,14 @@ describe('Parser', () => {
         let parser = new Parser(result.tokens).run();
         expect(parser).toBeInstanceOf(ParserResult);
         expect(parser.error).toBeInstanceOf(InvalidSyntaxError);
-    })
+    });
 
     it("Repeat invalid 2", () => {
         let result = new Lexer("test", "REPEAT 5 [ ED cos").run();
         let parser = new Parser(result.tokens).run();
         expect(parser).toBeInstanceOf(ParserResult);
         expect(parser.error).toBeInstanceOf(ExceptedCharError);
-    })
+    });
 
     it("Repeat valid 2", () => {
         let result = new Lexer("test", "ED cos REPEAT 5 [REPEAT 23 [ED cos] ED cos]").run();
@@ -53,7 +53,7 @@ describe('Parser', () => {
         expect(parser.node.nodes[1].body.nodes[0].body).toBeInstanceOf(ListNode);
         expect(parser.node.nodes[1].body.nodes[0].body.nodes.length).toBe(1);
         expect(parser.node.nodes[1].body.nodes[0].body.nodes[0]).toBeInstanceOf(EdNode);
-    })
+    });
 
     it("Valid expresions", () => {
         let result = new Lexer("test", "REPEAT ((2+(2/1)*2)-1) [ED cos]").run();
@@ -63,8 +63,8 @@ describe('Parser', () => {
         expect(parser.node.nodes.length).toBe(1);
         expect(parser.node.nodes[0]).toBeInstanceOf(RepeatNode);
 
-        expect(parser.node.nodes[0].numberNode.left.right.left).toBeInstanceOf(BinaryOperationNode)
-    })
+        expect(parser.node.nodes[0].numberNode.left.right.left).toBeInstanceOf(BinaryOperationNode);
+    });
 
     it("CL FW 40 49 ASK [0] [LR FW 10]", () => {
 
@@ -83,5 +83,5 @@ describe('Parser', () => {
         expect(parser.node.nodes[2]).toBeInstanceOf(AskNode);
         expect(parser.node.nodes[2].nodes.length).toBe(1);
         expect(parser.node.nodes[2].body.nodes.length).toBe(2);
-    })
+    });
 });
