@@ -7,7 +7,6 @@ import {
 } from "../node.js";
 
 export class ParserAbstraction {
-
     constructor(tokens) {
         this.tokens = tokens;
         this.index = -1;
@@ -37,7 +36,7 @@ export class ParserAbstraction {
                 new InvalidSyntaxError(
                     this.current_token.pos_start,
                     this.current_token.pos_end,
-                    "Excepted '+', '-', '*', '/'",
+                    "Excepted '+', '-', '*', '/'"
                 )
             );
         return res;
@@ -46,16 +45,14 @@ export class ParserAbstraction {
     bin_op(func, ops) {
         let res = new ParserResult();
         let left = res.register(func());
-        if (res.error !== null)
-            return res;
+        if (res.error !== null) return res;
 
         while (ops.includes(this.current_token.type)) {
             let op_token = this.current_token;
             res.register_advance();
             this.advance();
             let right = res.register(func());
-            if (res.error !== null)
-                return res;
+            if (res.error !== null) return res;
             left = new BinaryOperationNode(op_token, left, right);
         }
         return res.success(left);

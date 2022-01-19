@@ -9,9 +9,9 @@ export class NumberNode {
 
 export class ListNode {
     constructor(nodes, pos_start, pos_end) {
-        this.nodes = nodes
-        this.pos_start = pos_start
-        this.pos_end = pos_end
+        this.nodes = nodes;
+        this.pos_start = pos_start;
+        this.pos_end = pos_end;
     }
 }
 export class BinaryOperationNode {
@@ -40,9 +40,9 @@ export class VarNode {
         this.token = token;
         if (contextNode)
             if (contextNode.token === token) {
-                contextNode = null
+                contextNode = null;
             }
-        this.contextNode = contextNode
+        this.contextNode = contextNode;
 
         this.pos_start = token.pos_start;
         this.pos_end = token.pos_end;

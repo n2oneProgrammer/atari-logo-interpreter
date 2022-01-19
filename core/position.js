@@ -8,16 +8,16 @@ export default class Position {
     }
 
     advance(char = null) {
-        this.id++
-        this.column++
+        this.id++;
+        this.column++;
         if (char === "\n") {
-            this.line++
-            this.column = 0
+            this.line++;
+            this.column = 0;
         }
-        return this
+        return this;
     }
 
     copy() {
-        return new Position(this.id, this.line, this.column, this.fn, this.ftext)
+        return new Position(this.id, this.line, this.column, this.fn, this.ftext);
     }
 }

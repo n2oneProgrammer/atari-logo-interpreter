@@ -14,7 +14,7 @@ export default class Runner {
             return result.error.toString();
         }
         console.log(TokenPrinter.toString(result.tokens));
-        let parser = new Parser(result.tokens)
+        let parser = new Parser(result.tokens);
         result = parser.run();
         if (result.error !== null) {
             return result.error.toString();
