@@ -13,7 +13,7 @@ const {
     AskNode,
     TellNode,
     EdNode,
-    SaveLoadNode
+    SaveLoadNode,
 } = require("./node.js");
 const Token = require("./token.js");
 const {
@@ -38,13 +38,12 @@ module.exports = class Pareser extends ParserAbstraction {
                 this.current_token.type === Token.TYPE.EOF ||
                 this.current_token.isKeyword(Token.KEYWORDS.END) ||
                 this.current_token.type === Token.TYPE.RSQUARE
-            ) {
+            )
                 break;
-            }
+
             let statment = res.register(this.statment());
-            if (res.error !== null) {
-                return res;
-            }
+            if (res.error !== null) return res;
+
             statments.push(statment);
         }
         return res.success(
@@ -236,9 +235,7 @@ module.exports = class Pareser extends ParserAbstraction {
                 res.register_advance();
                 this.advance();
 
-                if (this.current_token.type === Token.TYPE.RSQUARE) {
-                    break;
-                }
+                if (this.current_token.type === Token.TYPE.RSQUARE) break;
 
                 if (this.current_token.type === Token.TYPE.EOF) {
                     return res.failure(
@@ -302,9 +299,8 @@ module.exports = class Pareser extends ParserAbstraction {
             return res.success(new TellNode(nodes));
         } else {
             let expr = res.register(this.expression());
-            if (res.error !== null) {
-                return res;
-            }
+            if (res.error !== null) return res;
+
             this.reverse(1);
 
             return res.success(new TellNode([expr]));
@@ -478,4 +474,4 @@ module.exports = class Pareser extends ParserAbstraction {
 
         return res.success(new SaveLoadNode(t, this.current_token));
     }
-}
+};

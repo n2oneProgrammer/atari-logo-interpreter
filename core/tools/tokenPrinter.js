@@ -9,12 +9,10 @@ module.exports = class TokenPrinter {
                 element.type === Token.TYPE.IDENTIFIER ||
                 element.type === Token.TYPE.PATH ||
                 element.type === Token.TYPE.KEYWORD
-            ) {
+            )
                 str += `[${element.type}:${element.value}] `;
-            } else {
-                str += `[${element.type}] `;
-            }
+            else str += `[${element.type}] `;
         }
         return str;
     }
-}
+};
