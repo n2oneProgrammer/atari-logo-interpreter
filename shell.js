@@ -1,14 +1,17 @@
-import prompt from 'prompt';
-import Runner from './core/runner.js';
+const prompt = require('prompt');
+const Runner = require('./core/runner.js');
 
 class Shell {
     constructor() {
         prompt.start();
-        this.shell();
         this.run = new Runner("shell");
+        this.shell();
     }
 
     shell() {
+        //TODO: Remove debug
+        this.execute("TELL 3 FW 100");
+        return;
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);
             this.shell();
@@ -21,4 +24,4 @@ class Shell {
     }
 }
 
-new Shell(null);
+new Shell();

@@ -4,15 +4,15 @@
     __statement__*
 
 - __statement__:
-    IDENTIFIER __expr__*?  
+    IDENTIFIER __expression__*?  
     __repeat-expr__  
     __func-def__  
     __ed-expr__  
     __tell-expr__  
     __ask-expr__  
-    __save-load__
+    __save-load-expr__
   
-- __expr__:  
+- __expression__:  
     __term__ ((PLUS|MINUS) __term__)*?
 
 - __term__:   
@@ -33,20 +33,21 @@
     KEYWORD:ED LSQUARE IDENTIFIER* RSQUARE
 
 - __tell-expr__:  
-    KEYWORD:TELL IDENTIFIER  
-    KEYWORD:TELL LSQUARE IDENTIFIER* RSQUARE
+    KEYWORD:TELL __expr__  
+    KEYWORD:TELL LSQUARE __expr__* RSQUARE
 
 - __ask-expr__:  
-    KEYWORD:ASK LSQUARE IDENTIFIER* RSQUARE LSQUARE __statments__ RSQUARE
+    KEYWORD:ASK LSQUARE __expr__* RSQUARE LSQUARE __statments__ RSQUARE
 
 - __repeat-expr__:  
-    KEYWORD:REPEAT __expr__ LSQUARE __statements__ RSQUARE
+    KEYWORD:REPEAT __expression__ LSQUARE __statements__ RSQUARE
 
 - __func-def__:  
     KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)*? __statements__ KEYWORD:END
 
-- __save-load__:
+- __save-load-expr__
     (KEYWORD:SAVE|KEYWORD:LOAD) PATH
+
 
 ## Legend
 - `?` - optional

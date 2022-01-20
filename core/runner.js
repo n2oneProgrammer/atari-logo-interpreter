@@ -1,6 +1,9 @@
-import Lexer from "./lexer.js";
+const Lexer = require("./lexer.js");
+const Parser = require("./parser.js");
+const TokenPrinter = require("./tools/tokenPrinter.js");
 
-export default class Runner {
+
+module.exports = class Runner {
     constructor(fn) {
         this.fn = fn;
     }
@@ -11,6 +14,12 @@ export default class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
-        return result.tokens;
+        console.log(TokenPrinter.toString(result.tokens));
+        let parser = new Parser(result.tokens);
+        result = parser.run();
+        if (result.error !== null) {
+            return result.error.toString();
+        }
+        return result;
     }
 }
