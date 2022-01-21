@@ -5,7 +5,7 @@ module.exports = class Context {
         this.displayName = displayName;
         this.parent = parent;
         this.parentEntryPos = parentEntryPos;
-        this.symbolTable = null
+        this.symbolTable = null;
     }
 
     generateNewSymbolTable(name, pos_start = null) {

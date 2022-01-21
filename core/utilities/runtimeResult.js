@@ -1,6 +1,6 @@
 module.exports = class RuntimeResult {
     constructor() {
-        this.reset()
+        this.reset();
     }
 
     reset() {

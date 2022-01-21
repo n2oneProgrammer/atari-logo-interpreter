@@ -37,7 +37,7 @@ class BaseFunction extends Value {
     }
 
 }
-class Function extends BaseFunction {
+class FunctionValue extends BaseFunction {
     constructor(name, body_node, argNames) {
         super(name);
         this.body_node = body_node;
@@ -45,7 +45,7 @@ class Function extends BaseFunction {
     }
 
     copy() {
-        let copy = new Function(this.name, this.body_node, this.argNames);
+        let copy = new FunctionValue(this.name, this.body_node, this.argNames);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;
@@ -62,11 +62,11 @@ class Function extends BaseFunction {
         res.register(interpreter.visit(this.body_node, context));
         if (res.error) return res;
 
-        return res.success(null)
+        return res.success(null);
     }
 }
 
 module.exports = {
     BaseFunction,
-    Function
+    Function: FunctionValue
 }

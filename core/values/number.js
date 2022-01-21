@@ -3,7 +3,7 @@ const {
 } = require('../error');
 const Value = require('./value');
 
-module.exports = class Number extends Value {
+module.exports = class NumberValue extends Value {
 
     constructor(value) {
         super();
@@ -11,16 +11,16 @@ module.exports = class Number extends Value {
     }
 
     copy() {
-        let copy = Number(this.value);
+        let copy = NumberValue(this.value);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;
     }
 
     add(other) {
-        if (other instanceof Number) {
+        if (other instanceof NumberValue) {
             return {
-                value: new Number(this.value + other.value),
+                value: new NumberValue(this.value + other.value),
                 error: null
             };
         }
@@ -31,9 +31,9 @@ module.exports = class Number extends Value {
     }
 
     sub(other) {
-        if (other instanceof Number) {
+        if (other instanceof NumberValue) {
             return {
-                value: new Number(this.value - other.value),
+                value: new NumberValue(this.value - other.value),
                 error: null
             };
         }
@@ -44,9 +44,9 @@ module.exports = class Number extends Value {
     }
 
     mul(other) {
-        if (other instanceof Number) {
+        if (other instanceof NumberValue) {
             return {
-                value: new Number(this.value * other.value),
+                value: new NumberValue(this.value * other.value),
                 error: null
             };
         }
@@ -57,7 +57,7 @@ module.exports = class Number extends Value {
     }
 
     div(other) {
-        if (other instanceof Number) {
+        if (other instanceof NumberValue) {
             if (other.value === 0) {
                 return {
                     value: null,
@@ -70,7 +70,7 @@ module.exports = class Number extends Value {
                 };
             }
             return {
-                value: new Number(this.value / other.value),
+                value: new NumberValue(this.value / other.value),
                 error: null
             };
         }

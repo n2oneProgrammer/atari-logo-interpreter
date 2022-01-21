@@ -30,7 +30,7 @@ module.exports = class Value {
             other.pos_end,
             `Illegal operation`,
             this.context
-        )
+        );
     }
 
     copy() {
