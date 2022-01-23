@@ -8,9 +8,7 @@ class CustomError {
 
     toString() {
         let r = `⚠  ${this.error_name}: ${this.desc}\n`;
-        r += `   In ${this.pos_start.fn}, at line ${
-      this.pos_start.line + 1
-    }, char: ${this.pos_start.column + 1}\n`;
+        r += `   In ${this.pos_start.fn}, at line ${this.pos_start.line + 1}, char: ${this.pos_start.column + 1}\n`;
         r += this.stringWithArrows();
         return r;
     }
@@ -65,8 +63,36 @@ class InvalidSyntaxError extends CustomError {
     }
 }
 
+class RuntimeError extends CustomError {
+    constructor(pos_start, pos_end, desc, context) {
+        super(pos_start, pos_end, "Runtime Error", desc);
+        this.context = context;
+    }
+
+    toString() {
+
+        let r = `⚠  ${this.error_name}: ${this.desc}\n`;
+        r += this.generateCtx();
+        r += this.stringWithArrows();
+        return r;
+    }
+
+    generateCtx() {
+        let r = "";
+        let pos = this.pos_start;
+        let ctx = this.context;
+
+        while (ctx != null) {
+            r += `In ${pos.fn} in ${ctx.displayName} at line ${pos.line + 1}, char: ${pos.column + 1}\n`;
+            pos = ctx.parentEntryPos;
+            ctx = ctx.parent;
+        }
+    }
+}
+
 module.exports = {
     IllegalCharError,
     ExceptedCharError,
-    InvalidSyntaxError
+    InvalidSyntaxError,
+    RuntimeError
 };
