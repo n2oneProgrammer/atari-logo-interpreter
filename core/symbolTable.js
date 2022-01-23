@@ -23,4 +23,4 @@ module.exports = class SymbolTable {
     remove(name) {
         delete this.symbols[name];
     }
-}
+};

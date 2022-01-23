@@ -4,4 +4,4 @@ const {
 
 module.exports = class BuiltInFunction extends BaseFunction {
     // TODO: make this a class
-}
+};

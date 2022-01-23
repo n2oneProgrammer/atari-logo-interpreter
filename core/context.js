@@ -13,4 +13,4 @@ module.exports = class Context {
         newContext.symbolTable = new SymbolTable(newContext.parent.symbolTable);
         return newContext;
     }
-}
+};

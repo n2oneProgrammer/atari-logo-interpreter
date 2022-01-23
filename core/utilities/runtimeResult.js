@@ -25,4 +25,4 @@ module.exports = class RuntimeResult {
         this.error = error;
         return this.error;
     }
-}
+};
