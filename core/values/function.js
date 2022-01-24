@@ -68,5 +68,5 @@ class FunctionValue extends BaseFunction {
 
 module.exports = {
     BaseFunction,
-    Function: FunctionValue
+    FunctionValue
 };

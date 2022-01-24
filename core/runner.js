@@ -1,7 +1,9 @@
 const Lexer = require("./lexer.js");
 const Parser = require("./parser.js");
 const TokenPrinter = require("./tools/tokenPrinter.js");
-
+const Context = require("./context.js");
+const Interpreter = require("./interpreter.js");
+const globalSymbolTable = require("./utilities/globalSymbolTable.js");
 
 module.exports = class Runner {
     constructor(fn) {
@@ -17,6 +19,13 @@ module.exports = class Runner {
         console.log(TokenPrinter.toString(result.tokens));
         let parser = new Parser(result.tokens);
         result = parser.run();
+        if (result.error !== null) {
+            return result.error.toString();
+        }
+        let context = new Context("<code>");
+        context.symbolTable = globalSymbolTable();
+        let interpreter = new Interpreter();
+        result = interpreter.visit(result.node, context);
         if (result.error !== null) {
             return result.error.toString();
         }
