@@ -1,12 +1,12 @@
 const {
     RuntimeError
-} = require('./error');
-const Token = require('./token');
+} = require("./error");
+const Token = require("./token");
 const {
     FunctionValue
-} = require('./values/function');
-const NumberValue = require('./values/number');
-const RuntimeResult = require('./utilities/runtimeResult');
+} = require("./values/function");
+const NumberValue = require("./values/number");
+const RuntimeResult = require("./utilities/runtimeResult");
 
 module.exports = class Interpeter {
     visit(node, context) {
@@ -24,12 +24,14 @@ module.exports = class Interpeter {
 
     visitNumberNode(node, context) {
         return new RuntimeResult().success(
-            new NumberValue(node.token.value).setPosition(node.pos_start, node.pos_end).setContext(context)
+            new NumberValue(node.token.value)
+            .setPosition(node.pos_start, node.pos_end)
+            .setContext(context)
         );
     }
 
     visitVarNode(node, context) {
-        let res = new RuntimeResult()
+        let res = new RuntimeResult();
         let var_name = node.token.value;
         let value = context.symbolTable.get(var_name);
         if (value == null) {
@@ -43,7 +45,10 @@ module.exports = class Interpeter {
             );
         }
 
-        value = value.copy().setPosition(node.pos_start, node.pos_end).setContext(context);
+        value = value
+            .copy()
+            .setPosition(node.pos_start, node.pos_end)
+            .setContext(context);
         return res.success(value);
     }
 
@@ -55,7 +60,7 @@ module.exports = class Interpeter {
         let right = res.register(this.visit(node.right, context));
         if (res.error) return res;
 
-        let obj = null
+        let obj = null;
 
         if (node.operator.type === Token.PLUS) {
             obj = left.add(right);
@@ -66,12 +71,14 @@ module.exports = class Interpeter {
         } else if (node.operator.type === Token.DIV) {
             obj = left.divide(right);
         } else {
-            return res.failure(new RuntimeError(
-                node.pos_start,
-                node.pos_end,
-                `Invalid binary operator ${node.token.type}`,
-                context
-            ));
+            return res.failure(
+                new RuntimeError(
+                    node.pos_start,
+                    node.pos_end,
+                    `Invalid binary operator ${node.token.type}`,
+                    context
+                )
+            );
         }
 
         if (obj.error) {
@@ -107,6 +114,34 @@ module.exports = class Interpeter {
             if (res.error) return res;
         }
 
-        return res.success(null)
+        return res.success(null);
     }
-}
+
+    visitRepeatNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitFunctionNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitCallNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitEdNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitTellNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitAskNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+
+    visitSaveLoadNode(node, context) {
+        throw new Error(`No visit method for ${node.constructor.name}`);
+    }
+};
