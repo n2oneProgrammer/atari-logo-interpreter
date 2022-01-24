@@ -36,13 +36,8 @@
  }
 
  class VarNode {
-     constructor(token, contextNode = null) {
+     constructor(token) {
          this.token = token;
-         if (contextNode)
-             if (contextNode.token === token) {
-                 contextNode = null;
-             }
-         this.contextNode = contextNode;
 
          this.pos_start = token.pos_start;
          this.pos_end = token.pos_end;
