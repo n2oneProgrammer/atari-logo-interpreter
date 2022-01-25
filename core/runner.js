@@ -29,6 +29,7 @@ module.exports = class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
+        console.log(context.symbolTable);
         return result;
     }
 }

@@ -4,7 +4,7 @@ const {
 } = require('../error');
 const RuntimeResult = require('../utilities/runtimeResult');
 const Interpreter = require('../interpreter');
-
+console.log(require('../interpreter'));
 class BaseFunction extends Value {
     constructor(name) {
         super();

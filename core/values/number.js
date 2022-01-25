@@ -11,7 +11,7 @@ module.exports = class NumberValue extends Value {
     }
 
     copy() {
-        let copy = NumberValue(this.value);
+        let copy = new NumberValue(this.value);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;

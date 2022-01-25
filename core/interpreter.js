@@ -118,15 +118,51 @@ module.exports = class Interpeter {
     }
 
     visitRepeatNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+
+        let times = res.register(this.visit(node.numberNode, context));
+        if (res.error) return res;
+
+        for (let i = 0; i < times.value; i++) {
+            context.symbolTable.set("i", new NumberValue(i));
+
+            res.register(this.visit(node.blockNode, context));
+            if (res.error) return res;
+        }
+
+        return res.success(null);
     }
 
     visitFunctionNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+
+        let name = node.name.value;
+        let body = node.body;
+        let agrs_names = node.args.map(arg => arg.value);
+
+        let func = new FunctionValue(name, body, agrs_names).setPosition(node.pos_start, node.pos_end).setContext(context);
+        context.symbolTable.set(name, func);
+
+        return res.success(null);
     }
 
     visitCallNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+
+        let args = [];
+        let func = res.register(this.visit(node.node, context));
+        if (res.error) return res;
+        func = func.copy().setPosition(node.pos_start, node.pos_end);
+
+        for (let i = 0; i < node.args.length; i++) {
+            let value = res.register(this.visit(node.args[i], context))
+            args.push(value);
+            if (res.error) return res;
+        }
+        res.register(func.execute(args));
+        if (res.error) return res;
+
+        return res.success(null);
     }
 
     visitEdNode(node, context) {

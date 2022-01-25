@@ -123,7 +123,7 @@ module.exports = class Pareser extends ParserAbstraction {
                 }
                 this.reverse(res.to_reverse_count + 1);
             }
-            return res.success(new CallNode(t, args));
+            return res.success(new CallNode(new VarNode(t), args));
         }
 
         return res.failure(
@@ -213,7 +213,7 @@ module.exports = class Pareser extends ParserAbstraction {
         if (t.isKeyword(Token.KEYWORDS.WHO)) {
             res.register_advance();
             this.advance();
-            return res.success(new VarNode(t));
+            return res.success(new VarNode(new Token(Token.TYPE.IDENTIFIER, "$who", t.pos_start, t.pos_end)));
         }
 
         return res.failure(
