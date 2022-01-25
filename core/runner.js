@@ -22,7 +22,7 @@ module.exports = class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
-        let context = new Context("<code>");
+        let context = new Context("<global>");
         context.symbolTable = globalSymbolTable();
         let interpreter = new Interpreter();
         result = interpreter.visit(result.node, context);
