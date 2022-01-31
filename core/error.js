@@ -71,7 +71,7 @@ class RuntimeError extends CustomError {
 
     toString() {
 
-        let r = `⚠  ${this.error_name}: ${this.desc}\n`;
+        let r = `⚠  ${this.error_name}: ${this.desc}`;
         r += this.generateCtx();
         r += this.stringWithArrows();
         return r;
@@ -82,11 +82,29 @@ class RuntimeError extends CustomError {
         let pos = this.pos_start;
         let ctx = this.context;
 
+        let lastLine = ""
+        let counter = 0;
+
         while (ctx != null) {
-            r += `In ${pos.fn} in ${ctx.displayName} at line ${pos.line + 1}, char: ${pos.column + 1}\n`;
+            let line = `In ${pos.fn} in ${ctx.displayName} at line ${pos.line + 1}, char: ${pos.column + 1}`
+            if (lastLine == line) {
+                counter++;
+            } else {
+                lastLine = line;
+
+                if (counter > 0) {
+                    r += ` (${counter} times)`
+                }
+                r += '\n'
+                r += `   ${line}`;
+                counter = 0;
+            }
             pos = ctx.parentEntryPos;
             ctx = ctx.parent;
         }
+        r += '\n'
+
+        return r;
     }
 }
 

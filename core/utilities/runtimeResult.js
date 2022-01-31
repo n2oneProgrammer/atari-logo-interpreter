@@ -23,6 +23,6 @@ module.exports = class RuntimeResult {
     failure(error) {
         this.reset();
         this.error = error;
-        return this.error;
+        return this;
     }
 };

@@ -1,133 +1,177 @@
- class NumberNode {
-     constructor(token) {
-         this.token = token;
+class NumberNode {
+    constructor(token) {
+        this.token = token;
 
-         this.pos_start = token.pos_start;
-         this.pos_end = token.pos_end;
-     }
- }
+        this.pos_start = token.pos_start;
+        this.pos_end = token.pos_end;
+    }
 
- class ListNode {
-     constructor(nodes, pos_start, pos_end) {
-         this.nodes = nodes;
-         this.pos_start = pos_start;
-         this.pos_end = pos_end;
-     }
- }
- class BinaryOperationNode {
-     constructor(token, left, right) {
-         this.token = token;
-         this.left = left;
-         this.right = right;
+    toString() {
+        return `NumberNode(${this.token.value})`;
+    }
+}
 
-         this.pos_start = left.pos_start;
-         this.pos_end = right.pos_end;
-     }
- }
+class ListNode {
+    constructor(nodes, pos_start, pos_end) {
+        this.nodes = nodes;
+        this.pos_start = pos_start;
+        this.pos_end = pos_end;
+    }
 
- class UnaryOperationNode {
-     constructor(token, right) {
-         this.token = token;
-         this.right = right;
+    toString() {
+        const str = this.nodes.map(node =>
+            node.toString()
+        ).join(', ');
 
-         this.pos_start = token.pos_start;
-         this.pos_end = right.pos_end;
-     }
- }
+        return `ListNode(${str})`;
+    }
+}
+class BinaryOperationNode {
+    constructor(token, left, right) {
+        this.token = token;
+        this.left = left;
+        this.right = right;
 
- class VarNode {
-     constructor(token) {
-         this.token = token;
+        this.pos_start = left.pos_start;
+        this.pos_end = right.pos_end;
+    }
 
-         this.pos_start = token.pos_start;
-         this.pos_end = token.pos_end;
-     }
- }
+    toString() {
+        return `BinaryOperationNode(${this.left.toString()} ${this.token.type} ${this.right.toString()})`;
+    }
+}
 
- class RepeatNode {
-     constructor(numberNode, body) {
-         this.numberNode = numberNode;
-         this.body = body;
+class UnaryOperationNode {
+    constructor(token, right) {
+        this.token = token;
+        this.right = right;
 
-         this.pos_start = numberNode.pos_start;
-         this.pos_end = body.pos_end;
-     }
- }
+        this.pos_start = token.pos_start;
+        this.pos_end = right.pos_end;
+    }
 
- class FunctionNode {
-     constructor(name, args, body) {
-         this.name = name;
-         this.args = args;
-         this.body = body;
+    toString() {
+        return `BinaryOperationNode(${this.right.toString()} ${this.token.value})`;
+    }
+}
 
-         this.pos_start = name.pos_start;
-         this.pos_end = body.pos_end;
-     }
- }
+class VarNode {
+    constructor(token) {
+        this.token = token;
 
- class CallNode {
-     constructor(node, args) {
-         this.node = node;
-         this.args = args;
+        this.pos_start = token.pos_start;
+        this.pos_end = token.pos_end;
+    }
 
-         this.pos_start = node.pos_start;
-         if (args.length > 0) {
-             this.pos_end = args[args.length - 1].pos_end;
-         } else {
-             this.pos_end = node.pos_end;
-         }
-     }
- }
+    toString() {
+        return `VarNode(${this.token.value})`;
+    }
+}
 
- class EdNode {
-     constructor(tokens) {
-         this.tokens = tokens;
+class RepeatNode {
+    constructor(numberNode, body) {
+        this.numberNode = numberNode;
+        this.body = body;
 
-         this.pos_start = tokens[0].pos_start;
-         this.pos_end = tokens[tokens.length - 1].pos_end;
-     }
- }
+        this.pos_start = numberNode.pos_start;
+        this.pos_end = body.pos_end;
+    }
 
- class TellNode {
-     constructor(nodes) {
-         this.nodes = nodes;
+    toString() {
+        return `RepeatNode(${this.numberNode.toString()}: ${this.body.toString()})`;
+    }
+}
 
-         this.pos_start = nodes[0].pos_start;
-         this.pos_end = nodes[nodes.length - 1].pos_end;
-     }
- }
+class FunctionNode {
+    constructor(name, args, body) {
+        this.name = name;
+        this.args = args;
+        this.body = body;
 
- class AskNode {
-     constructor(nodes, body) {
-         this.nodes = nodes;
-         this.body = body;
+        this.pos_start = name.pos_start;
+        this.pos_end = body.pos_end;
+    }
 
-         this.pos_start = nodes[0].pos_start;
-         this.pos_end = body.pos_end;
-     }
- }
+    toString() {
+        const str = this.args.map(arg =>
+            arg.value
+        ).join(', ');
 
- class SaveLoadNode {
-     constructor(token, path) {
-         this.token = token;
-         this.path = path;
+        return `FunctionNode(${this.name.value}[${str}]: ${this.body.toString()})`;
+    }
+}
 
-         this.pos_start = token.pos_start;
-         this.pos_end = path.pos_end;
-     }
- }
+class CallNode {
+    constructor(node, args) {
+        this.node = node;
+        this.args = args;
 
- module.exports = {
-     NumberNode,
-     ListNode,
-     BinaryOperationNode,
-     UnaryOperationNode,
-     VarNode,
-     RepeatNode,
-     FunctionNode,
-     CallNode,
-     EdNode,
-     TellNode,
-     AskNode,
-     SaveLoadNode
- };
+        this.pos_start = node.pos_start;
+        if (args.length > 0) {
+            this.pos_end = args[args.length - 1].pos_end;
+        } else {
+            this.pos_end = node.pos_end;
+        }
+    }
+
+    toString() {
+        const str = this.args.map(arg =>
+            arg.toString()
+        ).join(', ');
+
+        return `CallNode(${this.node.toString()}[${str}])`;
+    }
+}
+
+class EdNode {
+    constructor(tokens) {
+        this.tokens = tokens;
+
+        this.pos_start = tokens[0].pos_start;
+        this.pos_end = tokens[tokens.length - 1].pos_end;
+    }
+}
+
+class TellNode {
+    constructor(nodes) {
+        this.nodes = nodes;
+
+        this.pos_start = nodes[0].pos_start;
+        this.pos_end = nodes[nodes.length - 1].pos_end;
+    }
+}
+
+class AskNode {
+    constructor(nodes, body) {
+        this.nodes = nodes;
+        this.body = body;
+
+        this.pos_start = nodes[0].pos_start;
+        this.pos_end = body.pos_end;
+    }
+}
+
+class SaveLoadNode {
+    constructor(token, path) {
+        this.token = token;
+        this.path = path;
+
+        this.pos_start = token.pos_start;
+        this.pos_end = path.pos_end;
+    }
+}
+
+module.exports = {
+    NumberNode,
+    ListNode,
+    BinaryOperationNode,
+    UnaryOperationNode,
+    VarNode,
+    RepeatNode,
+    FunctionNode,
+    CallNode,
+    EdNode,
+    TellNode,
+    AskNode,
+    SaveLoadNode,
+};

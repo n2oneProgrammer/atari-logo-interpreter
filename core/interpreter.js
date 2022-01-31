@@ -33,7 +33,19 @@ module.exports = class Interpeter {
     visitVarNode(node, context) {
         let res = new RuntimeResult();
         let var_name = node.token.value;
-        let value = context.symbolTable.get(var_name);
+        let value = null
+        try {
+            value = context.symbolTable.get(var_name);
+        } catch (error) {
+            return res.failure(
+                new RuntimeError(
+                    node.pos_start,
+                    node.pos_end,
+                    `Call stack overflow`,
+                    context
+                )
+            );
+        }
         if (value == null) {
             return res.failure(
                 new RuntimeError(
@@ -62,14 +74,14 @@ module.exports = class Interpeter {
 
         let obj = null;
 
-        if (node.operator.type === Token.PLUS) {
+        if (node.token.type === Token.TYPE.PLUS) {
             obj = left.add(right);
-        } else if (node.operator.type === Token.MINUS) {
-            obj = left.subtract(right);
-        } else if (node.operator.type === Token.MUL) {
-            obj = left.multiply(right);
-        } else if (node.operator.type === Token.DIV) {
-            obj = left.divide(right);
+        } else if (node.token.type === Token.TYPE.MINUS) {
+            obj = left.sub(right);
+        } else if (node.token.type === Token.TYPE.MULTIPLY) {
+            obj = left.mul(right);
+        } else if (node.token.type === Token.TYPE.DIVDE) {
+            obj = left.div(right);
         } else {
             return res.failure(
                 new RuntimeError(
@@ -97,7 +109,7 @@ module.exports = class Interpeter {
             let {
                 value,
                 error
-            } = right.multiply(new NumberValue(-1));
+            } = right.mul(new NumberValue(-1));
             if (error) return res.failure(error);
             return res.success(value.setPosition(node.pos_start, node.pos_end));
         } else {

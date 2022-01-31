@@ -3,8 +3,7 @@ const {
     RuntimeError
 } = require('../error');
 const RuntimeResult = require('../utilities/runtimeResult');
-const Interpreter = require('../interpreter');
-console.log(require('../interpreter'));
+
 class BaseFunction extends Value {
     constructor(name) {
         super();
@@ -58,6 +57,7 @@ class FunctionValue extends BaseFunction {
         res.register(this.CheckAndPopulateArgs(this.argNames, args, context));
         if (res.error) return res;
 
+        const Interpreter = require('../interpreter');
         let interpreter = new Interpreter();
         res.register(interpreter.visit(this.body_node, context));
         if (res.error) return res;

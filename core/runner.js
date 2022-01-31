@@ -22,6 +22,8 @@ module.exports = class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
+        console.log(result.node.toString());
+
         let context = new Context("<global>");
         context.symbolTable = globalSymbolTable();
         let interpreter = new Interpreter();
@@ -29,7 +31,7 @@ module.exports = class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
-        console.log(context.symbolTable);
+        //console.log(context.symbolTable);
         return result;
     }
 }
