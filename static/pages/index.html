@@ -5,12 +5,26 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>ALI | index</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<h1>Hello World!</h1>
-We are using Node.js <span id="node-version"></span>,
-Chromium <span id="chrome-version"></span>,
-and Electron <span id="electron-version"></span>.
-<script src="./renderer.js"></script>
+    <main class="container">
+        <section class="canvas"></section>
+        <aside class="aside">
+            <header class="aside__header">
+                <section class="aside__menu">opcje</section>
+                <section class="aside__logo logo">
+                    <i class="logo__signet fas fa-igloo">♫</i>
+                    <span class="logo__logotype">aliapg</span>
+                </section>
+            </header>
+            <section class="aside__terminal"></section>
+            <section class="aside__input-container">
+                <input class="aside__input" type="text">
+            </section>
+        </aside>
+    </main>
 </body>
 </html>
