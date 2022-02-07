@@ -3,7 +3,6 @@
     "version": "0.0.1",
     "description": "",
     "main": "main.js",
-    "type": "module",
     "scripts": {
         "start": "electron .",
         "shell": "node shell.js",
