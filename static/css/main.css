@@ -1,0 +1,53 @@
+@import 'variables.css';
+
+.container {
+  display: flex;
+  height: 100vh
+}
+
+.canvas {
+  flex: 1;
+  background: var(--dark-2)
+}
+
+.aside {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px
+}
+
+.aside__header {
+  display: flex
+}
+
+.aside__menu {
+  flex-grow: 1
+}
+
+.aside__terminal {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: lime
+}
+
+.aside__input-container {
+
+}
+
+.aside__input {
+
+}
+
+.logo {
+
+}
+
+.logo__icon {
+
+}
+
+.logo__signet {
+
+}
