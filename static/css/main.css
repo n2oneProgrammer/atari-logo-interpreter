@@ -7,7 +7,7 @@
 
 .canvas {
   flex: 1;
-  background: var(--dark-2)
+  background: var(--color-dark-2)
 }
 
 .aside {
@@ -21,27 +21,99 @@
   display: flex
 }
 
-.aside__menu {
-  flex-grow: 1
+.aside__options {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: .8rem
+}
+
+.aside__logo {
+  padding: .8rem
+}
+
+.aside__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding-right: .45rem;
+  background: var(--color-dark-2);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: .2s
+}
+
+.aside__toolbar:hover {
+  width: 100%
 }
 
 .aside__terminal {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background: lime
+  position: relative;
+  padding: 1rem;
+  margin: 0 1rem
+}
+
+.aside__terminal-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-y: scroll
+}
+
+.aside__log {
+  text-align: right;
+  font-size: .9rem;
+  font-style: italic;
+  color: rgba(var(--color-light-rgb), .8)
+}
+
+.aside__history {
+  
+}
+
+.aside__logs {
+  display: none
+}
+
+.aside__errors {
+  display: none
+}
+
+.aside__editor {
+  display: none
 }
 
 .aside__input-container {
-
+  padding: 1rem
 }
 
 .aside__input {
-
+  width: 100%;
+  background: none;
+  outline: none;
+  border: none;
+  padding: .5rem 1rem;
+  border-bottom: .3rem solid var(--color-dark-2);
+  background: rgba(var(--color-dark-2-rgb), .1);
+  border-radius: 1rem 1rem 0 0;
+  color: var(--color-light);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-family: var(--font-default)
 }
 
 .logo {
-
+  font-size: 1.5rem;
+  user-select: none;
+  cursor: default
 }
 
 .logo__icon {
