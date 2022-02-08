@@ -1,10 +1,16 @@
 :root {
+  --color-dark-0: #111;
   --color-dark-1: #222831;
   --color-dark-2: #2D4059;
-  --color-dark-2-rgb: 45, 64, 89;
-  --color-accent: #ff5722;
   --color-light: #eee;
+  --color-accent-orange: #ff5722;
+  --color-accent-red: #dc143c;
+
+  --color-dark-1-rgb: 34, 40, 49;
+  --color-dark-2-rgb: 45, 64, 89;
   --color-light-rgb: 238, 238, 238;
+  --color-accent-orange-rgb: 255, 87, 34;
+  --color-accent-red-rgb: 220, 20, 60;
 
   --font-default: sans-serif
 }
