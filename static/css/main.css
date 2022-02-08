@@ -7,11 +7,26 @@
 
 .canvas {
   flex: 1;
-  background: var(--color-dark-2)
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 1rem;
+  margin-left: 1rem
+}
+
+.canvas::before {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  content: '';
+  width: 3px;
+  height: calc(100% - 40px);
+  background: rgba(var(--color-dark-2-rgb), .5)
 }
 
 .aside {
   flex: 1;
+  position: relative;
   display: flex;
   flex-direction: column;
   max-width: 500px
@@ -24,22 +39,20 @@
 .aside__options {
   flex-grow: 1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  padding: .8rem
-}
-
-.aside__logo {
-  padding: .8rem
+  padding: 1rem
 }
 
 .aside__toolbar {
+  position: relative;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 2rem;
+  max-width: 250px;
   height: 2rem;
-  padding-right: .45rem;
+  padding-left: .5rem;
   background: var(--color-dark-2);
   border-radius: 1rem;
   cursor: pointer;
@@ -47,7 +60,45 @@
 }
 
 .aside__toolbar:hover {
-  width: 100%
+  width: 100%;
+  padding-left: .8rem
+}
+
+.aside__toolbar:hover .aside__toolbar-icon {
+  display: block !important
+}
+
+.aside__toolbar:hover > .fa-cog {
+  margin-right: .5rem
+}
+
+.aside__toolbar i {
+  transition: .2s
+}
+
+.aside__toolbar i:not(.aside__toolbar-icon--close):hover {
+  color: var(--color-accent-orange)
+}
+
+.aside__toolbar-icon {
+  display: none !important;
+  margin: 0 .5rem
+}
+
+.aside__toolbar-icon--close {
+  position: absolute;
+  top: 50%;
+  right: .5rem;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: var(--color-accent-orange);
+  cursor: pointer;
+  transition: .2s
+}
+
+.aside__toolbar-icon--close:hover {
+  color: var(--color-accent-red);
+  transform: translateY(-50%) scale(.9)
 }
 
 .aside__terminal {
@@ -63,20 +114,41 @@
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 1rem;
-  border-radius: 1rem;
-  overflow-y: scroll
+  padding: 1rem
 }
 
 .aside__log {
-  text-align: right;
   font-size: .9rem;
   font-style: italic;
-  color: rgba(var(--color-light-rgb), .8)
+  color: rgba(var(--color-light-rgb), .8);
+  line-height: 130%;
+  min-height: 20px
 }
 
 .aside__history {
+  position: relative;
+  overflow-y: scroll
+}
+
+.aside__history::-webkit-scrollbar {
+  width: .6rem
+}
+ 
+.aside__history::-webkit-scrollbar-track {
   
+}
+ 
+.aside__history::-webkit-scrollbar-thumb {
+  background: var(--color-dark-2);
+  border-radius: .3rem
+}
+
+.aside__history-commands {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-height: 100%;
+  padding-right: .8rem
 }
 
 .aside__logs {
@@ -91,35 +163,114 @@
   display: none
 }
 
+.aside__terminal-options {
+  display: flex;
+  justify-content: flex-start;
+  gap: .8rem;
+  margin-top: 2rem;
+  padding: 0 1rem
+}
+
+.aside__terminal-options-button {
+  flex: 1;
+  background: none;
+  outline: none;
+  border: none;
+  padding: .3rem;
+  width: 100%;
+  max-width: 60px;
+  background: rgba(var(--color-dark-2-rgb), .2);
+  border-radius: .5rem;
+  color: var(--color-light);
+  cursor: pointer;
+  transition: .2s
+}
+
+.aside__terminal-options-button:not(.aside__terminal-options-button--active):hover {
+  background: var(--color-dark-2)
+}
+
+.aside__terminal-options-button--active {
+  background: var(--color-accent-orange);
+}
+
 .aside__input-container {
+  display: flex;
+  gap: 1rem;
   padding: 1rem
 }
 
 .aside__input {
-  width: 100%;
+  flex-grow: 1;
   background: none;
   outline: none;
   border: none;
   padding: .5rem 1rem;
   border-bottom: .3rem solid var(--color-dark-2);
-  background: rgba(var(--color-dark-2-rgb), .1);
-  border-radius: 1rem 1rem 0 0;
+  background: rgba(var(--color-dark-2-rgb), .2);
+  border-radius: .5rem;
   color: var(--color-light);
   font-size: 1.1rem;
   font-style: italic;
   font-family: var(--font-default)
 }
 
+.aside__input-confirm {
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: .5rem;
+  width: 100px;
+  padding: .5rem 0;
+  text-transform: uppercase;
+  color: var(--color-light);
+  font-family: var(--font-default);
+  font-weight: 700;
+  background: var(--color-accent-orange);
+  cursor: pointer;
+  transition: .2s
+}
+
+.aside__input-confirm:hover {
+  background: rgba(var(--color-accent-orange-rgb), .6);
+}
+
+.aside__settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: var(--color-dark-1)
+}
+
+.settings__header {
+  justify-content: space-between
+}
+
+.settings__header .fa-xmark {
+  position: absolute;
+  top: 1.25rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: var(--color-accent-orange);
+  cursor: pointer;
+  transition: .2s
+}
+
+.settings__header .fa-xmark:hover {
+  color: var(--color-accent-red);
+  transform: scale(.9)
+}
+
 .logo {
   font-size: 1.5rem;
   user-select: none;
+  padding: 1rem;
   cursor: default
 }
 
-.logo__icon {
-
-}
-
-.logo__signet {
-
+.logo i {
+  color: var(--color-accent-orange)
 }
