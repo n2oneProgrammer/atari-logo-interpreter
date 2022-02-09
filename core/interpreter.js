@@ -185,6 +185,8 @@ module.exports = class Interpeter {
 
     visitEdNode(node, context) {
         throw new Error(`No visit method for ${node.constructor.name}`);
+
+        //TODO: Implement this
     }
 
     visitTellNode(node, context) {
