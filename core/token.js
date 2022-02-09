@@ -28,6 +28,7 @@ module.exports = class Token {
         WHO: "who",
         LOAD: "load",
         SAVE: "save",
+        EACH: "each",
     };
 
     constructor(type, value = null, pos_start = null, pos_end = null) {

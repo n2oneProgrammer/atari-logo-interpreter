@@ -157,6 +157,14 @@ class TellNode {
     }
 }
 
+class EachNode {
+    constructor(body) {
+        this.body = body;
+        this.pos_start = body.pos_start;
+        this.pos_end = body.pos_end;
+    }
+}
+
 class AskNode {
     constructor(nodes, body) {
         this.nodes = nodes;
@@ -190,4 +198,5 @@ module.exports = {
     TellNode,
     AskNode,
     SaveLoadNode,
+    EachNode,
 };

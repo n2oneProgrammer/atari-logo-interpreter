@@ -13,6 +13,7 @@ const {
     AskNode,
     TellNode,
     EdNode,
+    EachNode,
     SaveLoadNode,
 } = require("./node.js");
 const Token = require("./token.js");
@@ -66,6 +67,14 @@ module.exports = class Pareser extends ParserAbstraction {
             res.register_advance();
             this.advance();
             let node = res.register(this.tellExpr());
+            if (res.error !== null) return res;
+            return res.success(node);
+        }
+
+        if (this.current_token.isKeyword(Token.KEYWORDS.EACH)) {
+            res.register_advance();
+            this.advance();
+            let node = res.register(this.eachExpr());
             if (res.error !== null) return res;
             return res.success(node);
         }
@@ -275,12 +284,9 @@ module.exports = class Pareser extends ParserAbstraction {
 
         if (this.current_token.type === Token.TYPE.LSQUARE) {
             let nodes = [];
-            while (true) {
-                res.register_advance();
-                this.advance();
-                if (this.current_token.type === Token.TYPE.RSQUARE) {
-                    break;
-                }
+            res.register_advance();
+            this.advance();
+            while (this.current_token.type !== Token.TYPE.RSQUARE) {
                 if (this.current_token.type === Token.TYPE.EOF) {
                     return res.failure(
                         new ExceptedCharError(
@@ -298,7 +304,6 @@ module.exports = class Pareser extends ParserAbstraction {
 
                 nodes.push(expr);
             }
-
             return res.success(new TellNode(nodes));
         } else {
             let expr = res.register(this.expression());
@@ -476,5 +481,36 @@ module.exports = class Pareser extends ParserAbstraction {
         }
 
         return res.success(new SaveLoadNode(t, this.current_token));
+    }
+
+    eachExpr() {
+        let res = new ParserResult();
+
+        if (this.current_token.type !== Token.TYPE.LSQUARE) {
+            return res.failure(
+                new ExceptedCharError(
+                    this.current_token.pos_start,
+                    this.current_token.pos_end,
+                    "["
+                )
+            );
+        }
+        res.register_advance();
+        this.advance();
+
+        let body = res.register(this.statments());
+        if (res.error !== null) return res;
+
+        if (this.current_token.type !== Token.TYPE.RSQUARE) {
+            return res.failure(
+                new ExceptedCharError(
+                    this.current_token.pos_start,
+                    this.current_token.pos_end,
+                    "]"
+                )
+            );
+        }
+
+        return res.success(new EachNode(body));
     }
 };
