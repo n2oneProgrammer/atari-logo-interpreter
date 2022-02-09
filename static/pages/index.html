@@ -24,33 +24,33 @@
             <i id="bt-download" class="aside__toolbar-icon fa-solid fa-download"></i>
             <i id="bt-save" class="aside__toolbar-icon fa-solid fa-floppy-disk"></i>
             <i id="bt-upload" class="aside__toolbar-icon fa-solid fa-upload"></i>
-            <i id="bt-close" class="aside__toolbar-icon aside__toolbar-icon--close fa-solid fa-xmark"></i>
+            <i class="aside__toolbar-icon aside__toolbar-icon--circle fa-solid fa-thumbtack"></i>
           </div>
         </section>
       </header>
       <section class="aside__terminal">
-        <section class="aside__terminal-section aside__history">
+        <section id="section-history" class="aside__terminal-section aside__history">
           <section class="aside__history-commands">
             <p class="aside__log">REPEAT 4 [FD 10 RT 90]</p>
             <p class="aside__log"></p>
           </section>
         </section>
-        <section class="aside__terminal-section aside__logs"></section>
-        <section class="aside__terminal-section aside__errors"></section>
-        <section class="aside__terminal-section aside__editor"></section>
+        <section id="section-logs" class="aside__terminal-section aside__logs">logi</section>
+        <section id="section-errors" class="aside__terminal-section aside__errors">błędy</section>
+        <section id="section-editor" class="aside__terminal-section aside__editor">edytor</section>
       </section>
       <section class="aside__terminal-options">
-        <button class="aside__terminal-options-button aside__terminal-options-button--active">
-          <i class="fa-solid fa-clock-rotate-left"></i>
+        <button id="bt-history" class="aside__terminal-options-button aside__terminal-options-button--active">
+          <i  class="fa-solid fa-clock-rotate-left"></i>
         </button>
-        <button class="aside__terminal-options-button">
-          <i class="fa-solid fa-pen-to-square"></i>
+        <button id="bt-editor" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-pen-to-square"></i>
         </button>
-        <button class="aside__terminal-options-button">
-          <i class="fa-solid fa-list"></i>
+        <button id="bt-logs" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-list"></i>
         </button>
-        <button class="aside__terminal-options-button">
-          <i class="fa-solid fa-circle-exclamation"></i>
+        <button id="bt-errors" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-circle-exclamation"></i>
         </button>
       </section>
       <section class="aside__input-container">
@@ -74,6 +74,6 @@
     </aside>
     <section class="canvas"></section>
   </main>
-  <script src="../js/main.js"></script>
+  <script src="../js/Main.js" type="module"></script>
 </body>
 </html>
