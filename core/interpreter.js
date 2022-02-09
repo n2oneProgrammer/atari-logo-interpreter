@@ -7,10 +7,9 @@ const {
 } = require("./values/function");
 const NumberValue = require("./values/number");
 const RuntimeResult = require("./utilities/runtimeResult");
-const fs = require('fs');
+const fs = require("fs");
 
 module.exports = class Interpeter {
-
     constructor(objcts) {
         this.objcts = objcts;
     }
@@ -39,7 +38,7 @@ module.exports = class Interpeter {
     visitVarNode(node, context) {
         let res = new RuntimeResult();
         let var_name = node.token.value;
-        let value = null
+        let value = null;
         try {
             value = context.symbolTable.get(var_name);
         } catch (error) {
@@ -156,9 +155,11 @@ module.exports = class Interpeter {
 
         let name = node.name.value;
         let body = node.body;
-        let agrs_names = node.args.map(arg => arg.value);
+        let agrs_names = node.args.map((arg) => arg.value);
 
-        let func = new FunctionValue(name, body, agrs_names, node.getContent()).setPosition(node.pos_start, node.pos_end).setContext(context);
+        let func = new FunctionValue(name, body, agrs_names, node.getContent())
+            .setPosition(node.pos_start, node.pos_end)
+            .setContext(context);
         context.symbolTable.set(name, func);
 
         return res.success(null);
@@ -173,7 +174,7 @@ module.exports = class Interpeter {
         func = func.copy().setPosition(node.pos_start, node.pos_end);
 
         for (let i = 0; i < node.args.length; i++) {
-            let value = res.register(this.visit(node.args[i], context))
+            let value = res.register(this.visit(node.args[i], context));
             args.push(value);
             if (res.error) return res;
         }
@@ -193,11 +194,11 @@ module.exports = class Interpeter {
         let res = new RuntimeResult();
         let turtles = [];
         for (let i = 0; i < node.nodes.length; i++) {
-            let value = res.register(this.visit(node.nodes[i], context))
+            let value = res.register(this.visit(node.nodes[i], context));
             if (res.error) return res;
 
             if (!this.objcts.isTurtle(value.value)) {
-                this.objcts.addTurtle(value.value)
+                this.objcts.addTurtle(value.value);
             }
             turtles.push(value.value);
         }
@@ -209,33 +210,33 @@ module.exports = class Interpeter {
 
     visitEachNode(node, context) {
         let res = new RuntimeResult();
-        const ids = context.symbolTable.get("$who").data
+        const ids = context.symbolTable.get("$who").data;
         for (let i = 0; i < ids.length; i++) {
-            context.symbolTable.setWho(ids[i])
-            res.register(this.visit(node.body, context))
+            context.symbolTable.setWho(ids[i]);
+            res.register(this.visit(node.body, context));
             if (res.error) return res;
         }
-        context.symbolTable.setWho(ids)
+        context.symbolTable.setWho(ids);
         return res.success(null);
     }
 
     visitAskNode(node, context) {
         let res = new RuntimeResult();
-        const prevIds = context.symbolTable.get("$who").data
+        const prevIds = context.symbolTable.get("$who").data;
 
         for (let i = 0; i < node.nodes.length; i++) {
-            let value = res.register(this.visit(node.nodes[i], context))
+            let value = res.register(this.visit(node.nodes[i], context));
             if (res.error) return res;
 
             if (!this.objcts.isTurtle(value.value)) {
-                this.objcts.addTurtle(value.value)
+                this.objcts.addTurtle(value.value);
             }
 
-            context.symbolTable.setWho(value.value)
-            res.register(this.visit(node.body, context))
+            context.symbolTable.setWho(value.value);
+            res.register(this.visit(node.body, context));
             if (res.error) return res;
         }
-        context.symbolTable.setWho(prevIds)
+        context.symbolTable.setWho(prevIds);
         return res.success(null);
     }
 
@@ -243,7 +244,7 @@ module.exports = class Interpeter {
         let res = new RuntimeResult();
         if (node.token.isKeyword(Token.KEYWORDS.SAVE)) {
             let txt = "";
-            const funcs = context.symbolTable.getAllFunc()
+            const funcs = context.symbolTable.getAllFunc();
             for (let i = 0; i < funcs.length; i++) {
                 if (funcs.text !== null) {
                     txt += funcs[i].text + "\n\n";
@@ -252,22 +253,42 @@ module.exports = class Interpeter {
             try {
                 fs.writeFileSync(node.path.value, txt);
             } catch (e) {
-                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found! \n     ${e}`, context));
+                return res.failure(
+                    new RuntimeError(
+                        node.pos_start,
+                        node.pos_end,
+                        `File ${node.path.value} not found! \n     ${e}`,
+                        context
+                    )
+                );
             }
-            return res.success(null)
+            return res.success(null);
         } else if (node.token.isKeyword(Token.KEYWORDS.LOAD)) {
             let txt;
             try {
                 txt = fs.readFileSync(node.path.value, "utf-8");
             } catch (e) {
-                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found! \n     ${e}`, context));
+                return res.failure(
+                    new RuntimeError(
+                        node.pos_start,
+                        node.pos_end,
+                        `File ${node.path.value} not found! \n     ${e}`,
+                        context
+                    )
+                );
             }
             const Runner = require("./runner");
-            let r = new Runner(node.path.value).run(txt)
+            let r = new Runner(node.path.value).run(txt);
             if (r.error) return r;
-            return res.success(null)
+            return res.success(null);
         }
-        return res.failure(new RuntimeError(node.pos_start, node.pos_end, "Not implemented yet", context));
-
+        return res.failure(
+            new RuntimeError(
+                node.pos_start,
+                node.pos_end,
+                "Not implemented yet",
+                context
+            )
+        );
     }
 };

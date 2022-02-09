@@ -8,7 +8,9 @@ class CustomError {
 
     toString() {
         let r = `⚠  ${this.error_name}: ${this.desc}\n`;
-        r += `   In ${this.pos_start.fn}, at line ${this.pos_start.line + 1}, char: ${this.pos_start.column + 1}\n`;
+        r += `   In ${this.pos_start.fn}, at line ${
+      this.pos_start.line + 1
+    }, char: ${this.pos_start.column + 1}\n`;
         r += this.stringWithArrows();
         return r;
     }
@@ -70,9 +72,8 @@ class RuntimeError extends CustomError {
     }
 
     toString() {
-
         let r = `⚠  ${this.error_name}: ${this.desc}\n`;
-        r += `   For turtle with id ${this.context.symbolTable.get('$who').data}`
+        r += `   For turtle with id ${this.context.symbolTable.get("$who").data}`;
         r += this.generateCtx();
         r += this.stringWithArrows();
         return r;
@@ -83,27 +84,29 @@ class RuntimeError extends CustomError {
         let pos = this.pos_start;
         let ctx = this.context;
 
-        let lastLine = ""
+        let lastLine = "";
         let counter = 0;
 
         while (ctx != null) {
-            let line = `In ${pos.fn} in ${ctx.displayName} at line ${pos.line + 1}, char: ${pos.column + 1}`
+            let line = `In ${pos.fn} in ${ctx.displayName} at line ${
+        pos.line + 1
+      }, char: ${pos.column + 1}`;
             if (lastLine == line) {
                 counter++;
             } else {
                 lastLine = line;
 
                 if (counter > 0) {
-                    r += ` (${counter} times)`
+                    r += ` (${counter} times)`;
                 }
-                r += '\n'
+                r += "\n";
                 r += `   ${line}`;
                 counter = 0;
             }
             pos = ctx.parentEntryPos;
             ctx = ctx.parent;
         }
-        r += '\n'
+        r += "\n";
 
         return r;
     }
@@ -113,5 +116,5 @@ module.exports = {
     IllegalCharError,
     ExceptedCharError,
     InvalidSyntaxError,
-    RuntimeError
+    RuntimeError,
 };
