@@ -7,6 +7,7 @@ const {
 } = require("./values/function");
 const NumberValue = require("./values/number");
 const RuntimeResult = require("./utilities/runtimeResult");
+const fs = require('fs');
 
 module.exports = class Interpeter {
 
@@ -157,7 +158,7 @@ module.exports = class Interpeter {
         let body = node.body;
         let agrs_names = node.args.map(arg => arg.value);
 
-        let func = new FunctionValue(name, body, agrs_names).setPosition(node.pos_start, node.pos_end).setContext(context);
+        let func = new FunctionValue(name, body, agrs_names, node.getContent()).setPosition(node.pos_start, node.pos_end).setContext(context);
         context.symbolTable.set(name, func);
 
         return res.success(null);
@@ -189,14 +190,12 @@ module.exports = class Interpeter {
     visitTellNode(node, context) {
         let res = new RuntimeResult();
         let turtles = [];
-        const currentId = context.symbolTable.get("$who").value
-
         for (let i = 0; i < node.nodes.length; i++) {
             let value = res.register(this.visit(node.nodes[i], context))
             if (res.error) return res;
 
             if (!this.objcts.isTurtle(value.value)) {
-                this.objcts.addTurtle(value.value, currentId)
+                this.objcts.addTurtle(value.value)
             }
             turtles.push(value.value);
         }
@@ -219,10 +218,45 @@ module.exports = class Interpeter {
     }
 
     visitAskNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+        const prevIds = context.symbolTable.get("$who").data
+
+        for (let i = 0; i < node.nodes.length; i++) {
+            let value = res.register(this.visit(node.nodes[i], context))
+            if (res.error) return res;
+
+            if (!this.objcts.isTurtle(value.value)) {
+                this.objcts.addTurtle(value.value)
+            }
+
+            context.symbolTable.setWho(value.value)
+            res.register(this.visit(node.body, context))
+            if (res.error) return res;
+        }
+        context.symbolTable.setWho(prevIds)
+        return res.success(null);
     }
 
     visitSaveLoadNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+        if (node.token.isKeyword(Token.KEYWORDS.SAVE)) {
+            let txt = "";
+            const funcs = context.symbolTable.getAllFunc()
+            for (let i = 0; i < funcs.length; i++) {
+                if (funcs.text !== null) {
+                    txt += funcs[i].text + "\n\n";
+                }
+            }
+            try {
+                fs.writeFileSync(node.path.value, txt);
+            } catch (e) {
+                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found \n     ${e}`, context));
+            }
+            return res.success(null)
+        } else if (node.token.isKeyword(Token.KEYWORDS.LOAD)) {
+            //TODO: load
+        }
+        return res.failure(new RuntimeError(node.pos_start, node.pos_end, "Not implemented yet", context));
+
     }
 };

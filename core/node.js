@@ -90,6 +90,11 @@ class FunctionNode {
 
         this.pos_start = name.pos_start;
         this.pos_end = body.pos_end;
+        console.log(this.getContent());
+    }
+
+    getContent() {
+        return "TO " + this.pos_end.ftext.slice(this.pos_start.id, this.pos_end.id);
     }
 
     toString() {
@@ -179,7 +184,7 @@ class AskNode {
     }
     toString() {
         const str = this.nodes.map(n =>
-            n.value
+            n.toString()
         ).join(', ');
 
         return `AskNode([${str}]: ${this.body.toString()})`;

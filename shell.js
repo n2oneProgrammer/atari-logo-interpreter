@@ -10,7 +10,7 @@ class Shell {
 
     shell() {
         //TODO: Remove debug
-        this.execute("TELL [4+5 2 1] EACH[TELL WHO]");
+        this.execute("TO func :xd :cos RT :xd FW 100 LR FW 100 END SAVE /a");
         return;
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);

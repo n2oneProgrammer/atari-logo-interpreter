@@ -1,4 +1,7 @@
 const WhoValue = require('./values/who');
+const {
+    BaseFunction
+} = require('./values/function');
 
 module.exports = class SymbolTable {
     constructor(parent = null) {
@@ -16,6 +19,19 @@ module.exports = class SymbolTable {
         }
 
         return null;
+    }
+
+    getAllFunc() {
+        if (this.parent != null) {
+            return this.parent.getAllFunc();
+        }
+        let funcs = [];
+        for (const [key, value] of Object.entries(this.symbols)) {
+            if (value instanceof BaseFunction) {
+                funcs.push(value);
+            }
+        }
+        return funcs;
     }
 
     set(name, value) {

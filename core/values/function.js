@@ -42,10 +42,15 @@ class BaseFunction extends Value {
 
 }
 class FunctionValue extends BaseFunction {
-    constructor(name, body_node, argNames) {
+    constructor(name, body_node, argNames, text) {
         super(name);
         this.body_node = body_node;
         this.argNames = argNames;
+        this.text = text;
+    }
+
+    toString() {
+        return `<${this.text}>`;
     }
 
     copy() {

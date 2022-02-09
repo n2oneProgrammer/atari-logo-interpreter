@@ -328,9 +328,9 @@ module.exports = class Pareser extends ParserAbstraction {
         }
 
         let nodes = [];
+        res.register_advance();
+        this.advance();
         while (this.current_token.type !== Token.TYPE.RSQUARE) {
-            res.register_advance();
-            this.advance();
             if (this.current_token.type === Token.TYPE.EOF) {
                 return res.failure(
                     new ExceptedCharError(
