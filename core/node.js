@@ -1,3 +1,5 @@
+const Token = require("./token");
+
 class NumberNode {
     constructor(token) {
         this.token = token;
@@ -200,7 +202,12 @@ class SaveLoadNode {
         this.pos_end = path.pos_end;
     }
     toString() {
-        return `${this.token.value}( ${this.path})`;
+        if (this.token.isKeyword(Token.KEYWORDS.SAVE)) {
+            return `SaveNode("${this.path.value}")`;
+        } else {
+            return `LoadNode("${this.path.value}")`;
+
+        }
     }
 }
 

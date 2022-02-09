@@ -250,11 +250,20 @@ module.exports = class Interpeter {
             try {
                 fs.writeFileSync(node.path.value, txt);
             } catch (e) {
-                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found \n     ${e}`, context));
+                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found! \n     ${e}`, context));
             }
             return res.success(null)
         } else if (node.token.isKeyword(Token.KEYWORDS.LOAD)) {
-            //TODO: load
+            let txt;
+            try {
+                txt = fs.readFileSync(node.path.value, "utf-8");
+            } catch (e) {
+                return res.failure(new RuntimeError(node.pos_start, node.pos_end, `File ${node.path.value} not found! \n     ${e}`, context));
+            }
+            const Runner = require("./runner");
+            let r = new Runner(node.path.value).run(txt)
+            if (r.error) return r;
+            return res.success(null)
         }
         return res.failure(new RuntimeError(node.pos_start, node.pos_end, "Not implemented yet", context));
 
