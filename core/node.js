@@ -163,6 +163,10 @@ class EachNode {
         this.pos_start = body.pos_start;
         this.pos_end = body.pos_end;
     }
+
+    toString() {
+        return `EachNode(${this.body.toString()})`;
+    }
 }
 
 class AskNode {
@@ -173,6 +177,13 @@ class AskNode {
         this.pos_start = nodes[0].pos_start;
         this.pos_end = body.pos_end;
     }
+    toString() {
+        const str = this.nodes.map(n =>
+            n.value
+        ).join(', ');
+
+        return `AskNode([${str}]: ${this.body.toString()})`;
+    }
 }
 
 class SaveLoadNode {
@@ -182,6 +193,9 @@ class SaveLoadNode {
 
         this.pos_start = token.pos_start;
         this.pos_end = path.pos_end;
+    }
+    toString() {
+        return `${this.token.value}( ${this.path})`;
     }
 }
 

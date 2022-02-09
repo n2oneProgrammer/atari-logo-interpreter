@@ -17,6 +17,9 @@ module.exports = class NumberValue extends Value {
         return copy;
     }
 
+    toString() {
+        return `[${this.value}]`;
+    }
 
     isNumber() {
         return true;

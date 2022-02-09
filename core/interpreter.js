@@ -143,7 +143,7 @@ module.exports = class Interpeter {
         for (let i = 0; i < times.value; i++) {
             context.symbolTable.set("i", new NumberValue(i));
 
-            res.register(this.visit(node.blockNode, context));
+            res.register(this.visit(node.body, context));
             if (res.error) return res;
         }
 
@@ -203,6 +203,18 @@ module.exports = class Interpeter {
 
         context.symbolTable.setWho(turtles);
 
+        return res.success(null);
+    }
+
+    visitEachNode(node, context) {
+        let res = new RuntimeResult();
+        const ids = context.symbolTable.get("$who").data
+        for (let i = 0; i < ids.length; i++) {
+            context.symbolTable.setWho(ids[i])
+            res.register(this.visit(node.body, context))
+            if (res.error) return res;
+        }
+        context.symbolTable.setWho(ids)
         return res.success(null);
     }
 

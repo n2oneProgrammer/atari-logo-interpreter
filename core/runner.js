@@ -34,7 +34,7 @@ module.exports = class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
-        console.log(context.symbolTable);
+        console.log(context.symbolTable.toString());
         return result;
     }
 }

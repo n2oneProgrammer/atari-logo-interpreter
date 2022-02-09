@@ -10,6 +10,11 @@ class BaseFunction extends Value {
         this.name = name;
     }
 
+    toString() {
+        return `<${this.name}>`;
+    }
+
+
     CheckArgs(argNames, args) {
         let res = new RuntimeResult();
         if (args.length !== argNames.length) {

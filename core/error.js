@@ -71,7 +71,8 @@ class RuntimeError extends CustomError {
 
     toString() {
 
-        let r = `⚠  ${this.error_name}: ${this.desc}`;
+        let r = `⚠  ${this.error_name}: ${this.desc}\n`;
+        r += `   For turtle with id ${this.context.symbolTable.get('$who').data}`
         r += this.generateCtx();
         r += this.stringWithArrows();
         return r;

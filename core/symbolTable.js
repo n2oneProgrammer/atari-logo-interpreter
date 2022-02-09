@@ -32,4 +32,13 @@ module.exports = class SymbolTable {
     remove(name) {
         delete this.symbols[name];
     }
-};
+
+    toString() {
+        let r = "Symbol Table:\n";
+        for (const [key, value] of Object.entries(this.symbols)) {
+            r += `  ${key}: ${value.toString()}\n`;
+        }
+        return r;
+    }
+
+}

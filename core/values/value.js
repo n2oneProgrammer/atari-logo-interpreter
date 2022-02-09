@@ -33,6 +33,10 @@ module.exports = class Value {
         );
     }
 
+    toString() {
+        return `[${this.constructor.name}]`;
+    }
+
     isNumber() {
         return false;
     }

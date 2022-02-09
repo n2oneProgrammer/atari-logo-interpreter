@@ -8,8 +8,15 @@ module.exports = class WhoValue extends Value {
 
     constructor(data) {
         super();
+        if (!Array.isArray(data)) {
+            data = [data];
+        }
         this.data = data;
         this.value = data[0];
+    }
+
+    toString() {
+        return `[${this.data}]`;
     }
 
     copy() {
