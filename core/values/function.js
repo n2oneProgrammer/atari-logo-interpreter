@@ -3,13 +3,17 @@ const {
     RuntimeError
 } = require('../error');
 const RuntimeResult = require('../utilities/runtimeResult');
-const Interpreter = require('../interpreter');
 
 class BaseFunction extends Value {
     constructor(name) {
         super();
         this.name = name;
     }
+
+    toString() {
+        return `<${this.name}>`;
+    }
+
 
     CheckArgs(argNames, args) {
         let res = new RuntimeResult();
@@ -38,10 +42,15 @@ class BaseFunction extends Value {
 
 }
 class FunctionValue extends BaseFunction {
-    constructor(name, body_node, argNames) {
+    constructor(name, body_node, argNames, text) {
         super(name);
         this.body_node = body_node;
         this.argNames = argNames;
+        this.text = text;
+    }
+
+    toString() {
+        return `<${this.text}>`;
     }
 
     copy() {
@@ -58,6 +67,7 @@ class FunctionValue extends BaseFunction {
         res.register(this.CheckAndPopulateArgs(this.argNames, args, context));
         if (res.error) return res;
 
+        const Interpreter = require('../interpreter');
         let interpreter = new Interpreter();
         res.register(interpreter.visit(this.body_node, context));
         if (res.error) return res;
@@ -68,5 +78,5 @@ class FunctionValue extends BaseFunction {
 
 module.exports = {
     BaseFunction,
-    Function: FunctionValue
+    FunctionValue
 };

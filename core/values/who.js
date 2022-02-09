@@ -2,27 +2,32 @@ const {
     RuntimeError
 } = require('../error');
 const Value = require('./value');
+const NumberValue = require('./number');
 
-module.exports = class NumberValue extends Value {
+module.exports = class WhoValue extends Value {
 
-    constructor(value) {
+    constructor(data) {
         super();
-        this.value = value;
+        if (!Array.isArray(data)) {
+            data = [data];
+        }
+        this.data = data;
+        this.value = data[0];
+    }
+
+    toString() {
+        return `[${this.data}]`;
     }
 
     copy() {
-        let copy = new NumberValue(this.value);
+        let copy = new WhoValue(this.data);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;
     }
 
-    toString() {
-        return `[${this.value}]`;
-    }
-
     isNumber() {
-        return true;
+        return this.data.length === 1;
     }
 
     add(other) {

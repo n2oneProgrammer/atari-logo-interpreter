@@ -1,58 +1,62 @@
 # Grammar
 
-- __statements__:
-    __statement__*
+- **statements**:
+  **statement**\*
 
-- __statement__:
-    IDENTIFIER __expression__*?  
-    __repeat-expr__  
-    __func-def__  
-    __ed-expr__  
-    __tell-expr__  
-    __ask-expr__  
-    __save-load-expr__
-  
-- __expression__:  
-    __term__ ((PLUS|MINUS) __term__)*?
+- **statement**:
+  IDENTIFIER **expression**\*?  
+   **repeat-expr**  
+   **func-def**  
+   **ed-expr**  
+   **tell-expr**  
+   **ask-expr**  
+   **save-load-expr**
+  **each**
 
-- __term__:   
-    __factor__ ((MUL|DIV) __factor__)*?
+- **expression**:  
+   **term** ((PLUS|MINUS) **term**)\*?
 
-- __factor__:     
-    (PLUS|MINUS)? __factor__   
-    __atom__
+- **term**:  
+   **factor** ((MUL|DIV) **factor**)\*?
 
-- __atom__:  
-    INT   
-    COLON IDENTIFIER  
-    LPAREN __expr__ RPAREN  
-    KEWORD:WHO
+- **factor**:  
+   (PLUS|MINUS)? **factor**  
+   **atom**
 
-- __ed-expr__:  
-    KEYWORD:ED IDENTIFIER  
-    KEYWORD:ED LSQUARE IDENTIFIER* RSQUARE
+- **atom**:  
+   INT  
+   COLON IDENTIFIER  
+   LPAREN **expr** RPAREN  
+   KEWORD:WHO
 
-- __tell-expr__:  
-    KEYWORD:TELL __expr__  
-    KEYWORD:TELL LSQUARE __expr__* RSQUARE
+- **ed-expr**:  
+   KEYWORD:ED IDENTIFIER  
+   KEYWORD:ED LSQUARE IDENTIFIER\* RSQUARE
 
-- __ask-expr__:  
-    KEYWORD:ASK LSQUARE __expr__* RSQUARE LSQUARE __statments__ RSQUARE
+- **tell-expr**:  
+   KEYWORD:TELL **expr**  
+   KEYWORD:TELL LSQUARE **expr**\* RSQUARE
 
-- __repeat-expr__:  
-    KEYWORD:REPEAT __expression__ LSQUARE __statements__ RSQUARE
+- **ask-expr**:  
+   KEYWORD:ASK LSQUARE **expr**\* RSQUARE LSQUARE **statments** RSQUARE
 
-- __func-def__:  
-    KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)*? __statements__ KEYWORD:END
+- **repeat-expr**:  
+   KEYWORD:REPEAT **expression** LSQUARE **statements** RSQUARE
 
-- __save-load-expr__
-    (KEYWORD:SAVE|KEYWORD:LOAD) PATH
+- **func-def**:  
+   KEYWORD:TO IDENTIFIER (COLON IDENTIFIER)\*? **statements** KEYWORD:END
 
+- **save-load-expr**
+  (KEYWORD:SAVE|KEYWORD:LOAD) PATH
+
+- **each**
+  KEYWORD:EACH LSQUARE **statments** RSQUARE
 
 ## Legend
+
 - `?` - optional
 - `\` - one or more
 - `|` - this or this
 - CAPITAL - token
-- __bold__ - other module
-- Code starts at module __statements__
+- **bold** - other module
+- Code starts at module **statements**

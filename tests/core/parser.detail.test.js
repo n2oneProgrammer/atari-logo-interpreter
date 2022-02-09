@@ -11,7 +11,8 @@ const {
     SaveLoadNode,
     FunctionNode,
     CallNode,
-    AskNode
+    AskNode,
+    EachNode
 } = require('../../core/node');
 
 
@@ -115,6 +116,15 @@ describe('Parser Detail', () => {
         expect(parser.node).toBeInstanceOf(ListNode);
         expect(parser.node.nodes.length).toBe(2);
         expect(parser.node.nodes[0]).toBeInstanceOf(AskNode);
+    });
+
+    it("WHO", () => {
+        let result = new Lexer("test", "EACH [FUNC 10] FW 100").run();
+        let parser = new Parser(result.tokens).run();
+        expect(parser).toBeInstanceOf(ParserResult);
+        expect(parser.node).toBeInstanceOf(ListNode);
+        expect(parser.node.nodes.length).toBe(2);
+        expect(parser.node.nodes[0]).toBeInstanceOf(EachNode);
     });
 
 

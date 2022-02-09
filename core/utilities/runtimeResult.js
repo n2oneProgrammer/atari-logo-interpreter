@@ -17,12 +17,12 @@ module.exports = class RuntimeResult {
     success(value) {
         this.reset();
         this.value = value;
-        return this.value;
+        return this;
     }
 
     failure(error) {
         this.reset();
         this.error = error;
-        return this.error;
+        return this;
     }
 };

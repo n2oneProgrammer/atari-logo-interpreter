@@ -9,7 +9,7 @@ module.exports = class Context {
     }
 
     generateNewSymbolTable(name, pos_start = null) {
-        newContext = new Context(name, this, pos_start === null ? this.parentEntryPos : pos_start);
+        let newContext = new Context(name, this, pos_start === null ? this.parentEntryPos : pos_start);
         newContext.symbolTable = new SymbolTable(newContext.parent.symbolTable);
         return newContext;
     }

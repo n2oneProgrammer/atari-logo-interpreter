@@ -33,6 +33,14 @@ module.exports = class Value {
         );
     }
 
+    toString() {
+        return `[${this.constructor.name}]`;
+    }
+
+    isNumber() {
+        return false;
+    }
+
     copy() {
         throw new Error(`No copy method defined`);
     }
