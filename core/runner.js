@@ -3,7 +3,10 @@ const Parser = require("./parser.js");
 const TokenPrinter = require("./tools/tokenPrinter.js");
 const Context = require("./context.js");
 const Interpreter = require("./interpreter.js");
-const globalSymbolTable = require("./utilities/globalSymbolTable.js");
+const {
+    globalSymbolTable,
+    interpreterObjects
+} = require("./utilities/globalSymbolTable.js");
 
 module.exports = class Runner {
     constructor(fn) {
@@ -26,12 +29,12 @@ module.exports = class Runner {
 
         let context = new Context("<global>");
         context.symbolTable = globalSymbolTable();
-        let interpreter = new Interpreter();
+        let interpreter = new Interpreter(interpreterObjects());
         result = interpreter.visit(result.node, context);
         if (result.error !== null) {
             return result.error.toString();
         }
-        //console.log(context.symbolTable);
+        console.log(context.symbolTable);
         return result;
     }
 }

@@ -9,6 +9,11 @@ const NumberValue = require("./values/number");
 const RuntimeResult = require("./utilities/runtimeResult");
 
 module.exports = class Interpeter {
+
+    constructor(objcts) {
+        this.objcts = objcts;
+    }
+
     visit(node, context) {
         let func = this[`visit${node.constructor.name}`];
         if (func) {
@@ -182,7 +187,23 @@ module.exports = class Interpeter {
     }
 
     visitTellNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+        let turtles = [];
+        const currentId = context.symbolTable.get("$who").value
+
+        for (let i = 0; i < node.nodes.length; i++) {
+            let value = res.register(this.visit(node.nodes[i], context))
+            if (res.error) return res;
+
+            if (!this.objcts.isTurtle(value.value)) {
+                this.objcts.addTurtle(value.value, currentId)
+            }
+            turtles.push(value.value);
+        }
+
+        context.symbolTable.setWho(turtles);
+
+        return res.success(null);
     }
 
     visitAskNode(node, context) {

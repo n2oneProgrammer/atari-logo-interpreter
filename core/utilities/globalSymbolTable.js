@@ -1,9 +1,16 @@
 const SymbolTable = require('../symbolTable');
-const NumberValue = require('../values/number');
+const WhoValue = require('../values/who');
+const InterpereterObjects = require('../interpereterObjects');
 
 let table = new SymbolTable();
-table.set("$who", new NumberValue(0));
+table.set("$who", new WhoValue([0]));
+let interpreterObjects = new InterpereterObjects();
 
-module.exports = function globalSymbolTable() {
-    return table
-};
+module.exports = {
+    globalSymbolTable() {
+        return table;
+    },
+    interpreterObjects() {
+        return interpreterObjects;
+    }
+}

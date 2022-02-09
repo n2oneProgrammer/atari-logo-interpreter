@@ -130,6 +130,14 @@ class EdNode {
         this.pos_start = tokens[0].pos_start;
         this.pos_end = tokens[tokens.length - 1].pos_end;
     }
+
+    toString() {
+        const str = this.tokens.map(token =>
+            token.value
+        ).join(', ');
+
+        return `EdNode(${str})`;
+    }
 }
 
 class TellNode {
@@ -138,6 +146,14 @@ class TellNode {
 
         this.pos_start = nodes[0].pos_start;
         this.pos_end = nodes[nodes.length - 1].pos_end;
+    }
+
+    toString() {
+        const str = this.nodes.map(node =>
+            node.toString()
+        ).join(', ');
+
+        return `TellNode(${str})`;
     }
 }
 

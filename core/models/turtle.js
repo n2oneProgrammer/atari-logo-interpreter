@@ -9,6 +9,10 @@ module.exports = class Turtle {
         this.visible = true;
     }
 
+    copy(id) {
+        return new Turtle(id, this.x, this.y, this.rotation);
+    }
+
     forward(distance) {}
     backward(distance) {}
     right(angle) {}

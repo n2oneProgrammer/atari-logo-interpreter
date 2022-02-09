@@ -33,6 +33,10 @@ module.exports = class Value {
         );
     }
 
+    isNumber() {
+        return false;
+    }
+
     copy() {
         throw new Error(`No copy method defined`);
     }

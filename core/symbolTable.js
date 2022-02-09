@@ -1,3 +1,5 @@
+const WhoValue = require('./values/who');
+
 module.exports = class SymbolTable {
     constructor(parent = null) {
         this.symbols = {};
@@ -18,6 +20,13 @@ module.exports = class SymbolTable {
 
     set(name, value) {
         this.symbols[name] = value;
+    }
+
+    setWho(value) {
+        if (this.parent != null) {
+            this.parent.setWho(value);
+        }
+        this.set("$who", new WhoValue(value));
     }
 
     remove(name) {

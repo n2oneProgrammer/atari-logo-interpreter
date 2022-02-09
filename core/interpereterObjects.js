@@ -6,7 +6,7 @@ module.exports = class InterpereterObjects {
         this.turtles = [];
         this.pens = [];
         this.createPens();
-        this.createTurtle(0, 0, 0);
+        this.createTurtle(0, 0, 0, 0);
     }
 
     createPens() {
@@ -15,8 +15,21 @@ module.exports = class InterpereterObjects {
         }
     }
 
-    createTurtle(x, y, rotation) {
-        this.turtles[this.turtles.length] = new Turtle(this.turtles.length, x, y, rotation);
-        return this.turtles[this.turtles.length];
+    createTurtle(id, x, y, rotation) {
+        this.turtles[this.turtles.length] = new Turtle(id, x, y, rotation);
+        return this.turtles[this.turtles.length - 1];
+    }
+
+    isTurtle(id) {
+        return this.turtles.filter(turtle => turtle.id === id).length > 0;
+    }
+
+    getTurtle(id) {
+        return this.turtles.filter(turtle => turtle.id === id)[0];
+    }
+
+    addTurtle(id, currentId) {
+        this.turtles[this.turtles.length] = this.getTurtle(currentId).copy(id);
+        return this.turtles[this.turtles.length - 1];
     }
 }
