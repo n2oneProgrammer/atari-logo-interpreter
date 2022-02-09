@@ -1,15 +1,8 @@
-const historySection = document.querySelector('.aside__history')
-console.log(historySection, historySection.scrollHeight)
-historySection.scrollTop = historySection.scrollHeight
+import ScreenManager from './ScreenManager.js';
 
-const btSettings = document.getElementById('bt-settings')
-const btCloseSettings = document.getElementById('bt-close-settings')
-const settings = document.getElementById('settings')
+new class Main {
 
-btSettings.addEventListener('click', () => {
-  settings.style.display = 'block'
-})
-
-btCloseSettings.addEventListener('click', () => {
-  settings.style.display = 'none'
-})
+    constructor() {
+        this.screen = new ScreenManager();
+    }
+}
