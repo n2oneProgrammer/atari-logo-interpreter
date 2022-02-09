@@ -6,6 +6,19 @@
   box-sizing: border-box
 }
 
+*::-webkit-scrollbar {
+  width: .6rem
+}
+ 
+*::-webkit-scrollbar-track {
+  
+}
+ 
+*::-webkit-scrollbar-thumb {
+  background: var(--color-dark-2);
+  border-radius: .3rem
+}
+
 body {
   background: var(--color-dark-1);
   color: var(--color-light);
