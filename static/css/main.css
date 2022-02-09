@@ -11,16 +11,16 @@
   width: 100%;
   height: 100%;
   padding: 2rem 1rem;
-  margin-left: 1rem
+  margin-left: 2rem
 }
 
 .canvas::before {
   position: absolute;
-  top: 20px;
+  top: 40px;
   left: 0;
   content: '';
   width: 3px;
-  height: calc(100% - 40px);
+  height: calc(100% - 80px);
   background: rgba(var(--color-dark-2-rgb), .5)
 }
 
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem
+  padding: 2rem
 }
 
 .aside__toolbar {
@@ -85,20 +85,12 @@
   margin: 0 .5rem
 }
 
-.aside__toolbar-icon--close {
+.aside__toolbar-icon--circle {
   position: absolute;
   top: 50%;
   right: .5rem;
   transform: translateY(-50%);
-  font-size: 1.5rem;
-  color: var(--color-accent-orange);
-  cursor: pointer;
-  transition: .2s
-}
-
-.aside__toolbar-icon--close:hover {
-  color: var(--color-accent-red);
-  transform: translateY(-50%) scale(.9)
+  font-size: 1rem
 }
 
 .aside__terminal {
@@ -197,7 +189,7 @@
 .aside__input-container {
   display: flex;
   gap: 1rem;
-  padding: 1rem
+  padding: 1rem 1rem 2rem 1rem
 }
 
 .aside__input {
@@ -251,9 +243,9 @@
 
 .settings__header .fa-xmark {
   position: absolute;
-  top: 1.25rem;
+  top: 2.25rem;
   right: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--color-accent-orange);
   cursor: pointer;
   transition: .2s
@@ -267,7 +259,7 @@
 .logo {
   font-size: 1.5rem;
   user-select: none;
-  padding: 1rem;
+  padding: 2rem;
   cursor: default
 }
 
