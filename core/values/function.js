@@ -14,6 +14,10 @@ class BaseFunction extends Value {
         return `<${this.name}>`;
     }
 
+    setObjcts(obj) {
+        this.objcts = obj;
+        return this;
+    }
 
     CheckArgs(argNames, args) {
         let res = new RuntimeResult();
@@ -77,36 +81,41 @@ class FunctionValue extends BaseFunction {
 }
 
 class BuiltInFunction extends BaseFunction {
-    constructor(name) {
-        super(name);
+    constructor() {
+        super("");
+        this.name = this.constructor.name;
     }
 
     toString() {
         return `<$${this.name}>`;
     }
 
-    copy() {
-        copy = new BuiltInFunction(this.name);
+    copy(_class) {
+        let copy = new _class(this.name);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;
     }
 
-    execute(args) {
+    run() {
+        throw new Error("Not implemented");
+    }
+
+    getAgrNames() {
+        throw new Error("Not implemented");
+    }
+
+    _execute(args, agrNames, run) {
         let res = new RuntimeResult();
         let context = this.context.generateNewSymbolTable(this.name, this.pos_start);
 
-        res.register(this.CheckAndPopulateArgs(this.argNames, args, context));
+        res.register(this.CheckAndPopulateArgs(agrNames, args, context));
         if (res.error) return res;
 
-        res.register(this.run());
+        res.register(run(context));
         if (res.error) return res;
 
         return res.success(null);
-    }
-
-    run() {
-        throw new Error("Not implemented");
     }
 
 };

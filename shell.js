@@ -10,7 +10,7 @@ class Shell {
 
     shell() {
         //TODO: Remove debug
-        this.execute("LOAD C:\\Data\\a");
+        this.execute("CS");
         return;
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);

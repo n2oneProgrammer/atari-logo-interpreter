@@ -171,7 +171,7 @@ module.exports = class Interpeter {
         let args = [];
         let func = res.register(this.visit(node.node, context));
         if (res.error) return res;
-        func = func.copy().setPosition(node.pos_start, node.pos_end);
+        func = func.copy().setPosition(node.pos_start, node.pos_end).setObjcts(this.objcts);
 
         for (let i = 0; i < node.args.length; i++) {
             let value = res.register(this.visit(node.args[i], context));
