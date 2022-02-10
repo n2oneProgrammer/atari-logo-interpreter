@@ -45,6 +45,10 @@ module.exports = class SymbolTable {
         this.set("$who", new WhoValue(value));
     }
 
+    setBuildInFunction(obj) {
+        this.set(obj.name, obj);
+    }
+
     remove(name) {
         delete this.symbols[name];
     }

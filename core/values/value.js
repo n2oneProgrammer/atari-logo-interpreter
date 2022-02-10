@@ -25,7 +25,7 @@ module.exports = class Value {
         if (other === null) {
             other = this;
         }
-        return RuntimeError(
+        return new RuntimeError(
             this.pos_start,
             other.pos_end,
             `Illegal operation`,
@@ -46,7 +46,7 @@ module.exports = class Value {
     }
 
     execute(args) {
-        return RuntimeResult().failure(this.illegalOperation());
+        return new RuntimeResult().failure(this.illegalOperation());
     }
 
     add(other) {
