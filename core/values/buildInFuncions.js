@@ -1,7 +1,11 @@
 const {
-    BaseFunction
+    BuiltInFunction
 } = require("./function");
+const RuntimeResult = require("../utilities/runtimeResult");
 
-module.exports = class BuiltInFunction extends BaseFunction {
-    // TODO: make this a class
-};
+
+
+
+module.exports = {
+
+}

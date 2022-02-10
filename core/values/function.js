@@ -76,7 +76,44 @@ class FunctionValue extends BaseFunction {
     }
 }
 
+class BuiltInFunction extends BaseFunction {
+    constructor(name) {
+        super(name);
+    }
+
+    toString() {
+        return `<$${this.name}>`;
+    }
+
+    copy() {
+        copy = new BuiltInFunction(this.name);
+        copy.setPosition(this.pos_start, this.pos_end);
+        copy.setContext(this.context);
+        return copy;
+    }
+
+    execute(args) {
+        let res = new RuntimeResult();
+        let context = this.context.generateNewSymbolTable(this.name, this.pos_start);
+
+        res.register(this.CheckAndPopulateArgs(this.argNames, args, context));
+        if (res.error) return res;
+
+        res.register(this.run());
+        if (res.error) return res;
+
+        return res.success(null);
+    }
+
+    run() {
+        throw new Error("Not implemented");
+    }
+
+};
+
+
 module.exports = {
     BaseFunction,
-    FunctionValue
+    FunctionValue,
+    BuiltInFunction
 };
