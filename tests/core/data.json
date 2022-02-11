@@ -1329,4 +1329,458 @@
             "desc": "\"&\""
         }
     }
+}, {
+    "command": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\"",
+    "lexer": {
+        "tokens": [{
+            "type": "KEYWORD",
+            "value": "repeat",
+            "pos_start": {
+                "id": 0,
+                "line": 0,
+                "column": 0,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 6,
+                "line": 0,
+                "column": 6,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 6,
+                "line": 0,
+                "column": 6,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 7,
+                "line": 0,
+                "column": 7,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "repeat",
+            "pos_start": {
+                "id": 8,
+                "line": 0,
+                "column": 8,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 14,
+                "line": 0,
+                "column": 14,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "to",
+            "pos_start": {
+                "id": 15,
+                "line": 0,
+                "column": 15,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 17,
+                "line": 0,
+                "column": 17,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 17,
+                "line": 0,
+                "column": 17,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 18,
+                "line": 0,
+                "column": 18,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "to",
+            "pos_start": {
+                "id": 19,
+                "line": 0,
+                "column": 19,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 21,
+                "line": 0,
+                "column": 21,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "end",
+            "pos_start": {
+                "id": 22,
+                "line": 0,
+                "column": 22,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 25,
+                "line": 0,
+                "column": 25,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 25,
+                "line": 0,
+                "column": 25,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 26,
+                "line": 0,
+                "column": 26,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "end",
+            "pos_start": {
+                "id": 27,
+                "line": 0,
+                "column": 27,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 30,
+                "line": 0,
+                "column": 30,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "ed",
+            "pos_start": {
+                "id": 31,
+                "line": 0,
+                "column": 31,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 33,
+                "line": 0,
+                "column": 33,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 33,
+                "line": 0,
+                "column": 33,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 34,
+                "line": 0,
+                "column": 34,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "ed",
+            "pos_start": {
+                "id": 35,
+                "line": 0,
+                "column": 35,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 37,
+                "line": 0,
+                "column": 37,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "tell",
+            "pos_start": {
+                "id": 38,
+                "line": 0,
+                "column": 38,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 42,
+                "line": 0,
+                "column": 42,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 42,
+                "line": 0,
+                "column": 42,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 43,
+                "line": 0,
+                "column": 43,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "tell",
+            "pos_start": {
+                "id": 44,
+                "line": 0,
+                "column": 44,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 48,
+                "line": 0,
+                "column": 48,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "ask",
+            "pos_start": {
+                "id": 49,
+                "line": 0,
+                "column": 49,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 52,
+                "line": 0,
+                "column": 52,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "COLON",
+            "value": null,
+            "pos_start": {
+                "id": 52,
+                "line": 0,
+                "column": 52,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 53,
+                "line": 0,
+                "column": 53,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "ask",
+            "pos_start": {
+                "id": 54,
+                "line": 0,
+                "column": 54,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 57,
+                "line": 0,
+                "column": 57,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "who",
+            "pos_start": {
+                "id": 58,
+                "line": 0,
+                "column": 58,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 61,
+                "line": 0,
+                "column": 61,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "who",
+            "pos_start": {
+                "id": 62,
+                "line": 0,
+                "column": 62,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 65,
+                "line": 0,
+                "column": 65,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "load",
+            "pos_start": {
+                "id": 66,
+                "line": 0,
+                "column": 66,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 70,
+                "line": 0,
+                "column": 70,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "PATH",
+            "value": "cgfvhdbshfb",
+            "pos_start": {
+                "id": 71,
+                "line": 0,
+                "column": 71,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 82,
+                "line": 0,
+                "column": 82,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "KEYWORD",
+            "value": "save",
+            "pos_start": {
+                "id": 83,
+                "line": 0,
+                "column": 83,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 87,
+                "line": 0,
+                "column": 87,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "PATH",
+            "value": "dfg h\\@j kl",
+            "pos_start": {
+                "id": 88,
+                "line": 0,
+                "column": 88,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 101,
+                "line": 0,
+                "column": 101,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }, {
+            "type": "EOF",
+            "value": null,
+            "pos_start": {
+                "id": 101,
+                "line": 0,
+                "column": 101,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            },
+            "pos_end": {
+                "id": 102,
+                "line": 0,
+                "column": 102,
+                "fn": "shell",
+                "ftext": "REPEAT: repeat TO: to END: end ED: ed TELL: tell ASK: ask WHO who load cgfvhdbshfb save \"dfg h\\@j kl\""
+            }
+        }],
+        "error": null
+    }
+}, {
+    "command": "save \"fghj",
+    "lexer": {
+        "tokens": [],
+        "error": {
+            "pos_start": {
+                "id": 10,
+                "line": 0,
+                "column": 10,
+                "fn": "shell",
+                "ftext": "save \"fghj"
+            },
+            "pos_end": {
+                "id": 10,
+                "line": 0,
+                "column": 10,
+                "fn": "shell",
+                "ftext": "save \"fghj"
+            },
+            "error_name": "Excepted Character",
+            "desc": "\""
+        }
+    }
 }]
