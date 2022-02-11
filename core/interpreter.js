@@ -8,6 +8,7 @@ const {
 const NumberValue = require("./values/number");
 const RuntimeResult = require("./utilities/runtimeResult");
 const fs = require("fs");
+const Interface = require("./utilities/interface");
 
 module.exports = class Interpeter {
     constructor(objcts) {
@@ -157,7 +158,7 @@ module.exports = class Interpeter {
         let body = node.body;
         let agrs_names = node.args.map((arg) => arg.value);
 
-        let func = new FunctionValue(name, body, agrs_names, node.getContent())
+        let func = new FunctionValue(name, body, agrs_names, node.getContent(), node.getBody())
             .setPosition(node.pos_start, node.pos_end)
             .setContext(context);
         context.symbolTable.set(name, func);
@@ -185,9 +186,24 @@ module.exports = class Interpeter {
     }
 
     visitEdNode(node, context) {
-        throw new Error(`No visit method for ${node.constructor.name}`);
+        let res = new RuntimeResult();
+        for (let i = 0; i < node.nodes.length; i++) {
+            let func = res.register(this.visit(node.nodes[i], context));
+            if (res.error) return res;
 
-        //TODO: Implement this
+            if (func.body_node == null) {
+                return res.error(
+                    new RuntimeError(
+                        node.pos_start,
+                        node.pos_end,
+                        `Cannot edit built-in function`,
+                        context
+                    ));
+            }
+            Interface.getMethodToEdit(func.name, func.argNames, func.strBody, node, context)
+        }
+        return res.success(null);
+
     }
 
     visitTellNode(node, context) {

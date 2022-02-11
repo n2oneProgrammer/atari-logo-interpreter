@@ -92,12 +92,16 @@ class FunctionNode {
 
         this.pos_start = name.pos_start;
         this.pos_end = body.pos_end;
-        console.log(this.getContent());
     }
 
     getContent() {
         return "TO " + this.pos_end.ftext.slice(this.pos_start.id, this.pos_end.id);
     }
+
+    getBody() {
+        return this.pos_end.ftext.slice(this.body.pos_start.id, this.body.pos_end.id - 4);
+    }
+
 
     toString() {
         const str = this.args.map(arg =>
@@ -125,22 +129,21 @@ class CallNode {
         const str = this.args.map(arg =>
             arg.toString()
         ).join(', ');
-
         return `CallNode(${this.node.toString()}[${str}])`;
     }
 }
 
 class EdNode {
-    constructor(tokens) {
-        this.tokens = tokens;
+    constructor(nodes) {
+        this.nodes = nodes;
 
-        this.pos_start = tokens[0].pos_start;
-        this.pos_end = tokens[tokens.length - 1].pos_end;
+        this.pos_start = nodes[0].pos_start;
+        this.pos_end = nodes[nodes.length - 1].pos_end;
     }
 
     toString() {
-        const str = this.tokens.map(token =>
-            token.value
+        const str = this.nodes.map(n =>
+            n.toString()
         ).join(', ');
 
         return `EdNode(${str})`;

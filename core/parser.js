@@ -236,9 +236,9 @@ module.exports = class Pareser extends ParserAbstraction {
 
     edExpr() {
         let res = new ParserResult();
-        let tokens = [];
+        let nodes = [];
         if (this.current_token.type === Token.TYPE.IDENTIFIER) {
-            tokens.push(this.current_token);
+            nodes.push(new VarNode(this.current_token));
         } else if (this.current_token.type === Token.TYPE.LSQUARE) {
             while (true) {
                 res.register_advance();
@@ -264,7 +264,7 @@ module.exports = class Pareser extends ParserAbstraction {
                         )
                     );
                 }
-                tokens.push(this.current_token);
+                nodes.push(new VarNode(this.current_token));
             }
         } else {
             return res.failure(
@@ -276,7 +276,7 @@ module.exports = class Pareser extends ParserAbstraction {
             );
         }
 
-        return res.success(new EdNode(tokens));
+        return res.success(new EdNode(nodes));
     }
 
     tellExpr() {

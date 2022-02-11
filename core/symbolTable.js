@@ -50,7 +50,12 @@ module.exports = class SymbolTable {
     }
 
     remove(name) {
-        delete this.symbols[name];
+        if (this.symbols[name] != undefined) {
+            delete this.symbols[name];
+        }
+        if (this.parent != null) {
+            this.parent.remove(name);
+        }
     }
 
     toString() {
