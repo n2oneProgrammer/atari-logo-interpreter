@@ -1,16 +1,115 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>ALI | index</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
-<h1>Hello World!</h1>
-We are using Node.js <span id="node-version"></span>,
-Chromium <span id="chrome-version"></span>,
-and Electron <span id="electron-version"></span>.
-<script src="./renderer.js"></script>
+  <header id="titlebar"></header>
+  <main class="container">
+    <aside class="aside">
+      <header class="aside__header">
+        <section class="aside__logo logo">
+          <i class="fas fa-igloo"></i>
+          <span class="logo__logotype">aliapg</span>
+        </section>
+        <section class="aside__options">
+          <div class="aside__toolbar">
+            <i id="bt-settings" class="fas fa-cog"></i>
+            <i id="bt-download" class="aside__toolbar-icon fa-solid fa-download"></i>
+            <i id="bt-save" class="aside__toolbar-icon fa-solid fa-floppy-disk"></i>
+            <i id="bt-upload" class="aside__toolbar-icon fa-solid fa-upload"></i>
+            <i class="aside__toolbar-icon aside__toolbar-icon--circle fa-solid fa-thumbtack"></i>
+          </div>
+        </section>
+      </header>
+      <section class="aside__terminal">
+        <section id="section-history" class="aside__terminal-section aside__history">
+          <section class="aside__history-commands">
+            <p class="aside__log">REPEAT 4 [FD 10 RT 90]</p>
+            <p class="aside__log">REPEAT 4 [FD 10 RT 90]</p>
+            <p class="aside__log">REPEAT 4 [FD 10 RT 90]</p>
+            <p class="aside__log">REPEAT 4 [FD 10 RT 90]</p>
+          </section>
+        </section>
+        <section id="section-logs" class="aside__terminal-section aside__logs">
+          <section class="aside__logs-logs">
+            <p class="aside__log--log">Konsollog zadziałał XD</p>
+            <p class="aside__log--log">ok</p>
+          </section>
+        </section>
+        <section id="section-errors" class="aside__terminal-section aside__errors">
+          <section class="aside__logs-errors">
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+            <p class="aside__log--error">Syntax error: everything wrong</p>
+            <p class="aside__log--error">Error: You stupid</p>
+          </section>
+        </section>
+        <section id="section-editor" class="aside__terminal-section aside__editor">
+          <section class="aside__editor-container">
+            <select id="procedures" class="aside__editor-select">
+              <option value="procedure-1">procedure-1</option>
+              <option value="procedure-2">procedure-2</option>
+            </select>
+            <textarea id="editor-textarea" class="aside__editor-textarea">
+
+            </textarea>
+          </section>
+        </section>
+      </section>
+      <section class="aside__terminal-options">
+        <button id="bt-history" class="aside__terminal-options-button aside__terminal-options-button--active">
+          <i  class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <button id="bt-editor" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <button id="bt-logs" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-list"></i>
+        </button>
+        <button id="bt-errors" class="aside__terminal-options-button">
+          <i  class="fa-solid fa-circle-exclamation"></i>
+        </button>
+      </section>
+      <section class="aside__input-container">
+        <button class="aside__input-confirm">run</button>
+        <input
+          class="aside__input"
+          type="text"
+          spellcheck="false"
+          autocomplete="off"
+        >
+      </section>
+      <section id="settings" class="aside__settings settings">
+        <header class="settings__header">
+          <section class="settings__logo logo">
+            <i class="fas fa-igloo"></i>
+            <span class="logo__logotype">aliapg</span>
+          </section>
+          <i id="bt-close-settings" class="fa-solid fa-xmark"></i>
+        </header>
+      </section>
+    </aside>
+    <section class="canvas"></section>
+  </main>
+  <script src="../js/Main.js" type="module"></script>
 </body>
 </html>
