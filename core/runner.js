@@ -1,6 +1,14 @@
-import Lexer from "./lexer.js";
+const Lexer = require("./lexer.js");
+const Parser = require("./parser.js");
+const TokenPrinter = require("./tools/tokenPrinter.js");
+const Context = require("./context.js");
+const Interpreter = require("./interpreter.js");
+const {
+    globalSymbolTable,
+    interpreterObjects
+} = require("./utilities/globalSymbolTable.js");
 
-export default class Runner {
+module.exports = class Runner {
     constructor(fn) {
         this.fn = fn;
     }
@@ -11,6 +19,45 @@ export default class Runner {
         if (result.error !== null) {
             return result.error.toString();
         }
-        return result.tokens;
+        console.log(TokenPrinter.toString(result.tokens));
+        let parser = new Parser(result.tokens);
+        result = parser.run();
+        if (result.error !== null) {
+            return result.error.toString();
+        }
+        console.log(result.node.toString());
+
+        let context = new Context("<global>");
+        context.symbolTable = globalSymbolTable();
+        let interpreter = new Interpreter(interpreterObjects());
+        result = interpreter.visit(result.node, context);
+        if (result.error !== null) {
+            return result.error.toString();
+        }
+        console.log(context.symbolTable.toString());
+        return result;
+    }
+
+    run(text) {
+        let lexer = new Lexer(this.fn, text);
+        let result = lexer.run();
+        if (result.error !== null) {
+            return result;
+        }
+
+        let parser = new Parser(result.tokens);
+        result = parser.run();
+        if (result.error !== null) {
+            return result;
+        }
+
+        let context = new Context("<global>");
+        context.symbolTable = globalSymbolTable();
+        let interpreter = new Interpreter(interpreterObjects());
+        result = interpreter.visit(result.node, context);
+        if (result.error !== null) {
+            return result;
+        }
+        return result;
     }
 }
