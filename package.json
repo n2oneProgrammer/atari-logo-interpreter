@@ -5,6 +5,7 @@
     "main": "main.js",
     "scripts": {
         "start": "electron .",
+        "dev": "set NODE_ENV=development&&electron .",
         "shell": "node shell.js",
         "test": "jest"
     },
@@ -22,6 +23,8 @@
         "@babel/plugin-transform-modules-commonjs": "^7.16.0",
         "@types/jest": "^27.0.3",
         "electron": "^16.0.1",
+        "electron-reload": "^2.0.0-alpha.1",
+        "electron-reloader": "^1.2.2",
         "jest": "^27.4.3"
     },
     "dependencies": {
