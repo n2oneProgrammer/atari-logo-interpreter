@@ -13,12 +13,31 @@ module.exports = class Turtle {
         return new Turtle(id, this.x, this.y, this.rotation);
     }
 
-    forward(distance) {}
-    backward(distance) {}
-    right(angle) {}
-    left(angle) {}
-    penup() {}
-    pendown() {}
-    pencolor(color) {}
-    clear() {}
+    forward(distance) {
+        console.log(this.id + " forward " + distance);
+    }
+    backward(distance) {
+        console.log(this.id + " backward " + distance);
+    }
+    right(angle) {
+        console.log(this.id + " right " + angle);
+    }
+    left(angle) {
+        console.log(this.id + " left " + angle);
+    }
+    penup() {
+        console.log(this.id + "  up");
+    }
+    pendown() {
+        console.log(this.id + "  down");
+    }
+    pencolor(color) {
+        console.log(this.id + " pen color: " + color);
+    }
+    hide() {
+        console.log(this.id + " hide");
+    }
+    show() {
+        console.log(this.id + " show");
+    }
 }

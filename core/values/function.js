@@ -22,7 +22,7 @@ class BaseFunction extends Value {
     CheckArgs(argNames, args) {
         let res = new RuntimeResult();
         if (args.length !== argNames.length) {
-            return res.failure(new RuntimeError(this.pos_start, this.pos_end, `Expected ${this.argNames.length} arguments but got ${args.length}`, this.context));
+            return res.failure(new RuntimeError(this.pos_start, this.pos_end, `Expected ${argNames.length} arguments but got ${args.length}`, this.context));
         }
         return res.success(null);
     }

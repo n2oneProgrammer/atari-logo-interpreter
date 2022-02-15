@@ -10,7 +10,7 @@ class Shell {
 
     shell() {
         //TODO: Remove debug
-        this.execute("TO fn cs END ED fn");
+        this.execute("CS HT ST PU PD RT 10 LT 10 FD 10 BK 10 SETC 10 SETPN 1 SETPC 1 12 POTS ERALL");
         return;
         prompt.get(['cmd'], (err, result) => {
             this.execute(result.cmd);
