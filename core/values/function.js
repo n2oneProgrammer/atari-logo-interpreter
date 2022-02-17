@@ -46,11 +46,12 @@ class BaseFunction extends Value {
 
 }
 class FunctionValue extends BaseFunction {
-    constructor(name, body_node, argNames, text) {
+    constructor(name, body_node, argNames, text, strBody) {
         super(name);
         this.body_node = body_node;
         this.argNames = argNames;
         this.text = text;
+        this.strBody = strBody;
     }
 
     toString() {
@@ -58,7 +59,7 @@ class FunctionValue extends BaseFunction {
     }
 
     copy() {
-        let copy = new FunctionValue(this.name, this.body_node, this.argNames);
+        let copy = new FunctionValue(this.name, this.body_node, this.argNames, this.text, this.strBody);
         copy.setPosition(this.pos_start, this.pos_end);
         copy.setContext(this.context);
         return copy;
