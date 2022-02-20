@@ -260,9 +260,9 @@ module.exports = class Interpeter {
         let res = new RuntimeResult();
         if (node.token.isKeyword(Token.KEYWORDS.SAVE)) {
             let txt = "";
-            const funcs = context.symbolTable.getAllFunc();
+            const funcs = context.symbolTable.getAllGlobalFunc();
             for (let i = 0; i < funcs.length; i++) {
-                if (funcs.text !== null) {
+                if (funcs[i].text !== undefined) {
                     txt += funcs[i].text + "\n\n";
                 }
             }

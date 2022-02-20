@@ -28,6 +28,10 @@ module.exports = class InterpereterObjects {
         return this.turtles.filter(turtle => turtle.id === id)[0];
     }
 
+    getPen(id) {
+        return this.pens[id]
+    }
+
     addTurtle(id) {
         let newTurtle = this.createTurtle(id, 0, 0, 0);
         this.turtles.push(newTurtle);

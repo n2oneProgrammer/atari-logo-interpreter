@@ -73,7 +73,7 @@ class FunctionValue extends BaseFunction {
         if (res.error) return res;
 
         const Interpreter = require('../interpreter');
-        let interpreter = new Interpreter();
+        let interpreter = new Interpreter(this.objcts);
         res.register(interpreter.visit(this.body_node, context));
         if (res.error) return res;
 

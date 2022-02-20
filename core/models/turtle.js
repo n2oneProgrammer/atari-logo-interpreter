@@ -40,4 +40,10 @@ module.exports = class Turtle {
     show() {
         console.log(this.id + " show");
     }
+    setcolor(color) {
+        console.log(this.id + " setcolor " + color);
+    }
+    setpen(pen) {
+        console.log(this.id + " setpen " + pen);
+    }
 }

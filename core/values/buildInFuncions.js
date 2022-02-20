@@ -2,6 +2,10 @@ const {
     BuiltInFunction
 } = require("./function");
 const RuntimeResult = require("../utilities/runtimeResult");
+const {
+    RuntimeError
+} = require("../error");
+const Interface = require("../utilities/interface");
 
 class cs extends BuiltInFunction {
 
@@ -11,7 +15,7 @@ class cs extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: cs
+            Interface.clear();
 
             return new RuntimeResult().success(null);
         });
@@ -168,14 +172,14 @@ class setc extends BuiltInFunction {
         return super._execute(args, ["color"], (context) => {
             const ids = context.symbolTable.get("$who").data;
             const v = context.symbolTable.get("color").value;
-
-        });
-    }
-
-    execute(args) {
-        return super._execute(args, ["color"], (context) => {
-            // TODO: setc
-
+            if (v < 0 || v > 127) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "Color value must be between 0 and 127", context)
+                );
+            }
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).setcolor(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -189,8 +193,16 @@ class setpn extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["id"], (context) => {
-            // TODO: setpn
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("id").value;
+            if (v < 0 || v > 2) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "You only have pens with id 0,1,2 available. (Buy a premum to unlock more pens 😉)", context)
+                );
+            }
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).setcolor(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -204,8 +216,19 @@ class setpc extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["id", "color"], (context) => {
-            // TODO: setpc
-
+            const v = context.symbolTable.get("id").value;
+            const c = context.symbolTable.get("color").value;
+            if (v < 0 || v > 2) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "You only have pens with id 0,1,2 available. (Buy a premum to unlock more pens 😉)", context)
+                );
+            }
+            if (c < 0 || c > 127) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "Color value must be between 0 and 127", context)
+                );
+            }
+            this.objcts.getPen(v).setColor(c);
             return new RuntimeResult().success(null);
         });
     }
@@ -220,7 +243,18 @@ class pots extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: pots
+            const funcs = context.symbolTable.getAllFunc();
+            let txt = "";
+            for (let i = 0; i < funcs.length; i++) {
+                if (funcs[i].text !== undefined) {
+                    const args = (funcs[i].argNames.map((e) => ":" + e).join(" "));
+                    txt += `${funcs[i].name} ${args}\n`;
+                }
+            }
+            if (txt === "") {
+                txt = "No functions found.\n";
+            }
+            Interface.print(txt);
 
             return new RuntimeResult().success(null);
         });
@@ -235,7 +269,13 @@ class erall extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: erall
+            const funcs = context.symbolTable.getAllFunc();
+
+            for (let i = 0; i < funcs.length; i++) {
+                if (funcs[i].text !== undefined) {
+                    context.symbolTable.remove(funcs[i].name);
+                }
+            }
 
             return new RuntimeResult().success(null);
         });
