@@ -1,5 +1,3 @@
-import DrawableLine from "./drawableLine.js";
-
 class CanvasManager {
     static #instance = null;
 
@@ -19,7 +17,6 @@ class CanvasManager {
         this.rescalingCanvas();
         this.drawableObjects = [];
         this.setListeners();
-        this.drawableObjects.push(new DrawableLine(-10, -10, 12, 68, 20, 'red'));
 
         this.draw()
     }
@@ -37,12 +34,15 @@ class CanvasManager {
         this.canvas.height = height;
     }
 
+    addDrawableObject(object) {
+        this.drawableObjects.push(object);
+    }
+
     draw() {
         const ctx = this.canvas.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const centerX = this.canvas.clientWidth / 2;
         const centerY = this.canvas.clientHeight / 2;
-        console.log(this.drawableObjects);
         this.drawableObjects.forEach(el => el.draw(ctx, centerX, centerY, this.scale));
     }
 
@@ -55,7 +55,6 @@ class CanvasManager {
             e.preventDefault();
             this.scale += e.deltaY * -0.001;
             this.scale = Math.min(Math.max(.125, this.scale), 10);
-            console.log(this.scale);
             this.draw()
         });
     }
