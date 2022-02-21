@@ -6,7 +6,11 @@ const {
 module.exports = class Interface {
 
     static print(str) {
+        console.log(str)
+    }
 
+    static clear() {
+        console.log("clear");
     }
 
     static getMethodToEdit(name, agrNames, body, node, context) {

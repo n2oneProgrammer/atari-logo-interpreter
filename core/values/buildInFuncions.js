@@ -2,6 +2,10 @@ const {
     BuiltInFunction
 } = require("./function");
 const RuntimeResult = require("../utilities/runtimeResult");
+const {
+    RuntimeError
+} = require("../error");
+const Interface = require("../utilities/interface");
 
 class cs extends BuiltInFunction {
 
@@ -11,7 +15,7 @@ class cs extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: cs
+            Interface.clear();
 
             return new RuntimeResult().success(null);
         });
@@ -26,8 +30,10 @@ class ht extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: ht
-
+            const ids = context.symbolTable.get("$who").data;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).hide();
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -41,8 +47,10 @@ class st extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: st
-
+            const ids = context.symbolTable.get("$who").data;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).show();
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -56,8 +64,10 @@ class pu extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: pu
-
+            const ids = context.symbolTable.get("$who").data;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).penup();
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -71,8 +81,10 @@ class pd extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: pd
-
+            const ids = context.symbolTable.get("$who").data;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).pendown();
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -86,8 +98,11 @@ class rt extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["v"], (context) => {
-            // TODO: rt
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("v").value;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).right(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -101,8 +116,11 @@ class lt extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["v"], (context) => {
-            // TODO: lt
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("v").value;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).left(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -116,8 +134,11 @@ class fd extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["v"], (context) => {
-            // TODO: fd
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("v").value;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).forward(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -131,8 +152,11 @@ class bk extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["v"], (context) => {
-            // TODO: bk
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("v").value;
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).backward(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -146,8 +170,16 @@ class setc extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["color"], (context) => {
-            // TODO: setc
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("color").value;
+            if (v < 0 || v > 127) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "Color value must be between 0 and 127", context)
+                );
+            }
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).setcolor(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -161,8 +193,16 @@ class setpn extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["id"], (context) => {
-            // TODO: setpn
-
+            const ids = context.symbolTable.get("$who").data;
+            const v = context.symbolTable.get("id").value;
+            if (v < 0 || v > 2) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "You only have pens with id 0,1,2 available. (Buy a premum to unlock more pens 😉)", context)
+                );
+            }
+            for (let i = 0; i < ids.length; i++) {
+                this.objcts.getTurtle(ids[i]).setcolor(v);
+            }
             return new RuntimeResult().success(null);
         });
     }
@@ -176,8 +216,19 @@ class setpc extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, ["id", "color"], (context) => {
-            // TODO: setpc
-
+            const v = context.symbolTable.get("id").value;
+            const c = context.symbolTable.get("color").value;
+            if (v < 0 || v > 2) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "You only have pens with id 0,1,2 available. (Buy a premum to unlock more pens 😉)", context)
+                );
+            }
+            if (c < 0 || c > 127) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(this.pos_start, this.pos_end, "Color value must be between 0 and 127", context)
+                );
+            }
+            this.objcts.getPen(v).setColor(c);
             return new RuntimeResult().success(null);
         });
     }
@@ -192,7 +243,18 @@ class pots extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: pots
+            const funcs = context.symbolTable.getAllFunc();
+            let txt = "";
+            for (let i = 0; i < funcs.length; i++) {
+                if (funcs[i].text !== undefined) {
+                    const args = (funcs[i].argNames.map((e) => ":" + e).join(" "));
+                    txt += `${funcs[i].name} ${args}\n`;
+                }
+            }
+            if (txt === "") {
+                txt = "No functions found.\n";
+            }
+            Interface.print(txt);
 
             return new RuntimeResult().success(null);
         });
@@ -207,7 +269,13 @@ class erall extends BuiltInFunction {
 
     execute(args) {
         return super._execute(args, [], (context) => {
-            // TODO: erall
+            const funcs = context.symbolTable.getAllFunc();
+
+            for (let i = 0; i < funcs.length; i++) {
+                if (funcs[i].text !== undefined) {
+                    context.symbolTable.remove(funcs[i].name);
+                }
+            }
 
             return new RuntimeResult().success(null);
         });

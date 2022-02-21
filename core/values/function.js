@@ -22,7 +22,7 @@ class BaseFunction extends Value {
     CheckArgs(argNames, args) {
         let res = new RuntimeResult();
         if (args.length !== argNames.length) {
-            return res.failure(new RuntimeError(this.pos_start, this.pos_end, `Expected ${this.argNames.length} arguments but got ${args.length}`, this.context));
+            return res.failure(new RuntimeError(this.pos_start, this.pos_end, `Expected ${argNames.length} arguments but got ${args.length}`, this.context));
         }
         return res.success(null);
     }
@@ -73,7 +73,7 @@ class FunctionValue extends BaseFunction {
         if (res.error) return res;
 
         const Interpreter = require('../interpreter');
-        let interpreter = new Interpreter();
+        let interpreter = new Interpreter(this.objcts);
         res.register(interpreter.visit(this.body_node, context));
         if (res.error) return res;
 

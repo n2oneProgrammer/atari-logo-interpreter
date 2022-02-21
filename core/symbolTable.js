@@ -21,11 +21,24 @@ module.exports = class SymbolTable {
         return null;
     }
 
-    getAllFunc() {
+    getAllGlobalFunc() {
         if (this.parent != null) {
-            return this.parent.getAllFunc();
+            return this.parent.getAllGlobalFunc();
         }
         let funcs = [];
+        for (const [key, value] of Object.entries(this.symbols)) {
+            if (value instanceof BaseFunction) {
+                funcs.push(value);
+            }
+        }
+        return funcs;
+    }
+
+    getAllFunc() {
+        let funcs = [];
+        if (this.parent != null) {
+            funcs = this.parent.getAllFunc();
+        }
         for (const [key, value] of Object.entries(this.symbols)) {
             if (value instanceof BaseFunction) {
                 funcs.push(value);
