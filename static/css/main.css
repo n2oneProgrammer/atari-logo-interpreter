@@ -1,338 +1,350 @@
 @import 'variables.css';
 
 .container {
-  display: flex;
-  height: 100vh
+    display: flex;
+    height: 100vh
 }
 
 .canvas {
-  flex: 1;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 2rem 1rem;
-  margin-left: 2rem
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 1rem;
+    margin-left: 2rem;
+    overflow: hidden;
 }
 
 .canvas::before {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  content: '';
-  width: 3px;
-  height: calc(100% - 80px);
-  background: rgba(var(--color-dark-2-rgb), .5)
+    position: absolute;
+    top: 40px;
+    left: 0;
+    content: '';
+    width: 3px;
+    height: calc(100% - 80px);
+    background: rgba(var(--color-dark-2-rgb), .5);
+}
+
+.canvasContainer {
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.canvasContainer canvas {
+    background-color: white;
 }
 
 .aside {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  max-width: 500px
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    max-width: 500px
 }
 
 .aside__header {
-  display: flex
+    display: flex
 }
 
 .aside__options {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 2rem
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem
 }
 
 .aside__toolbar {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 2rem;
-  max-width: 250px;
-  height: 2rem;
-  padding-left: .5rem;
-  background: var(--color-dark-2);
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: .2s
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 2rem;
+    max-width: 250px;
+    height: 2rem;
+    padding-left: .5rem;
+    background: var(--color-dark-2);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: .2s
 }
 
 .aside__toolbar:hover {
-  width: 100%;
-  padding-left: .8rem
+    width: 100%;
+    padding-left: .8rem
 }
 
 .aside__toolbar:hover .aside__toolbar-icon {
-  display: block !important
+    display: block !important
 }
 
 .aside__toolbar:hover > .fa-cog {
-  margin-right: .5rem
+    margin-right: .5rem
 }
 
 .aside__toolbar i {
-  transition: .2s
+    transition: .2s
 }
 
 .aside__toolbar i:not(.aside__toolbar-icon--close):hover {
-  color: var(--color-accent-orange)
+    color: var(--color-accent-orange)
 }
 
 .aside__toolbar-icon {
-  display: none !important;
-  margin: 0 .5rem
+    display: none !important;
+    margin: 0 .5rem
 }
 
 .aside__toolbar-icon--circle {
-  position: absolute;
-  top: 50%;
-  right: .5rem;
-  transform: translateY(-50%);
-  font-size: 1rem
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    transform: translateY(-50%);
+    font-size: 1rem
 }
 
 .aside__terminal {
-  flex-grow: 1;
-  position: relative;
-  padding: 1rem
+    flex-grow: 1;
+    position: relative;
+    padding: 1rem
 }
 
 .aside__terminal-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 1rem
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem
 }
 
 .aside__log {
-  font-size: .9rem;
-  font-style: italic;
-  color: rgba(var(--color-light-rgb), .8);
-  line-height: 130%;
-  min-height: 20px
+    font-size: .9rem;
+    font-style: italic;
+    color: rgba(var(--color-light-rgb), .8);
+    line-height: 130%;
+    min-height: 20px
 }
 
 .aside__log--log {
-  font-size: .8rem;
-  border-left: 2px solid var(--color-light);
-  padding-left: .5rem;
-  margin: .5rem 0
+    font-size: .8rem;
+    border-left: 2px solid var(--color-light);
+    padding-left: .5rem;
+    margin: .5rem 0
 }
 
 .aside__log--error {
-  font-size: .8rem;
-  border-left: 2px solid var(--color-accent-red);
-  padding-left: .5rem;
-  margin: .5rem 0
+    font-size: .8rem;
+    border-left: 2px solid var(--color-accent-red);
+    padding-left: .5rem;
+    margin: .5rem 0
 }
 
 .aside__history {
-  position: relative;
-  overflow-y: scroll
+    position: relative;
+    overflow-y: scroll
 }
 
 .aside__history-commands {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-height: 100%
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 100%
 }
 
 .aside__logs {
-  display: none;
-  position: relative;
-  overflow-y: scroll
+    display: none;
+    position: relative;
+    overflow-y: scroll
 }
 
 .aside__logs-logs {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-height: 100%
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 100%
 }
 
 .aside__errors {
-  display: none;
-  position: relative;
-  overflow-y: scroll
+    display: none;
+    position: relative;
+    overflow-y: scroll
 }
 
 .aside__logs-errors {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-height: 100%
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 100%
 }
 
 .aside__editor {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-height: 100%
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: 100%
 }
 
 .aside__editor-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  height: 100%
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    height: 100%
 }
 
 .aside__editor-select {
-  background: none;
-  border: 1px solid var(--color-dark-2);
-  border-radius: 1rem;
-  outline: none;
-  padding: .6rem 1.5rem .6rem 1rem;
-  font-family: sans-serif;
-  font-size: 1rem;
-  color: var(--color-light);
-  appearance: none;
-  cursor: pointer
+    background: none;
+    border: 1px solid var(--color-dark-2);
+    border-radius: 1rem;
+    outline: none;
+    padding: .6rem 1.5rem .6rem 1rem;
+    font-family: sans-serif;
+    font-size: 1rem;
+    color: var(--color-light);
+    appearance: none;
+    cursor: pointer
 }
 
 .aside__editor-select option {
-  display: block;
-  outline: none;
-  border: none;
-  background: var(--color-dark-2);
-  padding: 2rem;
-  transition: .2s
+    display: block;
+    outline: none;
+    border: none;
+    background: var(--color-dark-2);
+    padding: 2rem;
+    transition: .2s
 }
 
 .aside__editor-select option:hover {
-  background: var(--color-dark-1);
-  cursor: pointer
+    background: var(--color-dark-1);
+    cursor: pointer
 }
 
 .aside__editor-textarea {
-  flex-grow: 1;
-  background: none;
-  border: 1px solid var(--color-dark-2);
-  border-radius: 1rem;
-  padding: 1rem;
-  color: var(--color-light);
-  font-size: 1rem;
-  font-family: var(--font-default);
-  outline: none;
-  resize: none
+    flex-grow: 1;
+    background: none;
+    border: 1px solid var(--color-dark-2);
+    border-radius: 1rem;
+    padding: 1rem;
+    color: var(--color-light);
+    font-size: 1rem;
+    font-family: var(--font-default);
+    outline: none;
+    resize: none
 }
 
 .aside__terminal-options {
-  display: flex;
-  justify-content: flex-start;
-  gap: .8rem;
-  margin-top: 2rem;
-  padding: 0 1rem
+    display: flex;
+    justify-content: flex-start;
+    gap: .8rem;
+    margin-top: 2rem;
+    padding: 0 1rem
 }
 
 .aside__terminal-options-button {
-  flex: 1;
-  background: none;
-  outline: none;
-  border: none;
-  padding: .3rem;
-  width: 100%;
-  max-width: 60px;
-  background: rgba(var(--color-dark-2-rgb), .2);
-  border-radius: .5rem;
-  color: var(--color-light);
-  cursor: pointer;
-  transition: .2s
+    flex: 1;
+    background: none;
+    outline: none;
+    border: none;
+    padding: .3rem;
+    width: 100%;
+    max-width: 60px;
+    background: rgba(var(--color-dark-2-rgb), .2);
+    border-radius: .5rem;
+    color: var(--color-light);
+    cursor: pointer;
+    transition: .2s
 }
 
 .aside__terminal-options-button:not(.aside__terminal-options-button--active):hover {
-  background: var(--color-dark-2)
+    background: var(--color-dark-2)
 }
 
 .aside__terminal-options-button--active {
-  background: var(--color-accent-orange);
+    background: var(--color-accent-orange);
 }
 
 .aside__input-container {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem 1rem 2rem 1rem
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1rem 2rem 1rem
 }
 
 .aside__input {
-  flex-grow: 1;
-  background: none;
-  outline: none;
-  border: none;
-  padding: .5rem 1rem;
-  border-bottom: .3rem solid var(--color-dark-2);
-  background: rgba(var(--color-dark-2-rgb), .2);
-  border-radius: .5rem;
-  color: var(--color-light);
-  font-size: 1.1rem;
-  font-style: italic;
-  font-family: var(--font-default)
+    flex-grow: 1;
+    background: none;
+    outline: none;
+    border: none;
+    padding: .5rem 1rem;
+    border-bottom: .3rem solid var(--color-dark-2);
+    background: rgba(var(--color-dark-2-rgb), .2);
+    border-radius: .5rem;
+    color: var(--color-light);
+    font-size: 1.1rem;
+    font-style: italic;
+    font-family: var(--font-default)
 }
 
 .aside__input-confirm {
-  background: none;
-  outline: none;
-  border: none;
-  border-radius: .5rem;
-  width: 100px;
-  padding: .5rem 0;
-  text-transform: uppercase;
-  color: var(--color-light);
-  font-family: var(--font-default);
-  font-weight: 700;
-  background: var(--color-accent-orange);
-  cursor: pointer;
-  transition: .2s
+    background: none;
+    outline: none;
+    border: none;
+    border-radius: .5rem;
+    width: 100px;
+    padding: .5rem 0;
+    text-transform: uppercase;
+    color: var(--color-light);
+    font-family: var(--font-default);
+    font-weight: 700;
+    background: var(--color-accent-orange);
+    cursor: pointer;
+    transition: .2s
 }
 
 .aside__input-confirm:hover {
-  background: rgba(var(--color-accent-orange-rgb), .6);
+    background: rgba(var(--color-accent-orange-rgb), .6);
 }
 
 .aside__settings {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-  width: 100%;
-  height: 100%;
-  background: var(--color-dark-1)
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: var(--color-dark-1)
 }
 
 .settings__header {
-  justify-content: space-between
+    justify-content: space-between
 }
 
 .settings__header .fa-xmark {
-  position: absolute;
-  top: 2.25rem;
-  right: 2rem;
-  font-size: 1.8rem;
-  color: var(--color-accent-orange);
-  cursor: pointer;
-  transition: .2s
+    position: absolute;
+    top: 2.25rem;
+    right: 2rem;
+    font-size: 1.8rem;
+    color: var(--color-accent-orange);
+    cursor: pointer;
+    transition: .2s
 }
 
 .settings__header .fa-xmark:hover {
-  color: var(--color-accent-red);
-  transform: scale(.9)
+    color: var(--color-accent-red);
+    transform: scale(.9)
 }
 
 .logo {
-  font-size: 1.5rem;
-  user-select: none;
-  padding: 2rem;
-  cursor: default
+    font-size: 1.5rem;
+    user-select: none;
+    padding: 2rem;
+    cursor: default
 }
 
 .logo i {
-  color: var(--color-accent-orange)
+    color: var(--color-accent-orange)
 }
