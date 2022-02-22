@@ -1,3 +1,4 @@
+const InterfaceCanvas = require("../utilities/interfaceCanvas.js");
 module.exports = class Turtle {
     constructor(id, x, y, rotation) {
         this.id = id;
@@ -15,35 +16,46 @@ module.exports = class Turtle {
 
     forward(distance) {
         console.log(this.id + " forward " + distance);
+        InterfaceCanvas.createLine(0, 0, 400, 400, 20, "red")
     }
+
     backward(distance) {
         console.log(this.id + " backward " + distance);
     }
+
     right(angle) {
         console.log(this.id + " right " + angle);
     }
+
     left(angle) {
         console.log(this.id + " left " + angle);
     }
+
     penup() {
         console.log(this.id + "  up");
     }
+
     pendown() {
         console.log(this.id + "  down");
     }
+
     pencolor(color) {
         console.log(this.id + " pen color: " + color);
     }
+
     hide() {
         console.log(this.id + " hide");
     }
+
     show() {
         console.log(this.id + " show");
     }
+
     setcolor(color) {
         console.log(this.id + " setcolor " + color);
     }
+
     setpen(pen) {
         console.log(this.id + " setpen " + pen);
     }
-}
+};
