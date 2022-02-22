@@ -36,6 +36,7 @@ class CanvasManager {
 
     addDrawableObject(object) {
         this.drawableObjects.push(object);
+        this.draw();
     }
 
     draw() {
