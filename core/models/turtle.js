@@ -2,8 +2,6 @@ const InterfaceCanvas = require("../utilities/interfaceCanvas.js");
 module.exports = class Turtle {
     constructor(id, x, y, rotation) {
 
-        const {interpreterObjects} = require("../utilities/globalSymbolTable.js");
-        this.interpreterObjects = interpreterObjects();
         this.id = id;
         this.x = x;
         this.y = y;
@@ -19,12 +17,7 @@ module.exports = class Turtle {
 
     forward(distance) {
         console.log(this.id + " forward " + distance);
-        let newX = this.x + distance * Math.sin(this.rotation);
-        let newY = this.x + distance * Math.cos(this.rotation);
-        console.log(this.interpreterObjects.getPen);
-        InterfaceCanvas.createLine(this.x, this.y, newX, newY, 20, this.interpreterObjects.getPen(this.pen));
-        this.x = newX;
-        this.y = newY;
+        InterfaceCanvas.createLine(0, 0, 400, 400, 20, "red")
     }
 
     backward(distance) {
