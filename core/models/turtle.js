@@ -26,7 +26,6 @@ module.exports = class Turtle {
         let interpreterObject = this.Global.getInterpreterObjects();
         let newX = this.x + distance * Math.cos(this.degree2rad(this.rotation - 90));
         let newY = this.y + distance * Math.sin(this.degree2rad(this.rotation - 90));
-        // console.log(this.rotation, this.degree2rad(180 + this.rotation), "|", this.x, this.y, "|", newX, newY);
         if (this.isPenDown)
             InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, "white");
 

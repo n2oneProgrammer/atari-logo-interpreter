@@ -17,7 +17,6 @@ class ScreenManager {
             console.log(value);
             CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
-        // window.logoInterpreter.execute("TO func :x :y CS END TO run TO func2 :aaa CS END CS HT ST PU PD RT 10 LT 10 FD 10 BK 10 SETC 10 SETPN 2 SETPC 1 12 POTS ERALL END run");
         this.init();
     }
 
