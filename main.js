@@ -1,4 +1,8 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {
+    app,
+    BrowserWindow,
+    ipcMain
+} = require('electron');
 const path = require('path');
 const Runner = require("./core/runner.js");
 const InterfaceCanvas = require("./core/utilities/interfaceCanvas.js");
@@ -11,6 +15,13 @@ if (env === 'development') {
         hardResetMethod: 'exit'
     });
 }
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) {
+    // eslint-disable-line global-require
+    app.quit();
+}
+
 const runner = new Runner("commandline");
 const createWindow = () => {
     const mainWindow = new BrowserWindow({

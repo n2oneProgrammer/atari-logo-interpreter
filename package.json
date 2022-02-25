@@ -1,10 +1,13 @@
 {
     "name": "atari-logo-interpreter",
     "version": "0.0.1",
-    "description": "",
+    "description": "Atari logo interpreter",
     "main": "main.js",
     "scripts": {
-        "start": "electron .",
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish",
         "dev": "set NODE_ENV=development&&electron .",
         "shell": "node shell.js",
         "test": "jest"
@@ -13,7 +16,7 @@
         "type": "git",
         "url": "git+https://github.com/n2oneProgrammer/atari-logo-interpreter.git"
     },
-    "author": "",
+    "author": "jaanonim",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/n2oneProgrammer/atari-logo-interpreter/issues"
@@ -25,16 +28,47 @@
         "electron": "^16.0.1",
         "electron-reload": "^2.0.0-alpha.1",
         "electron-reloader": "^1.2.2",
+        "@electron-forge/cli": "^6.0.0-beta.63",
+        "@electron-forge/maker-deb": "^6.0.0-beta.63",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+        "@electron-forge/maker-zip": "^6.0.0-beta.63",
         "jest": "^27.4.3"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.0.0",
-        "prompt": "^1.2.0"
+        "electron-squirrel-startup": "^1.0.0"
     },
     "env": {
         "test": {
             "plugins": [
                 "@babel/plugin-transform-modules-commonjs"
+            ]
+        }
+    },
+    "config": {
+        "forge": {
+            "packagerConfig": {},
+            "makers": [{
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "atari-logo-interpreter"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
             ]
         }
     }
