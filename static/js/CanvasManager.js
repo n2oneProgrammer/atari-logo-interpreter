@@ -14,11 +14,11 @@ class CanvasManager {
         this.centerX = this.canvas.clientWidth / 2;
         this.centerY = this.canvas.clientHeight / 2;
         this.scale = 1;
-        this.rescalingCanvas();
+        this.background = document.createElement("canvas");
         this.drawableObjects = [];
+        this.rescalingCanvas();
         this.setListeners();
 
-        this.draw()
     }
 
     rescalingCanvas() {
@@ -29,34 +29,51 @@ class CanvasManager {
         const yscale = this.canvasContainer.clientHeight / this.canvas.height;
         this.centerX *= xscale;
         this.centerY *= yscale;
-
+        console.log(this.background);
         this.canvas.width = width;
         this.canvas.height = height;
+        this.background.width = width;
+        this.background.height = height;
     }
 
     addDrawableObject(object) {
         this.drawableObjects.push(object);
-        this.draw();
+        new Promise(() => this.drawOneLine(object));
     }
 
-    draw() {
-        const ctx = this.canvas.getContext('2d');
+    drawAll() {
+        const ctx = this.background.getContext('2d');
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const centerX = this.canvas.clientWidth / 2;
         const centerY = this.canvas.clientHeight / 2;
         this.drawableObjects.forEach(el => el.draw(ctx, centerX, centerY, this.scale));
+        this.flushImg();
+    }
+
+    drawOneLine(obj) {
+        const ctx = this.background.getContext('2d');
+        const centerX = this.canvas.clientWidth / 2;
+        const centerY = this.canvas.clientHeight / 2;
+        obj.draw(ctx, centerX, centerY, this.scale);
+        this.flushImg();
+    }
+
+    flushImg() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(this.background, 0, 0);
     }
 
     setListeners() {
         window.addEventListener("resize", () => {
             this.rescalingCanvas();
-            this.draw();
+            this.drawAll();
         });
         this.canvas.addEventListener("wheel", (e) => {
             e.preventDefault();
             this.scale += e.deltaY * -0.001;
             this.scale = Math.min(Math.max(.125, this.scale), 10);
-            this.draw()
+            new Promise(() => this.drawAll());
         });
     }
 
