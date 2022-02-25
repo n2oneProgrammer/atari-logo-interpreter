@@ -17,10 +17,8 @@ class DrawableLine {
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x2, y2);
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 1;
-        // ctx.strokeStyle = this.color;
-        // ctx.lineWidth = this.width;
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.width;
         ctx.stroke();
         ctx.closePath();
     }

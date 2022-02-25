@@ -8,4 +8,4 @@ module.exports = class Pen {
         this.color = color;
         console.log("Pen " + this.id + " set color to " + color);
     }
-}
+};
