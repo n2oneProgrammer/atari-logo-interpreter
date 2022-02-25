@@ -1,49 +1,83 @@
+const InterfaceCanvas = require("../utilities/interfaceCanvas.js");
+
 module.exports = class Turtle {
     constructor(id, x, y, rotation) {
+        this.Global = require("../utilities/global.js");
         this.id = id;
         this.x = x;
         this.y = y;
         this.rotation = rotation;
         this.color = 0;
         this.pen = 0;
+        this.isPenDown = true;
         this.visible = true;
     }
+
+    degree2rad(angle) {
+        return angle / 180 * Math.PI;
+    }
+
 
     copy(id) {
         return new Turtle(id, this.x, this.y, this.rotation);
     }
 
     forward(distance) {
-        console.log(this.id + " forward " + distance);
+        let interpreterObject = this.Global.getInterpreterObjects();
+        let newX = this.x + distance * Math.cos(this.degree2rad(this.rotation - 90));
+        let newY = this.y + distance * Math.sin(this.degree2rad(this.rotation - 90));
+        if (this.isPenDown)
+            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, "white");
+
+        this.x = newX;
+        this.y = newY;
     }
+
     backward(distance) {
-        console.log(this.id + " backward " + distance);
+        let interpreterObject = this.Global.getInterpreterObjects();
+        let newX = this.x - distance * Math.cos(this.degree2rad(this.rotation - 90));
+        let newY = this.y - distance * Math.sin(this.degree2rad(this.rotation - 90));
+        if (this.isPenDown)
+            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, "white");
+
+        this.x = newX;
+        this.y = newY;
     }
+
     right(angle) {
-        console.log(this.id + " right " + angle);
+        this.rotation += parseInt(angle);
     }
+
     left(angle) {
-        console.log(this.id + " left " + angle);
+        this.rotation -= parseInt(angle);
     }
+
     penup() {
-        console.log(this.id + "  up");
+        this.isPenDown = false;
     }
+
     pendown() {
-        console.log(this.id + "  down");
+        this.isPenDown = true;
     }
+
     pencolor(color) {
-        console.log(this.id + " pen color: " + color);
+        console.log(color);
+        this.pen = color;
     }
+
     hide() {
         console.log(this.id + " hide");
     }
+
     show() {
         console.log(this.id + " show");
     }
+
     setcolor(color) {
         console.log(this.id + " setcolor " + color);
     }
+
     setpen(pen) {
         console.log(this.id + " setpen " + pen);
     }
-}
+};

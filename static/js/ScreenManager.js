@@ -1,3 +1,6 @@
+import CanvasManager from "./CanvasManager.js";
+import DrawableLine from "./drawableLine.js";
+
 class ScreenManager {
     constructor() {
         this.settings = document.getElementById('settings');
@@ -8,7 +11,12 @@ class ScreenManager {
         this.toolbarButtons = {};
         this.terminalSections = {};
         this.terminalButtons = {};
-
+        this.commandLine = null;
+        this.commandLineButton = null;
+        window.logoInterpreter.handleCreateLine((event, value) => {
+            console.log(value);
+            CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
+        });
         this.init();
     }
 
@@ -20,25 +28,37 @@ class ScreenManager {
 
     getHTMLNodes() {
         this.toolbarButtonsNames.forEach(name => {
-            const button = { name, obj: document.getElementById(`bt-${name}`) };
+            const button = {name, obj: document.getElementById(`bt-${name}`)};
             this.toolbarButtons[name.replaceAll('-', '_')] = button;
         });
 
         this.terminalNames.forEach(name => {
-            const section = { name, obj: document.getElementById(`section-${name}`)};
-            const button = { name, obj: document.getElementById(`bt-${name}`)};
+            const section = {name, obj: document.getElementById(`section-${name}`)};
+            const button = {name, obj: document.getElementById(`bt-${name}`)};
             this.terminalSections[name.replaceAll('-', '_')] = section;
             this.terminalButtons[name.replaceAll('-', '_')] = button;
         });
+        this.commandLine = document.querySelector("#command_line");
+        this.commandLineButton = document.querySelector(".aside__input-confirm");
     }
 
     setListeners() {
         this.toolbarButtons.settings.obj.addEventListener('click', () => this.show(settings));
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
 
+        this.commandLine.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                this.executeCommand();
+            }
+
+        });
+        this.commandLineButton.addEventListener("click", () => {
+            this.executeCommand();
+        });
+
         Object.values(this.terminalButtons).forEach(({name, obj}) => {
             obj.addEventListener('click', () => {
-                
+
                 Object.values(this.terminalButtons).forEach(({obj}) => {
                     obj.classList.remove('aside__terminal-options-button--active');
                 });
@@ -49,6 +69,12 @@ class ScreenManager {
             });
         });
     }
+
+    executeCommand() {
+        window.logoInterpreter.execute(this.commandLine.value);
+        this.commandLine.value = "";
+    }
+
 
     hide(elem) {
         elem.style.display = 'none';

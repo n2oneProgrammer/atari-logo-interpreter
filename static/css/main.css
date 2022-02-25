@@ -32,9 +32,6 @@
     padding: 0;
 }
 
-.canvasContainer canvas {
-    background-color: white;
-}
 
 .aside {
     flex: 1;
