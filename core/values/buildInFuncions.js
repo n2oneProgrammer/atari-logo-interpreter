@@ -201,7 +201,7 @@ class setpn extends BuiltInFunction {
                 );
             }
             for (let i = 0; i < ids.length; i++) {
-                this.objcts.getTurtle(ids[i]).setcolor(v);
+                this.objcts.getTurtle(ids[i]).setpen(v);
             }
             return new RuntimeResult().success(null);
         });
@@ -297,4 +297,4 @@ module.exports = {
     setpc,
     pots,
     erall
-}
+};

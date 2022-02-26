@@ -1,6 +1,6 @@
 module.exports = class Pen {
     constructor(id) {
-        this.color = 0;
+        this.color = 7;
         this.id = id;
     }
 
