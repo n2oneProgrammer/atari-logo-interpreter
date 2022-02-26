@@ -1,4 +1,5 @@
 const InterfaceCanvas = require("../utilities/interfaceCanvas.js");
+const Color = require("../utilities/colors.js");
 
 module.exports = class Turtle {
     constructor(id, x, y, rotation) {
@@ -27,7 +28,7 @@ module.exports = class Turtle {
         let newX = this.x + distance * Math.cos(this.degree2rad(this.rotation - 90));
         let newY = this.y + distance * Math.sin(this.degree2rad(this.rotation - 90));
         if (this.isPenDown)
-            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, "white");
+            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, Color.getColor(interpreterObject.getPen(this.pen).color));
 
         this.x = newX;
         this.y = newY;
@@ -38,7 +39,7 @@ module.exports = class Turtle {
         let newX = this.x - distance * Math.cos(this.degree2rad(this.rotation - 90));
         let newY = this.y - distance * Math.sin(this.degree2rad(this.rotation - 90));
         if (this.isPenDown)
-            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, "white");
+            InterfaceCanvas.createLine(this.x, this.y, newX, newY, 1, Color.getColor(interpreterObject.getPen(this.pen).color));
 
         this.x = newX;
         this.y = newY;
@@ -74,10 +75,10 @@ module.exports = class Turtle {
     }
 
     setcolor(color) {
-        console.log(this.id + " setcolor " + color);
+        this.color = color;
     }
 
     setpen(pen) {
-        console.log(this.id + " setpen " + pen);
+        this.pen = pen;
     }
 };
