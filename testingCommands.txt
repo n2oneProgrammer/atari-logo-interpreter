@@ -5,3 +5,20 @@ FD 100 PU FD 100 PD FD 100
 SETC 1 SETPN 1 SETPC 1 1
 
 SETPC 0 8 SETPC 1 56 SETPC 2 96 SETPN 0 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 1 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 2 REPEAT 4 [FD 100 RT 90]
+
+TO kwadrat :bok
+    pu
+    lt 90 fd :bok/2
+    lt 90 fd :bok/2
+    lt 180
+    pd
+    REPEAT 4 [FD :bok RT 90]
+    pu
+    rt 90 fd :bok/2
+    lt 90 fd :bok/2
+    lt 180
+    pd
+end
+REPEAT 36 [kwadrat :i*10]
+
+SETPC 0 8 SETPC 1 56 SETPC 2 96 SETPN 0 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 1 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 2 REPEAT 4 [FD 100 RT 90]
