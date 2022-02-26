@@ -16,9 +16,16 @@ class CanvasManager {
         this.scale = 1;
         this.background = document.createElement("canvas");
         this.drawableObjects = [];
+
+        this.turtleImageShell = new Image(50);
+        this.turtleImageShell.src = "../img/turtleShell.png";
+        this.turtleImageShell.onload = () => this.flushImg();
+        this.turtleImageContours = new Image(50);
+        this.turtleImageContours.src = "../img/turtleContours.png";
+        this.turtleImageContours.onload = () => this.flushImg();
+
         this.rescalingCanvas();
         this.setListeners();
-
     }
 
     rescalingCanvas() {
@@ -58,11 +65,45 @@ class CanvasManager {
         this.flushImg();
     }
 
-    flushImg() {
+    async flushImg() {
+        const centerX = this.canvas.clientWidth / 2;
+        const centerY = this.canvas.clientHeight / 2;
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.drawImage(this.background, 0, 0);
+
+        let turtles = await window.logoInterpreter.getTurtles();
+        turtles.forEach(turtle => {
+            let width = 50;
+            let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
+            let x = centerX + turtle.x - width / 2;
+            let y = centerY + turtle.y - height / 2;
+            ctx.drawImage(this.drawTurtle(width, height, turtle.rotation, turtle.color), x, y);
+        });
+
     }
+
+    drawTurtle(width, height, rotation, color) {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+
+        ctx.translate(width * 0.5, height * 0.5);
+        ctx.rotate(rotation * Math.PI / 180);
+        ctx.translate(-width * 0.5, -height * 0.5);
+
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.drawImage(this.turtleImageShell, 0, 0, width, height);
+
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(this.turtleImageContours, 0, 0, width, height);
+        return canvas;
+    }
+
 
     setListeners() {
         window.addEventListener("resize", () => {

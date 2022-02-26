@@ -5,6 +5,10 @@ module.exports = class InterfaceCanvas {
         InterfaceCanvas.mainWindow.webContents.send("create-line", {x, y, x2, y2, width, color})
     }
 
+    static refreshCanvas() {
+        InterfaceCanvas.mainWindow.webContents.send("refresh-canvas")
+    }
+
     static setWindow(mainWindow) {
         InterfaceCanvas.mainWindow = mainWindow;
     }

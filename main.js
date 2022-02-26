@@ -29,6 +29,11 @@ const createWindow = () => {
             console.error(res.error.toString());
     });
 
+    ipcMain.handle('get-turtles', (event) => {
+        const Global = require("./core/utilities/global.js");
+        const turtles = Global.getInterpreterObjects().getTurtles();
+        return turtles.map(obj=>obj.serializable());
+    });
 
     mainWindow.loadFile('static/pages/index.html');
 };

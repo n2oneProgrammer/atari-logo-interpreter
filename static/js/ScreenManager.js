@@ -17,6 +17,9 @@ class ScreenManager {
             console.log(value);
             CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
+        window.logoInterpreter.handleRefreshCanvas((event) => {
+            CanvasManager.getInstance().flushImg()
+        });
         this.init();
     }
 

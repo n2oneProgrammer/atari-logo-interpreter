@@ -47,10 +47,12 @@ module.exports = class Turtle {
 
     right(angle) {
         this.rotation += parseInt(angle);
+        InterfaceCanvas.refreshCanvas();
     }
 
     left(angle) {
         this.rotation -= parseInt(angle);
+        InterfaceCanvas.refreshCanvas();
     }
 
     penup() {
@@ -68,17 +70,33 @@ module.exports = class Turtle {
 
     hide() {
         console.log(this.id + " hide");
+        InterfaceCanvas.refreshCanvas();
     }
 
     show() {
         console.log(this.id + " show");
+        InterfaceCanvas.refreshCanvas();
     }
 
     setcolor(color) {
         this.color = color;
+        InterfaceCanvas.refreshCanvas();
     }
 
     setpen(pen) {
         this.pen = pen;
+    }
+
+    serializable() {
+        return {
+            id: this.id,
+            x: this.x,
+            y: this.y,
+            rotation: this.rotation,
+            color: Color.getColor(this.color),
+            pen: this.pen,
+            isPenDown: this.isPenDown,
+            visible: this.visible
+        }
     }
 };
