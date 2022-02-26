@@ -135,7 +135,7 @@ describe('Interpreter', () => {
             new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text"))));
         let result = interpreter.visit(node, null);
         expect(result.value).toBeInstanceOf(NumberValue);
-        expect(result.value.value).toBe(0.5);
+        expect(result.value.value).toBe(0);
     });
 
     it('Visit UnaryOperationNode plus', () => {

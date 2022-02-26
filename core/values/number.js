@@ -78,7 +78,7 @@ module.exports = class NumberValue extends Value {
                 };
             }
             return {
-                value: new NumberValue(this.value / other.value),
+                value: new NumberValue(Math.floor(this.value / other.value)),
                 error: null
             };
         }
