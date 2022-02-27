@@ -11,7 +11,6 @@ if (env === 'development') {
         hardResetMethod: 'exit'
     });
 }
-const runner = new Runner("commandline");
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -23,6 +22,8 @@ const createWindow = () => {
     });
 
     InterfaceCanvas.setWindow(mainWindow);
+    const runner = new Runner("commandline");
+
     ipcMain.on('execute', (event, command) => {
         let res = runner.run(command);
         if (res.error !== null)
@@ -32,7 +33,7 @@ const createWindow = () => {
     ipcMain.handle('get-turtles', (event) => {
         const Global = require("./core/utilities/global.js");
         const turtles = Global.getInterpreterObjects().getTurtles();
-        return turtles.map(obj=>obj.serializable());
+        return turtles.map(obj => obj.serializable());
     });
 
     mainWindow.loadFile('static/pages/index.html');

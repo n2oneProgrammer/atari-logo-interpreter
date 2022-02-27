@@ -13,12 +13,14 @@ class ScreenManager {
         this.terminalButtons = {};
         this.commandLine = null;
         this.commandLineButton = null;
-        window.logoInterpreter.handleCreateLine((event, value) => {
-            console.log(value);
-            CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
+        window.logoInterpreter.handleCreateLine(async (event, value) => {
+            await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
         window.logoInterpreter.handleRefreshCanvas((event) => {
             CanvasManager.getInstance().flushImg()
+        });
+        window.logoInterpreter.handleRefreshTurtles((event, turtles) => {
+            CanvasManager.getInstance().refreshTurtles(turtles)
         });
         this.init();
     }

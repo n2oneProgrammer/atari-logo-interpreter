@@ -16,14 +16,19 @@ class CanvasManager {
         this.scale = 1;
         this.background = document.createElement("canvas");
         this.drawableObjects = [];
-
+        this.turtles = [];
         this.turtleImageShell = new Image(50);
         this.turtleImageShell.src = "../img/turtleShell.png";
-        this.turtleImageShell.onload = () => this.flushImg();
+        this.turtleImageShell.onload = async () => {
+            let turtles = await window.logoInterpreter.getTurtles();
+            this.refreshTurtles(turtles);
+        };
         this.turtleImageContours = new Image(50);
         this.turtleImageContours.src = "../img/turtleContours.png";
-        this.turtleImageContours.onload = () => this.flushImg();
-
+        this.turtleImageContours.onload = async () => {
+            let turtles = await window.logoInterpreter.getTurtles();
+            this.refreshTurtles(turtles);
+        };
         this.rescalingCanvas();
         this.setListeners();
     }
@@ -43,9 +48,9 @@ class CanvasManager {
         this.background.height = height;
     }
 
-    addDrawableObject(object) {
+    async addDrawableObject(object) {
         this.drawableObjects.push(object);
-        new Promise(() => this.drawOneLine(object));
+        await this.drawOneLine(object);
     }
 
     drawAll() {
@@ -57,12 +62,12 @@ class CanvasManager {
         this.flushImg();
     }
 
-    drawOneLine(obj) {
+    async drawOneLine(obj) {
         const ctx = this.background.getContext('2d');
         const centerX = this.canvas.clientWidth / 2;
         const centerY = this.canvas.clientHeight / 2;
         obj.draw(ctx, centerX, centerY, this.scale);
-        this.flushImg();
+
     }
 
     async flushImg() {
@@ -71,16 +76,11 @@ class CanvasManager {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.drawImage(this.background, 0, 0);
-
-        let turtles = await window.logoInterpreter.getTurtles();
-        turtles.forEach(turtle => {
-            let width = 50;
+        this.turtles.forEach(turtle => {
+            let width = 20;
             let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
-            let x = centerX + turtle.x - width / 2;
-            let y = centerY + turtle.y - height / 2;
-            ctx.drawImage(this.drawTurtle(width, height, turtle.rotation, turtle.color), x, y);
-        });
-
+            ctx.drawImage(turtle.turtle, centerX + turtle.x - width / 2, centerY + turtle.y - height / 2);
+        })
     }
 
     drawTurtle(width, height, rotation, color) {
@@ -104,11 +104,26 @@ class CanvasManager {
         return canvas;
     }
 
+    refreshTurtles(turtles) {
+        this.turtles = turtles.map(turtle => {
+            console.log(turtle);
+            let width = 20;
+            let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
+            return {
+                turtle: this.drawTurtle(width, height, turtle.rotation, turtle.color),
+                x: turtle.x,
+                y: turtle.y
+            };
+        });
+        this.flushImg();
+        console.log(this.turtles);
+    }
+
 
     setListeners() {
         window.addEventListener("resize", () => {
             this.rescalingCanvas();
-            this.drawAll();
+            new Promise(() => this.drawAll());
         });
         this.canvas.addEventListener("wheel", (e) => {
             e.preventDefault();

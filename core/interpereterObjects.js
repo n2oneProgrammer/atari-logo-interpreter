@@ -1,5 +1,6 @@
 const Turtle = require('./models/turtle');
 const Pen = require('./models/pen');
+const InterfaceCanvas = require("./utilities/interfaceCanvas.js");
 
 module.exports = class InterpereterObjects {
     constructor() {
@@ -17,6 +18,7 @@ module.exports = class InterpereterObjects {
 
     createTurtle(id, x, y, rotation) {
         this.turtles[this.turtles.length] = new Turtle(id, x, y, rotation);
+        InterfaceCanvas.refreshTurtles();
         return this.turtles[this.turtles.length - 1];
     }
 

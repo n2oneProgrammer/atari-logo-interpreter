@@ -32,6 +32,7 @@ module.exports = class Turtle {
 
         this.x = newX;
         this.y = newY;
+        InterfaceCanvas.refreshTurtles();
     }
 
     backward(distance) {
@@ -47,12 +48,12 @@ module.exports = class Turtle {
 
     right(angle) {
         this.rotation += parseInt(angle);
-        InterfaceCanvas.refreshCanvas();
+        InterfaceCanvas.refreshTurtles();
     }
 
     left(angle) {
         this.rotation -= parseInt(angle);
-        InterfaceCanvas.refreshCanvas();
+        InterfaceCanvas.refreshTurtles();
     }
 
     penup() {
@@ -70,17 +71,17 @@ module.exports = class Turtle {
 
     hide() {
         console.log(this.id + " hide");
-        InterfaceCanvas.refreshCanvas();
+        InterfaceCanvas.refreshTurtles();
     }
 
     show() {
         console.log(this.id + " show");
-        InterfaceCanvas.refreshCanvas();
+        InterfaceCanvas.refreshTurtles();
     }
 
     setcolor(color) {
         this.color = color;
-        InterfaceCanvas.refreshCanvas();
+        InterfaceCanvas.refreshTurtles();
     }
 
     setpen(pen) {

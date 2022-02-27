@@ -9,6 +9,15 @@ module.exports = class InterfaceCanvas {
         InterfaceCanvas.mainWindow.webContents.send("refresh-canvas")
     }
 
+    static refreshTurtles() {
+        const Global = require("./global.js");
+        let turtles = Global.getInterpreterObjects()?.getTurtles();
+        if (turtles == null) {
+            turtles = [];
+        }
+        InterfaceCanvas.mainWindow.webContents.send("refresh-turtles", turtles.map(obj => obj.serializable()))
+    }
+
     static setWindow(mainWindow) {
         InterfaceCanvas.mainWindow = mainWindow;
     }
