@@ -6,7 +6,7 @@ module.exports = class InterfaceCanvas {
     }
 
     static refreshCanvas() {
-        InterfaceCanvas.mainWindow.webContents.send("refresh-canvas")
+        InterfaceCanvas.mainWindow.webContents.send("refresh-canvas");
     }
 
     static refreshTurtles() {

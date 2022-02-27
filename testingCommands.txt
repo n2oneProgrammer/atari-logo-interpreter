@@ -44,5 +44,4 @@ TO paleta :bok
 end
 paleta 80
 
-
-ht REPEAT 1000000 [ cs TELL [0 1 2 3] ht RT 10*:i EACH [RT 90*WHO] FD 100 LT 90 FD 100 ]
+TELL [0 1 2] EACH [RT 90*WHO FD 100 TELL WHO*2 RT 30*WHO FD 100]
