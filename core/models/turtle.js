@@ -44,6 +44,7 @@ module.exports = class Turtle {
 
         this.x = newX;
         this.y = newY;
+        InterfaceCanvas.refreshTurtles();
     }
 
     right(angle) {
@@ -70,12 +71,12 @@ module.exports = class Turtle {
     }
 
     hide() {
-        console.log(this.id + " hide");
+        this.visible = false;
         InterfaceCanvas.refreshTurtles();
     }
 
     show() {
-        console.log(this.id + " show");
+        this.visible = true;
         InterfaceCanvas.refreshTurtles();
     }
 

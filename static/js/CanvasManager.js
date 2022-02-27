@@ -105,7 +105,7 @@ class CanvasManager {
     }
 
     refreshTurtles(turtles) {
-        this.turtles = turtles.map(turtle => {
+        this.turtles = turtles.filter(turtle=>turtle.visible).map(turtle => {
             console.log(turtle);
             let width = 30;
             let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
