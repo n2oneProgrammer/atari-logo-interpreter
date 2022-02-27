@@ -32,6 +32,7 @@ module.exports = class Turtle {
 
         this.x = newX;
         this.y = newY;
+        InterfaceCanvas.refreshTurtles();
     }
 
     backward(distance) {
@@ -43,14 +44,17 @@ module.exports = class Turtle {
 
         this.x = newX;
         this.y = newY;
+        InterfaceCanvas.refreshTurtles();
     }
 
     right(angle) {
         this.rotation += parseInt(angle);
+        InterfaceCanvas.refreshTurtles();
     }
 
     left(angle) {
         this.rotation -= parseInt(angle);
+        InterfaceCanvas.refreshTurtles();
     }
 
     penup() {
@@ -67,18 +71,34 @@ module.exports = class Turtle {
     }
 
     hide() {
-        console.log(this.id + " hide");
+        this.visible = false;
+        InterfaceCanvas.refreshTurtles();
     }
 
     show() {
-        console.log(this.id + " show");
+        this.visible = true;
+        InterfaceCanvas.refreshTurtles();
     }
 
     setcolor(color) {
         this.color = color;
+        InterfaceCanvas.refreshTurtles();
     }
 
     setpen(pen) {
         this.pen = pen;
+    }
+
+    serializable() {
+        return {
+            id: this.id,
+            x: this.x,
+            y: this.y,
+            rotation: this.rotation,
+            color: Color.getColor(this.color),
+            pen: this.pen,
+            isPenDown: this.isPenDown,
+            visible: this.visible
+        }
     }
 };
