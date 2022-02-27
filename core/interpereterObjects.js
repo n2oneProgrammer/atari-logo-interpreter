@@ -47,4 +47,8 @@ module.exports = class InterpereterObjects {
         this.turtles.push(newTurtle);
         return newTurtle;
     }
+    removeAllTurtles(){
+        this.turtles = [];
+        this.createTurtle(0, 0, 0, 0);
+    }
 };

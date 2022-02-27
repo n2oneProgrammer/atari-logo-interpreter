@@ -66,7 +66,6 @@ module.exports = class Turtle {
     }
 
     pencolor(color) {
-        console.log(color);
         this.pen = color;
     }
 

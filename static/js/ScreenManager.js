@@ -22,6 +22,9 @@ class ScreenManager {
         window.logoInterpreter.handleRefreshTurtles((event, turtles) => {
             CanvasManager.getInstance().refreshTurtles(turtles)
         });
+        window.logoInterpreter.handleClearCanvas(async (event) => {
+            await CanvasManager.getInstance().clearCanvas();
+        });
         this.init();
     }
 

@@ -27,4 +27,22 @@ TELL [0 1] EACH [RT WHO*90 FD 100]
 
 TELL [0 1 2 3] EACH [RT 90*WHO] REPEAT 90 [FD 1 RT 1]
 TELL [0 1 2 3] RT 45 EACH [RT 90*WHO] FD 100 LT 90 FD 100
+TO kwadrat :bok
+    REPEAT :bok/2 [FD :bok rt 90 fd 1 rt 90 FD :bok lt 90 fd 1 lt 90]
+end
 
+TO ROW :bok :startcolor
+    REPEAT 8 [SETPC 0 :startcolor+:i kwadrat :bok/8]
+end
+
+TO paleta :bok
+    HT
+    REPEAT 16[
+        ROW :bok :i*8
+        pu lt 90 fd :bok rt 90 bk :bok/8 pd
+    ]
+end
+paleta 80
+
+
+ht REPEAT 1000000 [ cs TELL [0 1 2 3] ht RT 10*:i EACH [RT 90*WHO] FD 100 LT 90 FD 100 ]
