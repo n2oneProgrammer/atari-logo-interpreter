@@ -77,9 +77,9 @@ class CanvasManager {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.drawImage(this.background, 0, 0);
         this.turtles.forEach(turtle => {
-            let width = 20;
+            let width = 30;
             let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
-            ctx.drawImage(turtle.turtle, centerX + turtle.x - width / 2, centerY + turtle.y - height / 2);
+            ctx.drawImage(turtle.turtle, centerX + turtle.x * this.scale - width / 2, centerY + turtle.y * this.scale - height / 2);
         })
     }
 
@@ -107,7 +107,7 @@ class CanvasManager {
     refreshTurtles(turtles) {
         this.turtles = turtles.map(turtle => {
             console.log(turtle);
-            let width = 20;
+            let width = 30;
             let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
             return {
                 turtle: this.drawTurtle(width, height, turtle.rotation, turtle.color),
