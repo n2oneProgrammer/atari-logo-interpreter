@@ -1,6 +1,7 @@
 import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
+import {ErrorsTab} from "./ErrorsTab.js";
 
 class ScreenManager {
     constructor() {
@@ -14,6 +15,17 @@ class ScreenManager {
         this.terminalButtons = {};
         this.commandLine = null;
         this.commandLineButton = null;
+        this.init();
+    }
+
+    init() {
+        this.getHTMLNodes();
+        this.setListeners();
+        this.setHandlers();
+        this.terminalSections.history.scrollTop = this.terminalSections.history.scrollHeight;
+    }
+
+    setHandlers() {
         window.logoInterpreter.handleCreateLine(async (event, value) => {
             await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
@@ -26,14 +38,11 @@ class ScreenManager {
         window.logoInterpreter.handleClearCanvas(async (event) => {
             await CanvasManager.getInstance().clearCanvas();
         });
-        this.init();
+        window.logoInterpreter.handleAddError(async (event, value) => {
+            await ErrorsTab.getInstance().addError(value);
+        });
     }
 
-    init() {
-        this.getHTMLNodes();
-        this.setListeners();
-        this.terminalSections.history.scrollTop = this.terminalSections.history.scrollHeight;
-    }
 
     getHTMLNodes() {
         this.toolbarButtonsNames.forEach(name => {
