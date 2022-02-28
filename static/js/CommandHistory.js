@@ -1,3 +1,5 @@
+import {ConsoleOutput} from "./ConsoleOutput.js";
+
 export class CommandHistory {
     static #instance = null;
 
@@ -14,6 +16,7 @@ export class CommandHistory {
     }
 
     addCommand(command) {
+        ConsoleOutput.getInstance().addLine(command, "NORMAL");
         this.commands.push(command);
         this.refreshCommandList();
     }

@@ -1,7 +1,7 @@
 import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
-import {ErrorsTab} from "./ErrorsTab.js";
+import {ConsoleOutput} from "./ConsoleOutput.js";
 
 class ScreenManager {
     constructor() {
@@ -38,8 +38,11 @@ class ScreenManager {
         window.logoInterpreter.handleClearCanvas(async (event) => {
             await CanvasManager.getInstance().clearCanvas();
         });
-        window.logoInterpreter.handleAddError(async (event, value) => {
-            await ErrorsTab.getInstance().addError(value);
+        window.logoInterpreter.handleAddError((event, value) => {
+            ConsoleOutput.getInstance().addLine(value, "ERROR");
+        });
+        window.logoInterpreter.handleAddOutput((event, value) => {
+            ConsoleOutput.getInstance().addLine(value, "NORMAL");
         });
     }
 

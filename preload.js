@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('logoInterpreter', {
     handleRefreshCanvas: (callback) => ipcRenderer.on("refresh-canvas", callback),
     handleRefreshTurtles: (callback) => ipcRenderer.on("refresh-turtles", callback),
     handleClearCanvas: (callback) => ipcRenderer.on("clear-canvas", callback),
-    handleAddError: (callback) => ipcRenderer.on("add-error", callback)
+    handleAddError: (callback) => ipcRenderer.on("add-error", callback),
+    handleAddOutput: (callback) => ipcRenderer.on("add-output", callback)
 });
