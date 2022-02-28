@@ -18,6 +18,10 @@ module.exports = class InterfaceCanvas {
         InterfaceCanvas.mainWindow.webContents.send("refresh-turtles", turtles.map(obj => obj.serializable()))
     }
 
+    static sendOutput(msg) {
+        InterfaceCanvas.mainWindow.webContents.send("add-output", msg);
+    }
+
     static clearCanvas() {
         InterfaceCanvas.mainWindow.webContents.send("clear-canvas")
     }

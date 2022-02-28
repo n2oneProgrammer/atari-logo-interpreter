@@ -6,7 +6,7 @@ const InterfaceCanvas = require("./interfaceCanvas.js");
 module.exports = class Interface {
 
     static print(str) {
-        console.log(str)
+        InterfaceCanvas.sendOutput(str);
     }
 
     static clear() {

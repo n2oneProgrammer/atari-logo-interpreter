@@ -38,8 +38,11 @@ const createWindow = () => {
 
     ipcMain.on('execute', (event, command) => {
         let res = runner.run(command);
-        if (res.error !== null)
-            console.error(res.error.toString());
+        if (res.error !== null) {
+            let errorMsg = res.error.toString();
+            console.error(errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
+        }
     });
 
     ipcMain.handle('get-turtles', (event) => {
