@@ -63,7 +63,6 @@ class ScreenManager {
         this.commandLine = document.querySelector("#command_line");
         this.multiCommandLine = document.querySelector(".aside__multiline-multiline");
         this.commandLineButton = document.querySelector(".aside__input-confirm");
-
     }
 
     setListeners() {
@@ -74,7 +73,6 @@ class ScreenManager {
             if (e.key === "Enter") {
                 this.executeCommand();
             }
-
         });
         this.commandLineButton.addEventListener("click", () => {
             this.executeCommand();

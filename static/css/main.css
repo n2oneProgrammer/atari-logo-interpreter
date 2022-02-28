@@ -157,7 +157,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100%
 }
 
 .aside__multiline {
@@ -167,7 +167,7 @@
 
 .multiline-button {
     width: 100% !important;
-    height: 42px;
+    height: 42px
 }
 
 .aside__multiline-multiline {
