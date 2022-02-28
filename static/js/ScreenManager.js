@@ -8,13 +8,14 @@ class ScreenManager {
         this.settings = document.getElementById('settings');
 
         this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
-        this.terminalNames = ['history', 'logs', 'errors', 'editor'];
+        this.terminalNames = ['history', 'logs', 'editor', 'multiline'];
 
         this.toolbarButtons = {};
         this.terminalSections = {};
         this.terminalButtons = {};
         this.commandLine = null;
         this.commandLineButton = null;
+        this.isMultiline = false;
         this.init();
     }
 
@@ -60,6 +61,7 @@ class ScreenManager {
             this.terminalButtons[name.replaceAll('-', '_')] = button;
         });
         this.commandLine = document.querySelector("#command_line");
+        this.multiCommandLine = document.querySelector(".aside__multiline-multiline");
         this.commandLineButton = document.querySelector(".aside__input-confirm");
     }
 
@@ -71,7 +73,6 @@ class ScreenManager {
             if (e.key === "Enter") {
                 this.executeCommand();
             }
-
         });
         this.commandLineButton.addEventListener("click", () => {
             this.executeCommand();
@@ -86,14 +87,33 @@ class ScreenManager {
 
                 this.terminalButtons[name].obj.classList.add('aside__terminal-options-button--active');
                 Object.values(this.terminalSections).forEach(({obj}) => this.hide(obj));
+
+                if (name === "multiline") {
+                    this.commandLineButton.classList.add("multiline-button");
+                    this.commandLine.style.display = "none";
+                    if (!this.isMultiline) {
+                        this.multiCommandLine.value = "";
+                    }
+                    this.isMultiline = true;
+                } else {
+                    this.commandLine.style.display = "block";
+                    this.commandLineButton.classList.remove("multiline-button");
+                    this.isMultiline = false;
+                }
+
                 this.show(this.terminalSections[name].obj, 'flex');
             });
         });
     }
 
     executeCommand() {
-        CommandHistory.getInstance().addCommand(this.commandLine.value);
-        window.logoInterpreter.execute(this.commandLine.value);
+
+        let command = this.commandLine.value;
+        if (this.isMultiline) {
+            command = this.multiCommandLine.value;
+        }
+        CommandHistory.getInstance().addCommand(command);
+        window.logoInterpreter.execute(command);
         this.commandLine.value = "";
     }
 
