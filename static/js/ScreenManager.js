@@ -1,5 +1,6 @@
 import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
+import {CommandHistory} from "./CommandHistory.js";
 
 class ScreenManager {
     constructor() {
@@ -79,6 +80,7 @@ class ScreenManager {
     }
 
     executeCommand() {
+        CommandHistory.getInstance().addCommand(this.commandLine.value);
         window.logoInterpreter.execute(this.commandLine.value);
         this.commandLine.value = "";
     }
