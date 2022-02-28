@@ -105,7 +105,7 @@ class CanvasManager {
     }
 
     refreshTurtles(turtles) {
-        this.turtles = turtles.filter(turtle=>turtle.visible).map(turtle => {
+        this.turtles = turtles.filter(turtle => turtle.visible).map(turtle => {
             console.log(turtle);
             let width = 30;
             let height = width * this.turtleImageShell.naturalHeight / this.turtleImageShell.naturalWidth;
@@ -119,6 +119,13 @@ class CanvasManager {
         console.log(this.turtles);
     }
 
+    async clearCanvas() {
+        const ctx = this.background.getContext('2d');
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.turtles = [];
+        let turtles = await window.logoInterpreter.getTurtles();
+        this.refreshTurtles(turtles);
+    }
 
     setListeners() {
         window.addEventListener("resize", () => {
