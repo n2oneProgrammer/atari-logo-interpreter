@@ -6,6 +6,12 @@ import {ConsoleOutput} from "./ConsoleOutput.js";
 class ScreenManager {
     constructor() {
         this.settings = document.getElementById('settings');
+        this.pin = document.getElementById('bt-pin');
+        this.bar = document.getElementById('bar');
+        this.pin.addEventListener('click', () => {
+            this.bar.classList.toggle('tb');
+            this.pin.classList.toggle('o');
+        });
 
         this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
         this.terminalNames = ['history', 'logs', 'editor', 'multiline'];

@@ -19,12 +19,12 @@
                 <span class="logo__logotype">aliapg</span>
             </section>
             <section class="aside__options">
-                <div class="aside__toolbar">
+                <div id="bar" class="aside__toolbar">
                     <i id="bt-settings" class="fas fa-cog"></i>
                     <i id="bt-download" class="aside__toolbar-icon fa-solid fa-download"></i>
                     <i id="bt-save" class="aside__toolbar-icon fa-solid fa-floppy-disk"></i>
                     <i id="bt-upload" class="aside__toolbar-icon fa-solid fa-upload"></i>
-                    <i class="aside__toolbar-icon aside__toolbar-icon--circle fa-solid fa-thumbtack"></i>
+                    <i id="bt-pin" class="aside__toolbar-icon aside__toolbar-icon--circle fa-solid fa-thumbtack"></i>
                 </div>
             </section>
         </header>
@@ -42,13 +42,16 @@
             </section>
             <section id="section-editor" class="aside__terminal-section aside__editor">
                 <section class="aside__editor-container">
-                    <select id="procedures" class="aside__editor-select">
-                        <option value="procedure-1">procedure-1</option>
-                        <option value="procedure-2">procedure-2</option>
-                    </select>
-                    <textarea id="editor-textarea" class="aside__editor-textarea">
-
-            </textarea>
+                    <select id="procedures" class="aside__editor-select"></select>
+                    <input
+                        id="procedure-name"
+                        class="aside__editor-input"
+                        type="text"
+                        value="procedure-name"
+                        spellcheck="false"
+                    >
+                    <ul id="procedure-arguments" class="aside__editor-arguments"></ul>
+                    <textarea id="editor-textarea" class="aside__editor-textarea"></textarea>
                 </section>
             </section>
         </section>
