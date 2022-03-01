@@ -329,4 +329,140 @@ describe('Interpreter', () => {
         expect(result.value).toEqual(null);
         expect(result.error).toBeInstanceOf(RuntimeError);
     })
+
+    it('Visit FunctionNode', () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter(context);
+        let node = new FunctionNode(
+            new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+            [],
+            new ListNode([
+                    new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                ],
+                new Position(0, 0, -1, "fn", "text"),
+                new Position(1, 0, -1, "fn", "text")
+            ));
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(mock).toHaveBeenCalledTimes(0);
+    })
+
+    it('Visit FunctionNode Call', () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter(context);
+        let node =
+            new ListNode([
+                new FunctionNode(
+                    new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+                    [],
+                    new ListNode([
+                            new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                        ],
+                        new Position(0, 0, -1, "fn", "text"),
+                        new Position(1, 0, -1, "fn", "text")
+                    )),
+                new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(2, 0, 20, "fn", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dolor."))), [])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(mock).toHaveBeenCalledTimes(1);
+    })
+
+    it('Visit FunctionNode args', () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFuncArgs(mock, context);
+
+        let interpreter = new Interpeter(context);
+        let node =
+            new ListNode([
+                new FunctionNode(
+                    new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+                    [new Token(Token.TYPE.IDENTIFIER, 'v', null, new Position(-1, 0, -1, "fn", "text"))],
+                    new ListNode([
+                            new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [new VarNode(new Token(Token.TYPE.IDENTIFIER, 'v', null, new Position(-1, 0, -1, "fn", "text")))])
+                        ],
+                        new Position(0, 0, -1, "fn", "text"),
+                        new Position(1, 0, -1, "fn", "text")
+                    )),
+                new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(2, 0, 20, "fn", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dolor."))), [new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text")))])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.error).toEqual(null);
+        expect(result.value).toEqual(null);
+        expect(mock).toHaveBeenCalledTimes(1);
+        expect(mock).toHaveBeenCalledWith([0], 1);
+    })
+
+    it('Visit FunctionNode Invalid number of args', () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter(context);
+        let node =
+            new ListNode([
+                new FunctionNode(
+                    new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+                    [],
+                    new ListNode([
+                            new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                        ],
+                        new Position(0, 0, -1, "fn", "text"),
+                        new Position(1, 0, -1, "fn", "text")
+                    )),
+                new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(2, 0, 20, "fn", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dolor."))), [new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text")))])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toBeInstanceOf(RuntimeError);
+    })
+
+    it('Visit FunctionNode Error', () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        let interpreter = new Interpeter(context);
+
+        let node =
+            new ListNode([
+                new FunctionNode(
+                    new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+                    [],
+                    new ListNode([
+                            new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'xd', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                        ],
+                        new Position(0, 0, -1, "fn", "text"),
+                        new Position(1, 0, -1, "fn", "text")
+                    )),
+                new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(2, 0, 20, "fn", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dolor."))), [])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toBeInstanceOf(RuntimeError);
+    })
 });
