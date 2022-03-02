@@ -517,4 +517,38 @@ describe('Interpreter', () => {
         expect(mock).toHaveBeenCalledTimes(1);
         expect(mock).toHaveBeenCalledWith([1, 2, 190, 0]);
     })
+
+    it("Visit EachNode", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+        let objects = new InterpereterObjects();
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter(objects);
+        let node =
+            new ListNode([
+                new TellNode([
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 190, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 0, null, new Position(-1, 0, -1, "fn", "text")))
+                ]),
+                new EachNode(
+                    new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                )
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(context.symbolTable.get('$who').data).toEqual([1, 2, 190, 0]);
+        expect(mock).toHaveBeenCalledTimes(4);
+        expect(mock).toHaveBeenCalledWith([1]);
+        expect(mock).toHaveBeenCalledWith([2]);
+        expect(mock).toHaveBeenCalledWith([190]);
+        expect(mock).toHaveBeenCalledWith([0]);
+    })
 });
