@@ -29,7 +29,7 @@ const {
     BuiltInFunction
 } = require("../../core/values/function");
 const RuntimeResult = require("../../core/utilities/runtimeResult");
-
+const InterpereterObjects = require("../../core/interpereterObjects");
 
 describe('Interpreter', () => {
 
@@ -107,7 +107,7 @@ describe('Interpreter', () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
         context.symbolTable.set("a", new NumberValue(1));
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new VarNode(new Token(Token.TYPE.IDENTIFIER, 'a', null, new Position(-1, 0, -1, "fn", "text")));
         let result = interpreter.visit(node, context);
         expect(result.value).toBeInstanceOf(NumberValue);
@@ -118,7 +118,7 @@ describe('Interpreter', () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
         context.symbolTable.set("a", new WhoValue([0, 1]));
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new VarNode(new Token(Token.TYPE.IDENTIFIER, 'a', null, new Position(-1, 0, -1, "fn", "text")));
         let result = interpreter.visit(node, context);
         expect(result.value).toBeInstanceOf(WhoValue);
@@ -130,7 +130,7 @@ describe('Interpreter', () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
         context.symbolTable.set("a", new FunctionValue("a", [], [], "", ""));
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new VarNode(new Token(Token.TYPE.IDENTIFIER, 'a', null, new Position(-1, 0, -1, "fn", "text")));
         let result = interpreter.visit(node, context);
         expect(result.value).toBeInstanceOf(FunctionValue);
@@ -209,7 +209,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFunc(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), []);
         let result = interpreter.visit(node, context);
 
@@ -225,7 +225,7 @@ describe('Interpreter', () => {
 
         let mock = jest.fn();
         testFuncArgs(mock, context);
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
 
         let node = new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text")))]);
         let result = interpreter.visit(node, context);
@@ -244,7 +244,7 @@ describe('Interpreter', () => {
 
         let mock = jest.fn();
         testFuncArgs(mock, context);
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
 
         let node = new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), []);
         let result = interpreter.visit(node, context);
@@ -263,7 +263,7 @@ describe('Interpreter', () => {
         context.symbolTable.set("a", new NumberValue(1));
         context.symbolTable.set("b", new NumberValue(2));
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new ListNode([
             new VarNode(new Token(Token.TYPE.IDENTIFIER, 'a', null, new Position(-1, 0, -1, "fn", "text"))),
             new VarNode(new Token(Token.TYPE.IDENTIFIER, 'b', null, new Position(-1, 0, -1, "fn", "text"))),
@@ -283,7 +283,7 @@ describe('Interpreter', () => {
 
         context.symbolTable.set("a", new NumberValue(1));
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new ListNode([
             new VarNode(new Token(Token.TYPE.IDENTIFIER, 'a', null, new Position(-1, 0, -1, "fn", "text"))),
             new VarNode(new Token(Token.TYPE.IDENTIFIER, 'b', null, new Position(-1, 0, -1, "fn", "text")))
@@ -301,7 +301,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFunc(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new RepeatNode(
             new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text"))),
             new ListNode([
@@ -318,7 +318,7 @@ describe('Interpreter', () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new RepeatNode(
             new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text"))),
             new ListNode([
@@ -338,7 +338,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFunc(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node = new FunctionNode(
             new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
             [],
@@ -363,7 +363,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFunc(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node =
             new ListNode([
                 new FunctionNode(
@@ -392,7 +392,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFuncArgs(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node =
             new ListNode([
                 new FunctionNode(
@@ -422,7 +422,7 @@ describe('Interpreter', () => {
         let mock = jest.fn();
         testFunc(mock, context);
 
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
         let node =
             new ListNode([
                 new FunctionNode(
@@ -445,7 +445,7 @@ describe('Interpreter', () => {
     it('Visit FunctionNode Error', () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
-        let interpreter = new Interpeter(context);
+        let interpreter = new Interpeter(null);
 
         let node =
             new ListNode([
@@ -464,5 +464,57 @@ describe('Interpreter', () => {
 
         expect(result.value).toEqual(null);
         expect(result.error).toBeInstanceOf(RuntimeError);
+    })
+
+    //TODO: ED node
+
+    it("Visit TellNode", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+        let objects = new InterpereterObjects();
+
+        let interpreter = new Interpeter(objects);
+        let node =
+            new ListNode([
+                new TellNode([
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text")))
+                ])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(context.symbolTable.get('$who').data).toEqual([1, 2]);
+    })
+
+    it("Visit TellNode call", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+        let objects = new InterpereterObjects();
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter(objects);
+        let node =
+            new ListNode([
+                new TellNode([
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 1, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 2, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 190, null, new Position(-1, 0, -1, "fn", "text"))),
+                    new NumberNode(new Token(Token.TYPE.NUMBER, 0, null, new Position(-1, 0, -1, "fn", "text")))
+                ]),
+                new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'test', null, new Position(-1, 0, -1, "fn", "text"))), [])
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(context.symbolTable.get('$who').data).toEqual([1, 2, 190, 0]);
+        expect(mock).toHaveBeenCalledTimes(1);
+        expect(mock).toHaveBeenCalledWith([1, 2, 190, 0]);
     })
 });
