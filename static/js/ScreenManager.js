@@ -1,30 +1,58 @@
 import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
+import {CommandHistory} from "./CommandHistory.js";
+import {ConsoleOutput} from "./ConsoleOutput.js";
 
 class ScreenManager {
     constructor() {
         this.settings = document.getElementById('settings');
+        this.pin = document.getElementById('bt-pin');
+        this.bar = document.getElementById('bar');
+        this.pin.addEventListener('click', () => {
+            this.bar.classList.toggle('tb');
+            this.pin.classList.toggle('o');
+        });
 
         this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
-        this.terminalNames = ['history', 'logs', 'errors', 'editor'];
+        this.terminalNames = ['history', 'logs', 'editor', 'multiline'];
 
         this.toolbarButtons = {};
         this.terminalSections = {};
         this.terminalButtons = {};
         this.commandLine = null;
         this.commandLineButton = null;
-        window.logoInterpreter.handleCreateLine((event, value) => {
-            console.log(value);
-            CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
-        });
+        this.isMultiline = false;
         this.init();
     }
 
     init() {
         this.getHTMLNodes();
         this.setListeners();
+        this.setHandlers();
         this.terminalSections.history.scrollTop = this.terminalSections.history.scrollHeight;
     }
+
+    setHandlers() {
+        window.logoInterpreter.handleCreateLine(async (event, value) => {
+            await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
+        });
+        window.logoInterpreter.handleRefreshCanvas((event) => {
+            CanvasManager.getInstance().flushImg()
+        });
+        window.logoInterpreter.handleRefreshTurtles((event, turtles) => {
+            CanvasManager.getInstance().refreshTurtles(turtles)
+        });
+        window.logoInterpreter.handleClearCanvas(async (event) => {
+            await CanvasManager.getInstance().clearCanvas();
+        });
+        window.logoInterpreter.handleAddError((event, value) => {
+            ConsoleOutput.getInstance().addLine(value, "ERROR");
+        });
+        window.logoInterpreter.handleAddOutput((event, value) => {
+            ConsoleOutput.getInstance().addLine(value, "NORMAL");
+        });
+    }
+
 
     getHTMLNodes() {
         this.toolbarButtonsNames.forEach(name => {
@@ -39,6 +67,7 @@ class ScreenManager {
             this.terminalButtons[name.replaceAll('-', '_')] = button;
         });
         this.commandLine = document.querySelector("#command_line");
+        this.multiCommandLine = document.querySelector(".aside__multiline-multiline");
         this.commandLineButton = document.querySelector(".aside__input-confirm");
     }
 
@@ -50,7 +79,6 @@ class ScreenManager {
             if (e.key === "Enter") {
                 this.executeCommand();
             }
-
         });
         this.commandLineButton.addEventListener("click", () => {
             this.executeCommand();
@@ -65,13 +93,33 @@ class ScreenManager {
 
                 this.terminalButtons[name].obj.classList.add('aside__terminal-options-button--active');
                 Object.values(this.terminalSections).forEach(({obj}) => this.hide(obj));
+
+                if (name === "multiline") {
+                    this.commandLineButton.classList.add("multiline-button");
+                    this.commandLine.style.display = "none";
+                    if (!this.isMultiline) {
+                        this.multiCommandLine.value = "";
+                    }
+                    this.isMultiline = true;
+                } else {
+                    this.commandLine.style.display = "block";
+                    this.commandLineButton.classList.remove("multiline-button");
+                    this.isMultiline = false;
+                }
+
                 this.show(this.terminalSections[name].obj, 'flex');
             });
         });
     }
 
     executeCommand() {
-        window.logoInterpreter.execute(this.commandLine.value);
+
+        let command = this.commandLine.value;
+        if (this.isMultiline) {
+            command = this.multiCommandLine.value;
+        }
+        CommandHistory.getInstance().addCommand(command);
+        window.logoInterpreter.execute(command);
         this.commandLine.value = "";
     }
 

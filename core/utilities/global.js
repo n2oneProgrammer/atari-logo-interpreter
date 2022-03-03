@@ -51,4 +51,4 @@ module.exports = class Global {
     static getInterpreterObjects() {
         return Global.interpreterObjects;
     }
-}
+};

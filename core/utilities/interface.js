@@ -1,16 +1,19 @@
 const {
     FunctionValue
 } = require('../values/function');
-
+const InterfaceCanvas = require("./interfaceCanvas.js");
 
 module.exports = class Interface {
 
     static print(str) {
-        console.log(str)
+        InterfaceCanvas.sendOutput(str);
     }
 
     static clear() {
-        console.log("clear");
+        const Global = require("./global.js");
+        Global.getInterpreterObjects()?.removeAllTurtles();
+        InterfaceCanvas.clearCanvas();
+
     }
 
     static getMethodToEdit(name, agrNames, body, node, context) {

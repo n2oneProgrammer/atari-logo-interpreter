@@ -1,4 +1,8 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {
+    app,
+    BrowserWindow,
+    ipcMain
+} = require('electron');
 const path = require('path');
 const Runner = require("./core/runner.js");
 const InterfaceCanvas = require("./core/utilities/interfaceCanvas.js");
@@ -11,7 +15,14 @@ if (env === 'development') {
         hardResetMethod: 'exit'
     });
 }
-const runner = new Runner("commandline");
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) {
+    // eslint-disable-line global-require
+    app.quit();
+}
+
+
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -23,12 +34,22 @@ const createWindow = () => {
     });
 
     InterfaceCanvas.setWindow(mainWindow);
+    const runner = new Runner("commandline");
+
     ipcMain.on('execute', (event, command) => {
         let res = runner.run(command);
-        if (res.error !== null)
-            console.error(res.error.toString());
+        if (res.error !== null) {
+            let errorMsg = res.error.toString();
+            console.error(errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
+        }
     });
 
+    ipcMain.handle('get-turtles', (event) => {
+        const Global = require("./core/utilities/global.js");
+        const turtles = Global.getInterpreterObjects().getTurtles();
+        return turtles.map(obj => obj.serializable());
+    });
 
     mainWindow.loadFile('static/pages/index.html');
 };

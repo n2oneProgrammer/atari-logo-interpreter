@@ -5,6 +5,27 @@ module.exports = class InterfaceCanvas {
         InterfaceCanvas.mainWindow.webContents.send("create-line", {x, y, x2, y2, width, color})
     }
 
+    static refreshCanvas() {
+        InterfaceCanvas.mainWindow.webContents.send("refresh-canvas");
+    }
+
+    static refreshTurtles() {
+        const Global = require("./global.js");
+        let turtles = Global.getInterpreterObjects()?.getTurtles();
+        if (turtles == null) {
+            turtles = [];
+        }
+        InterfaceCanvas.mainWindow.webContents.send("refresh-turtles", turtles.map(obj => obj.serializable()))
+    }
+
+    static sendOutput(msg) {
+        InterfaceCanvas.mainWindow.webContents.send("add-output", msg);
+    }
+
+    static clearCanvas() {
+        InterfaceCanvas.mainWindow.webContents.send("clear-canvas")
+    }
+
     static setWindow(mainWindow) {
         InterfaceCanvas.mainWindow = mainWindow;
     }

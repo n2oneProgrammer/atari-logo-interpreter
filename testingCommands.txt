@@ -3,3 +3,45 @@ REPEAT 360 [lt 1 fd 1]
 REPEAT 36 [REPEAT 360 [lt 1 fd 1] RT 10]
 FD 100 PU FD 100 PD FD 100
 SETC 1 SETPN 1 SETPC 1 1
+
+SETPC 0 8 SETPC 1 56 SETPC 2 96 SETPN 0 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 1 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 2 REPEAT 4 [FD 100 RT 90]
+
+TO kwadrat :bok
+    pu
+    lt 90 fd :bok/2
+    lt 90 fd :bok/2
+    lt 180
+    pd
+    REPEAT 4 [FD :bok RT 90]
+    pu
+    rt 90 fd :bok/2
+    lt 90 fd :bok/2
+    lt 180
+    pd
+end
+REPEAT 36 [kwadrat :i*10]
+
+SETPC 0 8 SETPC 1 56 SETPC 2 96 SETPN 0 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 1 REPEAT 4 [FD 100 RT 90] lt 90 FD 100 RT 90 SETPN 2 REPEAT 4 [FD 100 RT 90]
+
+TELL [0 1] EACH [RT WHO*90 FD 100]
+
+TELL [0 1 2 3] EACH [RT 90*WHO] REPEAT 90 [FD 1 RT 1]
+TELL [0 1 2 3] RT 45 EACH [RT 90*WHO] FD 100 LT 90 FD 100
+TO kwadrat :bok
+    REPEAT :bok/2 [FD :bok rt 90 fd 1 rt 90 FD :bok lt 90 fd 1 lt 90]
+end
+
+TO ROW :bok :startcolor
+    REPEAT 8 [SETPC 0 :startcolor+:i kwadrat :bok/8]
+end
+
+TO paleta :bok
+    HT
+    REPEAT 16[
+        ROW :bok :i*8
+        pu lt 90 fd :bok rt 90 bk :bok/8 pd
+    ]
+end
+paleta 80
+
+TELL [0 1 2] EACH [RT 90*WHO FD 100 TELL WHO*2 RT 30*WHO FD 100]
