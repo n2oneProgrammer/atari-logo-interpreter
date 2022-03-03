@@ -34,6 +34,9 @@ const InterpereterObjects = require("../../core/interpereterObjects");
 const Interface = require("../../core/utilities/interface");
 jest.mock("../../core/utilities/interface");
 
+const InterfaceCanvas = require("../../core/utilities/interfaceCanvas.js");
+jest.mock("../../core/utilities/interfaceCanvas.js");
+
 const fs = require('fs');
 jest.mock('fs');
 
