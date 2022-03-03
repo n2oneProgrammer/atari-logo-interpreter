@@ -9,11 +9,11 @@ class DrawableLine {
         this.color = color;
     }
 
-    draw(ctx, centerX, centerY, scale) {
-        let x = this.x * scale + centerX;
-        let y = this.y * scale + centerY;
-        let x2 = this.x2 * scale + centerX;
-        let y2 = this.y2 * scale + centerY;
+    draw(ctx, centerX, centerY) {
+        let x = this.x + centerX;
+        let y = this.y + centerY;
+        let x2 = this.x2 + centerX;
+        let y2 = this.y2 + centerY;
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x2, y2);
