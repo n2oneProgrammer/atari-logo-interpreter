@@ -7,8 +7,7 @@
         "start": "electron .",
         "dev": "set NODE_ENV=development&&electron .",
         "shell": "node shell.js",
-        "test": "jest",
-        "dev-test": "jest -- tests/core/interpreter.test.js"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
