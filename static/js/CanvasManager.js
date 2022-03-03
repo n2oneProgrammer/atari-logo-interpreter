@@ -127,6 +127,18 @@ class CanvasManager {
         });
     }
 
+    saveCanvas(){
+        let data = this.canvas.toDataURL("image/png");
+
+        let a = document.createElement('a');
+        a.href = data;
+        a.download = "screen.png";
+        document.body.appendChild(a);
+        a.click();
+    }
+
+
+
 }
 
 export default CanvasManager;
