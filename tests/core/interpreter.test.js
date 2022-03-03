@@ -21,7 +21,6 @@ const {
     RuntimeError
 } = require('../../core/error');
 const Context = require("../../core/context.js");
-0
 const SymbolTable = require("../../core/symbolTable.js");
 const WhoValue = require("../../core/values/who");
 const {
@@ -480,7 +479,7 @@ describe('Interpreter', () => {
         context.symbolTable = new SymbolTable();
 
         let interpreter = new Interpeter(null);
-        let edNode = new EdNode([new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(0, 0, -1, "fn", "text")))])
+        let edNode = new EdNode([new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(0, 0, -1, "fn", "text")))]);
         let node = new ListNode([
             new FunctionNode(
                 new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
@@ -676,7 +675,7 @@ describe('Interpreter', () => {
         testFunc(mock, context);
 
         let interpreter = new Interpeter();
-        let node = new SaveLoadNode(new Token(Token.TYPE.KEYWORD, "load", null, new Position(-1, 0, -1, "fn", "TO func test END")), new Token(Token.TYPE.PATH, "C:/a.txt", null, new Position(-1, 0, -1, "fn", "TO func test END")))
+        let node = new SaveLoadNode(new Token(Token.TYPE.KEYWORD, "load", null, new Position(-1, 0, -1, "fn", "TO func test END")), new Token(Token.TYPE.PATH, "C:/a.txt", null, new Position(-1, 0, -1, "fn", "TO func test END")));
         let result = interpreter.visit(node, context);
 
         expect(result.value).toEqual(null);
