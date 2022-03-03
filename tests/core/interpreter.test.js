@@ -31,6 +31,9 @@ const {
 const RuntimeResult = require("../../core/utilities/runtimeResult");
 const InterpereterObjects = require("../../core/interpereterObjects");
 
+const Interface = require("../../core/utilities/interface");
+jest.mock("../../core/utilities/interface");
+
 const fs = require('fs');
 jest.mock('fs');
 
@@ -469,7 +472,44 @@ describe('Interpreter', () => {
         expect(result.error).toBeInstanceOf(RuntimeError);
     })
 
-    //TODO: ED node
+    it("Visit EdNode Error", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+
+        let interpreter = new Interpeter(null);
+        let edNode = new EdNode([new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(0, 0, -1, "fn", "text")))])
+        let node = new ListNode([
+            new FunctionNode(
+                new Token(Token.TYPE.IDENTIFIER, 'func', new Position(0, 0, -1, "fn", "text"), new Position(1, 0, -1, "fn", "text")),
+                [],
+                new ListNode([
+                        new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'xd', null, new Position(-1, 0, -1, "fn", "text"))), [])
+                    ],
+                    new Position(0, 0, -1, "fn", "text"),
+                    new Position(1, 0, -1, "fn", "text")
+                )),
+            edNode
+        ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(Interface.getMethodToEdit).toBeCalledTimes(1);
+        expect(Interface.getMethodToEdit).toBeCalledWith("func", [], "t", edNode, context);
+    })
+
+
+    it("Visit EdNode Error", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+
+        let interpreter = new Interpeter(null);
+        let node = new EdNode([new VarNode(new Token(Token.TYPE.IDENTIFIER, 'ed', null, new Position(0, 0, -1, "fn", "text")))]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toBeInstanceOf(RuntimeError);
+    })
 
     it("Visit TellNode", () => {
         let context = new Context("<global>");
