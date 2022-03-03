@@ -2,7 +2,6 @@ const Runner = require('./core/runner.js');
 
 class Shell {
     constructor() {
-        prompt.start();
         this.run = new Runner("shell");
         this.shell();
     }
