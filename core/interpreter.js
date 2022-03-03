@@ -294,7 +294,7 @@ module.exports = class Interpeter {
                 );
             }
             const Runner = require("./runner");
-            let r = new Runner(node.path.value).run(txt);
+            let r = new Runner(node.path.value).run(txt, context);
             if (r.error) return r;
             return res.success(null);
         }

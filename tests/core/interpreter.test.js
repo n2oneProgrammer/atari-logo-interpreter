@@ -31,6 +31,9 @@ const {
 const RuntimeResult = require("../../core/utilities/runtimeResult");
 const InterpereterObjects = require("../../core/interpereterObjects");
 
+const fs = require('fs');
+jest.mock('fs');
+
 describe('Interpreter', () => {
 
     const testFunc = (mock, context) => {
@@ -583,5 +586,60 @@ describe('Interpreter', () => {
         expect(mock).toHaveBeenCalledWith([2]);
         expect(mock).toHaveBeenCalledWith([1]);
         expect(mock).toHaveBeenCalledWith([0]);
+    })
+
+    it("Visit SaveNode", () => {
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter();
+        let node =
+            new ListNode([
+                new FunctionNode(
+                    new Token(Token.TYPE.IDENTIFIER, 'func', new Position(3, 0, -1, "fn", "TO func test END"), new Position(1, 0, -1, "fn", "TO func test END")),
+                    [],
+                    new ListNode([
+                            new CallNode(new VarNode(new Token(Token.TYPE.IDENTIFIER, 'TO func test END', null, new Position(-1, 0, -1, "fn", "TO func test END"))), [])
+                        ],
+                        new Position(3, 0, -1, "fn", "TO func test END"),
+                        new Position(16, 0, -1, "fn", "TO func test END")
+                    )),
+                new SaveLoadNode(new Token(Token.TYPE.KEYWORD, "save", null, new Position(-1, 0, -1, "fn", "TO func test END")), new Token(Token.TYPE.PATH, "C:/a.txt", null, new Position(-1, 0, -1, "fn", "TO func test END")))
+            ]);
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+        expect(fs.writeFileSync).toHaveBeenCalledWith("C:/a.txt", "TO func test END\n\n");
+    })
+
+
+    it("Visit LoadNode", () => {
+
+        const spy = jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
+            return "TO func test END\n\n";
+        });
+
+        let context = new Context("<global>");
+        context.symbolTable = new SymbolTable();
+        context.symbolTable.set("$who", new WhoValue([0]));
+
+        let mock = jest.fn();
+        testFunc(mock, context);
+
+        let interpreter = new Interpeter();
+        let node = new SaveLoadNode(new Token(Token.TYPE.KEYWORD, "load", null, new Position(-1, 0, -1, "fn", "TO func test END")), new Token(Token.TYPE.PATH, "C:/a.txt", null, new Position(-1, 0, -1, "fn", "TO func test END")))
+        let result = interpreter.visit(node, context);
+
+        expect(result.value).toEqual(null);
+        expect(result.error).toEqual(null);
+        expect(context.symbolTable.get('func')).toBeInstanceOf(FunctionValue);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith("C:/a.txt", "utf-8");
     })
 });
