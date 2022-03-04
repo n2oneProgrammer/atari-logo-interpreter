@@ -28,7 +28,7 @@ module.exports = class NumberValue extends Value {
     add(other) {
         if (this.isNumber()) {
             return {
-                value: new NumberValue(this.value + other.value),
+                value: new NumberValue(this.value + other.value).setContext(this.context).setPosition(this.pos_start, other.pos_end),
                 error: null
             };
         }
@@ -41,7 +41,7 @@ module.exports = class NumberValue extends Value {
     sub(other) {
         if (this.isNumber()) {
             return {
-                value: new NumberValue(this.value - other.value),
+                value: new NumberValue(this.value - other.value).setContext(this.context).setPosition(this.pos_start, other.pos_end),
                 error: null
             };
         }
@@ -54,7 +54,7 @@ module.exports = class NumberValue extends Value {
     mul(other) {
         if (this.isNumber()) {
             return {
-                value: new NumberValue(this.value * other.value),
+                value: new NumberValue(this.value * other.value).setContext(this.context).setPosition(this.pos_start, other.pos_end),
                 error: null
             };
         }
@@ -69,16 +69,16 @@ module.exports = class NumberValue extends Value {
             if (other.value === 0) {
                 return {
                     value: null,
-                    error: RuntimeError(
+                    error: new RuntimeError(
                         this.pos_start,
-                        this.pos_end,
+                        other.pos_end,
                         `Division by zero`,
                         this.context
                     )
                 };
             }
             return {
-                value: new NumberValue(Math.floor(this.value / other.value)),
+                value: new NumberValue(Math.floor(this.value / other.value)).setContext(this.context).setPosition(this.pos_start, other.pos_end),
                 error: null
             };
         }
