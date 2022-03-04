@@ -286,6 +286,17 @@
     overflow-x: scroll
 }
 
+.aside__save-button {
+    background: var(--color-accent-orange);
+    color: #eee;
+    outline: none;
+    border: none;
+    padding: .8rem 1rem;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 1rem
+}
+
 .procedure-argument {
     display: flex;
     align-items: center;
@@ -394,7 +405,8 @@
     font-family: var(--font-default)
 }
 
-.aside__input-confirm {
+/* .aside__input-confirm { */
+.main-button {
     background: none;
     outline: none;
     border: none;
@@ -410,7 +422,7 @@
     transition: .2s
 }
 
-.aside__input-confirm:hover {
+.main-button:hover {
     background: rgba(var(--color-accent-orange-rgb), .6);
 }
 
