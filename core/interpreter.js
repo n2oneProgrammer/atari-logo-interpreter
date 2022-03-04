@@ -190,9 +190,8 @@ module.exports = class Interpeter {
         for (let i = 0; i < node.nodes.length; i++) {
             let func = res.register(this.visit(node.nodes[i], context));
             if (res.error) return res;
-
             if (func.body_node == null) {
-                return res.error(
+                return res.failure(
                     new RuntimeError(
                         node.pos_start,
                         node.pos_end,
