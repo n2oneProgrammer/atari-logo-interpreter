@@ -74,6 +74,8 @@ class ScreenManager {
     setListeners() {
         this.toolbarButtons.settings.obj.addEventListener('click', () => this.show(settings));
         this.toolbarButtons.download.obj.addEventListener('click', () => CanvasManager.getInstance().saveCanvas());
+        this.toolbarButtons.save.obj.addEventListener('click', () => window.logoInterpreter.openSaveProcedureDialog());
+        this.toolbarButtons.upload.obj.addEventListener('click', () => window.logoInterpreter.openLoadProcedureDialog());
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
 
         this.commandLine.addEventListener("keypress", (e) => {
