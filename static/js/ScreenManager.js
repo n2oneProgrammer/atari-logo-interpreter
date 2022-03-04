@@ -83,9 +83,18 @@ class ScreenManager {
         this.toolbarButtons.upload.obj.addEventListener('click', () => window.logoInterpreter.openLoadProcedureDialog());
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
 
-        this.commandLine.addEventListener("keypress", (e) => {
+        this.commandLine.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 this.executeCommand();
+            } else if (e.key === "ArrowUp") {
+                console.log(this.commandLine.value);
+                this.commandLine.value = CommandHistory.getInstance().goUp(this.commandLine.value);
+                console.log("UP");
+            } else if (e.key === "ArrowDown") {
+                console.log("DOWN");
+                this.commandLine.value = CommandHistory.getInstance().goDown();
+            } else {
+                CommandHistory.getInstance().reset(this.commandLine.value);
             }
         });
         this.commandLineButton.addEventListener("click", () => {
