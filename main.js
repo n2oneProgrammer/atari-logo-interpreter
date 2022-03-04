@@ -37,7 +37,7 @@ const createWindow = () => {
     const runner = new Runner("commandline");
 
     ipcMain.on('execute', (event, command) => {
-        let res = runner.run(command);
+        let res = runner.start(command);
         if (res.error !== null) {
             let errorMsg = res.error.toString();
             console.error(errorMsg);
