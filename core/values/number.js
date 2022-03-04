@@ -34,7 +34,7 @@ module.exports = class NumberValue extends Value {
         }
         return {
             value: null,
-            error: Value.illegalOperation(other)
+            error: this.illegalOperation(other)
         };
     }
 
@@ -47,7 +47,7 @@ module.exports = class NumberValue extends Value {
         }
         return {
             value: null,
-            error: Value.illegalOperation(other)
+            error: this.illegalOperation(other)
         };
     }
 
@@ -60,7 +60,7 @@ module.exports = class NumberValue extends Value {
         }
         return {
             value: null,
-            error: Value.illegalOperation(other)
+            error: this.illegalOperation(other)
         };
     }
 
@@ -78,13 +78,13 @@ module.exports = class NumberValue extends Value {
                 };
             }
             return {
-                value: new NumberValue(this.value / other.value),
+                value: new NumberValue(Math.floor(this.value / other.value)),
                 error: null
             };
         }
         return {
             value: null,
-            error: Value.illegalOperation(other)
+            error: this.illegalOperation(other)
         };
     }
 

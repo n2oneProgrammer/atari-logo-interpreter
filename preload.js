@@ -9,5 +9,7 @@ contextBridge.exposeInMainWorld('logoInterpreter', {
     handleAddError: (callback) => ipcRenderer.on("add-error", callback),
     handleAddOutput: (callback) => ipcRenderer.on("add-output", callback),
     handleEditProcedure: (callback) => ipcRenderer.on("edit-procedure", callback),
-    saveProcedure: (procedure) => ipcRenderer.invoke("save-procedures", procedure)
+    saveProcedure: (procedure) => ipcRenderer.invoke("save-procedures", procedure),
+    openSaveProcedureDialog: () => ipcRenderer.invoke("open-save-procedure-dialog"),
+    openLoadProcedureDialog: () => ipcRenderer.invoke("open-load-procedure-dialog")
 });
