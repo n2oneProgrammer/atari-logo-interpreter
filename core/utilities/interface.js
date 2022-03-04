@@ -35,7 +35,7 @@ module.exports = class Interface {
             return result;
         }
 
-        let func = new FunctionValue(newName, result.nodes, agrNames, `TO ${newName} ${agrNames.map(arg => ":" + arg).join(' ')} ${body} END`, body)
+        let func = new FunctionValue(newName, result.node, agrNames, `TO ${newName} ${agrNames.map(arg => ":" + arg).join(' ')} ${body} END`, body)
             .setPosition(node.pos_start, node.pos_end)
             .setContext(context);
         context.symbolTable.remove(lastName);
