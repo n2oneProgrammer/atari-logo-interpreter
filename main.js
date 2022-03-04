@@ -1,7 +1,8 @@
 const {
     app,
     BrowserWindow,
-    ipcMain
+    ipcMain,
+    dialog
 } = require('electron');
 const path = require('path');
 const Runner = require("./core/runner.js");
@@ -37,7 +38,7 @@ const createWindow = () => {
     const runner = new Runner("commandline");
 
     ipcMain.on('execute', (event, command) => {
-        let res = runner.run(command);
+        let res = runner.start(command);
         if (res.error !== null) {
             let errorMsg = res.error.toString();
             console.error(errorMsg);
@@ -50,7 +51,20 @@ const createWindow = () => {
         const turtles = Global.getInterpreterObjects().getTurtles();
         return turtles.map(obj => obj.serializable());
     });
-
+    ipcMain.handle('open-save-procedure-dialog', async (event) => {
+        let options = {
+            title: "Save LOGO procedures",
+            defaultPath: "procedures.txt",
+            buttonLabel: "Save procedures",
+            filters: [
+                {name: 'Text', extensions: ['txt']}
+            ]
+        };
+        let result = await dialog.showSaveDialog(options);
+        if (!result.canceled) {
+            runner.start(`SAVE ${result.filePath}`);
+        }
+    });
     mainWindow.loadFile('static/pages/index.html');
 };
 

@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('logoInterpreter', {
     handleRefreshTurtles: (callback) => ipcRenderer.on("refresh-turtles", callback),
     handleClearCanvas: (callback) => ipcRenderer.on("clear-canvas", callback),
     handleAddError: (callback) => ipcRenderer.on("add-error", callback),
-    handleAddOutput: (callback) => ipcRenderer.on("add-output", callback)
+    handleAddOutput: (callback) => ipcRenderer.on("add-output", callback),
+    openSaveProcedureDialog: () => ipcRenderer.invoke("open-save-procedure-dialog"),
 });
