@@ -163,7 +163,8 @@
 
 .aside__history {
     position: relative;
-    overflow-y: scroll
+    overflow-y: scroll;
+    display: none
 }
 
 .aside__history-commands {
@@ -205,7 +206,6 @@
 }
 
 .aside__logs {
-    display: none;
     position: relative;
     overflow-y: scroll
 }

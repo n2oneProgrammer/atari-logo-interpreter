@@ -15,7 +15,7 @@ class ScreenManager {
         });
 
         this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
-        this.terminalNames = ['history', 'logs', 'editor', 'multiline'];
+        this.terminalNames = ['logs', 'history', 'editor', 'multiline'];
 
         this.toolbarButtons = {};
         this.terminalSections = {};
@@ -53,7 +53,7 @@ class ScreenManager {
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
         });
         window.logoInterpreter.handleEditProcedure((event, value) => {
-            const { name, agrNames, body, node, context } = value;
+            const {name, agrNames, body, node, context} = value;
             ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
         });
     }
