@@ -2,6 +2,7 @@ import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
 import {ConsoleOutput} from "./ConsoleOutput.js";
+import ProcedureEditor from "./ProcedureEditor.js";
 
 class ScreenManager {
     constructor() {
@@ -50,6 +51,10 @@ class ScreenManager {
         });
         window.logoInterpreter.handleAddOutput((event, value) => {
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
+        });
+        window.logoInterpreter.handleEditProcedure((event, value) => {
+            const { name, agrNames, body, node, context } = value;
+            ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
         });
     }
 

@@ -7,6 +7,7 @@ const {
 const path = require('path');
 const Runner = require("./core/runner.js");
 const InterfaceCanvas = require("./core/utilities/interfaceCanvas.js");
+const Interface = require("./core/utilities/interface.js");
 
 const env = process.env.NODE_ENV || 'production';
 
@@ -50,6 +51,13 @@ const createWindow = () => {
         const Global = require("./core/utilities/global.js");
         const turtles = Global.getInterpreterObjects().getTurtles();
         return turtles.map(obj => obj.serializable());
+    });
+    ipcMain.handle('save-procedures', (event, value) => {
+        const { lastName, newName, params, body } = value;
+        const obj = Interface.proceduresInEdit.find(p => p.name === lastName);
+        const node = obj.node;
+        const context = obj.context;
+        Interface.setEditedMethod(lastName, newName, params, body, node, context);
     });
     ipcMain.handle('open-save-procedure-dialog', async (event) => {
         let options = {

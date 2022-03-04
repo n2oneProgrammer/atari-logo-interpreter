@@ -5,6 +5,8 @@ const InterfaceCanvas = require("./interfaceCanvas.js");
 
 module.exports = class Interface {
 
+    static proceduresInEdit = [];
+
     static print(str) {
         InterfaceCanvas.sendOutput(str);
     }
@@ -13,11 +15,11 @@ module.exports = class Interface {
         const Global = require("./global.js");
         Global.getInterpreterObjects()?.removeAllTurtles();
         InterfaceCanvas.clearCanvas();
-
     }
 
     static getMethodToEdit(name, agrNames, body, node, context) {
-        Interface.setEditedMethod(name, "xd", agrNames, body + " ht", node, context);
+        InterfaceCanvas.editProcedure(name, agrNames, body);
+        this.proceduresInEdit.push({ name, node, context });
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {
