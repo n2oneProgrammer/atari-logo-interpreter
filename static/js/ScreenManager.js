@@ -82,6 +82,19 @@ class ScreenManager {
         this.toolbarButtons.save.obj.addEventListener('click', () => window.logoInterpreter.openSaveProcedureDialog());
         this.toolbarButtons.upload.obj.addEventListener('click', () => window.logoInterpreter.openLoadProcedureDialog());
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
+        this.multiCommandLine.addEventListener("keydown", (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                let start = e.target.selectionStart;
+                let end = e.target.selectionEnd;
+
+                e.target.value = e.target.value.substring(0, start) +
+                    "\t" + e.target.value.substring(end);
+
+                e.target.selectionStart =
+                    e.target.selectionEnd = start + 1;
+            }
+        });
 
         this.commandLine.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
