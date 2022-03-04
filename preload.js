@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld('logoInterpreter', {
     handleAddError: (callback) => ipcRenderer.on("add-error", callback),
     handleAddOutput: (callback) => ipcRenderer.on("add-output", callback),
     openSaveProcedureDialog: () => ipcRenderer.invoke("open-save-procedure-dialog"),
+    openLoadProcedureDialog: () => ipcRenderer.invoke("open-load-procedure-dialog"),
 });

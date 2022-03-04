@@ -65,6 +65,21 @@ const createWindow = () => {
             runner.start(`SAVE ${result.filePath}`);
         }
     });
+    ipcMain.handle('open-load-procedure-dialog', async (event) => {
+        let options = {
+            title: "Load LOGO procedures",
+            defaultPath: "procedures.txt",
+            buttonLabel: "Load procedures",
+            filters: [
+                {name: 'Text', extensions: ['txt']}
+            ]
+        };
+        let result = await dialog.showOpenDialog(options);
+        console.log(result);
+        if (!result.canceled) {
+            runner.start(`LOAD ${result.filePaths[0]}`);
+        }
+    });
     mainWindow.loadFile('static/pages/index.html');
 };
 
