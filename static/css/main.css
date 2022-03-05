@@ -5,6 +5,20 @@
     height: 100vh
 }
 
+#popup {
+    position: absolute;
+    bottom: 2rem;
+    left: 1rem;
+    transform: translateX(-200%);
+    background: var(--color-dark-2);
+    color: #eee;
+    font-size: 14px;
+    padding: .8rem 1rem;
+    min-width: 200px;
+    border-radius: .5rem;
+    transition: .2s
+}
+
 .canvas {
     flex: 1;
     position: relative;

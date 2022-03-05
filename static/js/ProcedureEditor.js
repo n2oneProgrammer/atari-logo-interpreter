@@ -38,6 +38,11 @@ class ProcedureEditor {
 
         this.saveButton.addEventListener('click', () => {
             window.logoInterpreter.saveProcedure(this.currentProcedure);
+            const pop = document.getElementById('popup');
+            pop.textContent = 'Zapisano procedurę';
+            pop.style.transform = 'translateX(0)';
+
+            setTimeout(() => pop.style.transform = 'translateX(-200%)', 1500);
         });
     }
 
