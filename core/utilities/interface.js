@@ -22,9 +22,13 @@ module.exports = class Interface {
     }
 
     static getMethodToEdit(name, agrNames, body, node, context) {
-        InterfaceCanvas.editProcedure(name, agrNames, body); 
-        this.proceduresInEdit.push({ name, node, context });
-        return new new RuntimeResult().success(null) // TODO: this shoud return value from calling method Interface.setEditedMethod
+        InterfaceCanvas.editProcedure(name, agrNames, body);
+        this.proceduresInEdit.push({
+            name,
+            node,
+            context
+        });
+        return new RuntimeResult().success(null) // TODO: this shoud return value from calling method Interface.setEditedMethod
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {
