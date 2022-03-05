@@ -17,14 +17,14 @@ module.exports = class Runner {
         let lexer = new Lexer(this.fn, text);
         let result = lexer.run();
         if (result.error !== null) {
-            return result.error.toString();
+            return result;
         }
         if (this.debug) console.log(TokenPrinter.toString(result.tokens));
 
         let parser = new Parser(result.tokens);
         result = parser.run();
         if (result.error !== null) {
-            return result.error.toString();
+            return result;
         }
         if (this.debug) console.log(result.node.toString());
 
@@ -33,7 +33,7 @@ module.exports = class Runner {
         let interpreter = new Interpreter(Global.getInterpreterObjects());
         result = interpreter.visit(result.node, context);
         if (result.error !== null) {
-            return result.error.toString();
+            return result;
         }
         if (this.debug) console.log(context.symbolTable.toString());
 

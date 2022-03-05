@@ -158,6 +158,18 @@ module.exports = class Interpeter {
         let body = node.body;
         let agrs_names = node.args.map((arg) => arg.value);
 
+        if (context.symbolTable.get(name) != null) {
+            if (context.symbolTable.get(name).body_node == null) {
+                return res.failure(
+                    new RuntimeError(
+                        node.name.pos_start,
+                        node.name.pos_end,
+                        `Cannot overrite built-in function`,
+                        context
+                    ));
+            }
+        }
+
         let func = new FunctionValue(name, body, agrs_names, node.getContent(), node.getBody())
             .setPosition(node.pos_start, node.pos_end)
             .setContext(context);
@@ -190,9 +202,8 @@ module.exports = class Interpeter {
         for (let i = 0; i < node.nodes.length; i++) {
             let func = res.register(this.visit(node.nodes[i], context));
             if (res.error) return res;
-
             if (func.body_node == null) {
-                return res.error(
+                return res.failure(
                     new RuntimeError(
                         node.pos_start,
                         node.pos_end,
@@ -200,7 +211,8 @@ module.exports = class Interpeter {
                         context
                     ));
             }
-            Interface.getMethodToEdit(func.name, func.argNames, func.strBody, node, context)
+            res.register(Interface.getMethodToEdit(func.name, func.argNames, func.strBody, node, context))
+            if (res.error) return res;
         }
         return res.success(null);
 

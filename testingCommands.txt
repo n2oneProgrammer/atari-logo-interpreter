@@ -45,3 +45,6 @@ end
 paleta 80
 
 TELL [0 1 2] EACH [RT 90*WHO FD 100 TELL WHO*2 RT 30*WHO FD 100]
+
+TO func FD 100 END
+ED func
