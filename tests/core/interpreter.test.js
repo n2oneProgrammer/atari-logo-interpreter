@@ -474,7 +474,7 @@ describe('Interpreter', () => {
         expect(result.error).toBeInstanceOf(RuntimeError);
     })
 
-    it("Visit EdNode Error", () => {
+    it("Visit EdNode", () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
 
