@@ -6,6 +6,7 @@ import {ConsoleOutput} from "./ConsoleOutput.js";
 class ScreenManager {
     constructor() {
         this.settings = document.getElementById('settings');
+        this.help = document.getElementById('section-help');
         this.pin = document.getElementById('bt-pin');
         this.bar = document.getElementById('bar');
         this.pin.addEventListener('click', () => {
@@ -13,8 +14,8 @@ class ScreenManager {
             this.pin.classList.toggle('o');
         });
 
-        this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
-        this.terminalNames = ['history', 'logs', 'editor', 'multiline'];
+        this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings', 'close-help'];
+        this.terminalNames = ['history', 'logs', 'editor', 'multiline', 'help'];
 
         this.toolbarButtons = {};
         this.terminalSections = {};
@@ -72,9 +73,18 @@ class ScreenManager {
     }
 
     setListeners() {
-        this.toolbarButtons.settings.obj.addEventListener('click', () => this.show(settings));
+        this.toolbarButtons.settings.obj.addEventListener('click', () => this.show(this.settings));
+        this.terminalButtons.help.obj.addEventListener('click', () => this.show(this.help));
         this.toolbarButtons.download.obj.addEventListener('click', () => CanvasManager.getInstance().saveCanvas());
-        this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
+        this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(this.settings));
+        this.toolbarButtons.close_help.obj.addEventListener('click', () => {
+            this.hide(this.help);
+            Object.values(this.terminalButtons).forEach(({obj}) => {
+                obj.classList.remove('aside__terminal-options-button--active');
+            });
+            this.terminalButtons['logs'].obj.classList.add('aside__terminal-options-button--active');
+            Object.values(this.terminalSections).forEach(({obj}) => this.hide(obj));
+        });
 
         this.commandLine.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
