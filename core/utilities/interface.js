@@ -2,6 +2,10 @@ const {
     FunctionValue
 } = require('../values/function');
 const InterfaceCanvas = require("./interfaceCanvas.js");
+const RuntimeResult = require("./runtimeResult.js");
+const {
+    RuntimeError
+} = require("../error.js");
 
 module.exports = class Interface {
 
@@ -11,13 +15,13 @@ module.exports = class Interface {
 
     static clear() {
         const Global = require("./global.js");
-        Global.getInterpreterObjects()?.removeAllTurtles();
+        Global.getInterpreterObjects().removeAllTurtles();
         InterfaceCanvas.clearCanvas();
 
     }
 
-    static getMethodToEdit(name, agrNames, body, node, context) {
-        Interface.setEditedMethod(name, "xd", agrNames, body + " ht", node, context);
+    static setEditedMethod(name, agrNames, body, node, context) {
+        return Interface.setEditedMethod(name, "cs", agrNames, body + " ht", node, context);
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {
@@ -33,6 +37,18 @@ module.exports = class Interface {
         result = parser.run();
         if (result.error !== null) {
             return result;
+        }
+
+        if (context.symbolTable.get(newName) != null) {
+            if (context.symbolTable.get(newName).body_node == null) {
+                return new RuntimeResult().failure(
+                    new RuntimeError(
+                        node.pos_start,
+                        node.pos_end,
+                        `Cannot edit built-in function`,
+                        context
+                    ));
+            }
         }
 
         let func = new FunctionValue(newName, result.node, agrNames, `TO ${newName} ${agrNames.map(arg => ":" + arg).join(' ')} ${body} END`, body)
