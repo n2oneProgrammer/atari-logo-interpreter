@@ -46,6 +46,10 @@
     display: flex
 }
 
+.aside__logo-image {
+    height: 40px
+}
+
 .aside__options {
     flex-grow: 1;
     display: flex;
@@ -78,7 +82,8 @@
     display: block !important
 }
 
-.tb > .fa-cog {
+.fa-info {
+    margin-left: .35rem;
     margin-right: .5rem
 }
 
@@ -99,7 +104,7 @@
     display: block !important
 }
 
-.aside__toolbar:hover > .fa-cog {
+.aside__toolbar:hover > .fa-info {
     margin-right: .5rem
 }
 
@@ -189,6 +194,10 @@
 .multiline-button {
     width: 100% !important;
     height: 42px
+}
+
+#bt-help {
+    margin-right: 0;
 }
 
 .aside__multiline-multiline {
@@ -343,11 +352,17 @@
 }
 
 .aside__terminal-options {
+    position: relative;
     display: flex;
     justify-content: flex-start;
     gap: .8rem;
     margin-top: 2rem;
     padding: 0 1rem
+}
+
+#bt-help {
+    position: absolute;
+    right: 1rem
 }
 
 .aside__terminal-options-button {
@@ -414,7 +429,7 @@
     background: rgba(var(--color-accent-orange-rgb), .6);
 }
 
-.aside__settings {
+.aside__subsite {
     position: absolute;
     top: 0;
     left: 0;
@@ -424,21 +439,21 @@
     background: var(--color-dark-1)
 }
 
-.settings__header {
+.subsite__header {
     justify-content: space-between
 }
 
-.settings__header .fa-xmark {
+.subsite__header .fa-xmark {
     position: absolute;
-    top: 2.25rem;
-    right: 2rem;
+    top: 2.6rem;
+    right: 2.5rem;
     font-size: 1.8rem;
     color: var(--color-accent-orange);
     cursor: pointer;
     transition: .2s
 }
 
-.settings__header .fa-xmark:hover {
+.subsite__header .fa-xmark:hover {
     color: var(--color-accent-red);
     transform: scale(.9)
 }
