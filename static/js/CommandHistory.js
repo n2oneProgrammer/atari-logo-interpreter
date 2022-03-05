@@ -15,6 +15,8 @@ export class CommandHistory {
         this.selected_command = -1;
         this.save_input = "";
         this.DOMcommandHistory = document.querySelector(".aside__history-commands");
+        this.DOMcommandHistoryContainer = document.querySelector(".aside__history");
+        this.DOMconsoleContainer = document.querySelector(".aside__logs");
     }
 
     addCommand(command) {
@@ -31,7 +33,8 @@ export class CommandHistory {
             element.innerText = comm;
             this.DOMcommandHistory.appendChild(element);
         });
-
+        this.DOMcommandHistoryContainer.scrollTop = this.DOMcommandHistoryContainer.scrollHeight;
+        this.DOMconsoleContainer.scrollTop = this.DOMconsoleContainer.scrollHeight;
     }
 
     goUp(value) {

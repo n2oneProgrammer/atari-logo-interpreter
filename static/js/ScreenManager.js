@@ -143,7 +143,6 @@ class ScreenManager {
     }
 
     executeCommand() {
-
         let command = this.commandLine.value;
         if (this.isMultiline) {
             command = this.multiCommandLine.value;
