@@ -1,9 +1,15 @@
 @import 'variables.css';
 
+@font-face {
+    font-family: "Source Code Pro";
+    src: url("../fonts/SourceCodePro-VariableFont_wght.ttf")
+}
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
+  font-family: "Source Code Pro", monospace
 }
 
 *::-webkit-scrollbar {

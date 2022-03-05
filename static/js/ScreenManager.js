@@ -2,6 +2,7 @@ import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
 import {ConsoleOutput} from "./ConsoleOutput.js";
+import ProcedureEditor from "./ProcedureEditor.js";
 
 class ScreenManager {
     constructor() {
@@ -14,7 +15,7 @@ class ScreenManager {
         });
 
         this.toolbarButtonsNames = ['settings', 'download', 'save', 'upload', 'close-settings'];
-        this.terminalNames = ['history', 'logs', 'editor', 'multiline'];
+        this.terminalNames = ['logs', 'history', 'editor', 'multiline'];
 
         this.toolbarButtons = {};
         this.terminalSections = {};
@@ -51,6 +52,10 @@ class ScreenManager {
         window.logoInterpreter.handleAddOutput((event, value) => {
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
         });
+        window.logoInterpreter.handleEditProcedure((event, value) => {
+            const {name, agrNames, body, node, context} = value;
+            ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
+        });
     }
 
 
@@ -74,11 +79,35 @@ class ScreenManager {
     setListeners() {
         this.toolbarButtons.settings.obj.addEventListener('click', () => this.show(settings));
         this.toolbarButtons.download.obj.addEventListener('click', () => CanvasManager.getInstance().saveCanvas());
+        this.toolbarButtons.save.obj.addEventListener('click', () => window.logoInterpreter.openSaveProcedureDialog());
+        this.toolbarButtons.upload.obj.addEventListener('click', () => window.logoInterpreter.openLoadProcedureDialog());
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(settings));
+        this.multiCommandLine.addEventListener("keydown", (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                let start = e.target.selectionStart;
+                let end = e.target.selectionEnd;
 
-        this.commandLine.addEventListener("keypress", (e) => {
+                e.target.value = e.target.value.substring(0, start) +
+                    "\t" + e.target.value.substring(end);
+
+                e.target.selectionStart =
+                    e.target.selectionEnd = start + 1;
+            }
+        });
+
+        this.commandLine.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 this.executeCommand();
+            } else if (e.key === "ArrowUp") {
+                console.log(this.commandLine.value);
+                this.commandLine.value = CommandHistory.getInstance().goUp(this.commandLine.value);
+                console.log("UP");
+            } else if (e.key === "ArrowDown") {
+                console.log("DOWN");
+                this.commandLine.value = CommandHistory.getInstance().goDown();
+            } else {
+                CommandHistory.getInstance().reset(this.commandLine.value);
             }
         });
         this.commandLineButton.addEventListener("click", () => {

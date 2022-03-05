@@ -9,6 +9,8 @@ const {
 
 module.exports = class Interface {
 
+    static proceduresInEdit = [];
+
     static print(str) {
         InterfaceCanvas.sendOutput(str);
     }
@@ -17,11 +19,12 @@ module.exports = class Interface {
         const Global = require("./global.js");
         Global.getInterpreterObjects().removeAllTurtles();
         InterfaceCanvas.clearCanvas();
-
     }
 
-    static setEditedMethod(name, agrNames, body, node, context) {
-        return Interface.setEditedMethod(name, "cs", agrNames, body + " ht", node, context);
+    static getMethodToEdit(name, agrNames, body, node, context) {
+        InterfaceCanvas.editProcedure(name, agrNames, body); 
+        this.proceduresInEdit.push({ name, node, context });
+        return new new RuntimeResult().success(null) // TODO: this shoud return value from calling method Interface.setEditedMethod
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {

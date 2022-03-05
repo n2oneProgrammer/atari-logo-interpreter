@@ -60,4 +60,4 @@ module.exports = class Runner {
         }
         return result;
     }
-}
+};

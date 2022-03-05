@@ -1,36 +1,63 @@
 class ProcedureEditor {
+
+    static #instance = null;
+
+    static getInstance() {
+        if (ProcedureEditor.#instance === null) {
+            ProcedureEditor.#instance = new ProcedureEditor();
+        }
+        return ProcedureEditor.#instance;
+    }
+
     constructor() {
-        
-        this.currId = 2;
-
-        this.procedureObjs = [
-            { id: 0, name: 'procedure-1', params: [{ id: 0, name: 'arr' }, { id: 1, name: 'x'}] },
-            { id: 1, name: 'procedure-2', params: [{ id: 0, name: 'letter' }, { id: 1, name: 'y'}] },
-            { id: 2, name: 'procedure-3', params: [{ id: 0, name: 'z' }, { id: 1, name: 'okej'}] }
-        ];
-
-        this.currentProcedure = this.procedureObjs[0];
-        this.params = this.currentProcedure.params;
+        this.procedureObjs = [];
+        this.currentProcedure = null;
+        this.params = null;
 
         this.ul = document.getElementById('procedure-arguments');
         this.procedureName = document.getElementById('procedure-name');
+        this.procedures = document.getElementById('procedures');
+        this.bodyTextarea = document.getElementById('editor-textarea');
+        this.saveButton = document.getElementById('save-procedure');
+    }
+
+    addListeners() {
         this.procedureName.addEventListener('input', e => {
-            this.currentProcedure.name = e.target.value;
+            this.currentProcedure.newName = e.target.value;
             this.init();
         });
-        this.procedures = document.getElementById('procedures');
+
         this.procedures.addEventListener('change', e => {
-            this.currentProcedure = this.procedureObjs.find(p => p.id === +e.target.value);
+            this.currentProcedure = this.procedureObjs.find(p => p.name === e.target.value);
             this.params = this.currentProcedure.params;
             this.init();
         });
 
+        this.saveButton.addEventListener('click', () => {
+            window.logoInterpreter.saveProcedure(this.currentProcedure);
+        });
+    }
+
+    uniqValues() {
+        const uniques = [];
+        this.procedureObjs.forEach(p => {
+            if (!uniques.some(u => u.lastName === p.lastName))
+                uniques.push(p);
+        });
+        this.procedureObjs = uniques;
+    }
+
+    setProcedure(name, agrNames, body) {
+        const obj = { lastName: name, newName: name, params: agrNames, body };
+        this.procedureObjs.push(obj);
+        this.currentProcedure = obj;
         this.init();
     }
 
     init() {
         this.ul.innerHTML = '';
-        this.procedureName.value = this.currentProcedure.name;
+        console.log(this.currentProcedure.lastName);
+        this.procedureName.value = this.currentProcedure.newName;
 
         const addArgumentSpan = document.createElement('span');
         addArgumentSpan.classList.add('add-argument');
@@ -38,49 +65,54 @@ class ProcedureEditor {
         const i = document.createElement('i');
         i.classList.add('fa-solid', 'fa-plus');
         i.addEventListener('click', () => {
-            this.params.push({ id: this.currId++,  name: 'name' });
+            this.currentProcedure.params.push('name');
             this.init();
         });
 
         addArgumentSpan.appendChild(i);
         this.ul.appendChild(addArgumentSpan);
 
+        this.bodyTextarea.innerHTML = this.currentProcedure.body;
+        
         this.displayArguments();
+        this.uniqValues();
         this.setProcedures();
+        this.addListeners();
     }
 
     setProcedures() {
         this.procedures.innerHTML = '';
-        this.procedureObjs.forEach(({name, id}) => {
+        this.procedureObjs.forEach(({ lastName }) => {
             const option = document.createElement('option');
-            option.innerText = name;
-            option.value = id;
-            if (this.currentProcedure.id === id)
+            option.innerText = lastName;
+            if (this.currentProcedure.lastName === lastName)
                 option.selected = true;
             this.procedures.appendChild(option);
         });
     }
 
     displayArguments() {
-        this.params.forEach(({name, id}) => {
+        this.currentProcedure.params.forEach(n => {
             const li = document.createElement('li');
             li.classList.add('procedure-argument');
 
             const input = document.createElement('input');
             input.classList.add('procedure-argument-input');
             input.type = 'text';
-            input.value = name;
+            input.value = n;
             input.addEventListener('input', e => {
                 this.resizeInput(e.target);
-                this.currentProcedure.params.find(p => p.id === id).name = e.target.value;
+                for (let i = 0; i < this.currentProcedure.params.length; i++) {
+                    if (this.currentProcedure.params[i] === n)
+                        this.currentProcedure.params[i] = e.target.value;
+                }
             });
             this.resizeInput(input);
 
             const i = document.createElement('i');
             i.classList.add('fa-solid', 'fa-xmark');
             i.addEventListener('click', () => {
-                this.params = this.params.filter(p => p.id !== id);
-                this.currentProcedure.params = this.params;
+                this.currentProcedure.params = this.currentProcedure.params.filter(p => p !== n);
                 this.init();
             });
 
