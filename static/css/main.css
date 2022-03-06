@@ -74,6 +74,7 @@
 
 .aside__toolbar {
     position: relative;
+    left: -3rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -99,10 +100,6 @@
 .fa-info {
     margin-left: .35rem;
     margin-right: .5rem
-}
-
-.tb i:not(.aside__toolbar-icon--close):hover {
-    color: var(--color-accent-orange)
 }
 
 .o {
@@ -306,7 +303,7 @@
     list-style: none;
     padding: .5rem 0;
     max-height: 300px;
-    overflow-x: scroll
+    overflow-y: scroll
 }
 
 .aside__save-button {
@@ -472,7 +469,7 @@
 .subsite__header .fa-xmark {
     position: absolute;
     top: 2.6rem;
-    right: 2.5rem;
+    right: .5rem;
     font-size: 1.8rem;
     color: var(--color-accent-orange);
     cursor: pointer;
@@ -482,6 +479,62 @@
 .subsite__header .fa-xmark:hover {
     color: var(--color-accent-red);
     transform: scale(.9)
+}
+
+.aside__subsite-content {
+    position: absolute;
+    top: 6rem;
+    left: 2rem;
+    width: 100%;
+    height: calc(100% - 8rem);
+    padding-right: 1rem;
+    overflow-y: scroll
+}
+
+.aside__subsite-content p {
+    font-size: 12px;
+    margin: .8rem 0;
+    padding-left: .5rem;
+    border-left: 2px solid var(--color-light)
+}
+
+.aside__subsite-content .desc {
+    margin-top: 2rem;
+    font-size: 16px;
+    text-align: center;
+    border: none
+}
+
+.aside__subsite-content h2 {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 18px;
+    color: var(--color-accent-orange)
+}
+
+.aside__subsite-content ul {
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 130%
+}
+
+.aside__subsite-content p:nth-child(even):not(.title) {
+    filter: brightness(.6)
+}
+
+.aside__subsite-content .title {
+    border-color: var(--color-accent-orange)
+}
+
+.aside__subsite-content span {
+    display: block;
+    font-size: 12px;
+    font-style: italic
+}
+
+.aside__subsite-content hr {
+    margin: 2rem 0;
+    height: 2px
 }
 
 #editor-overlay {

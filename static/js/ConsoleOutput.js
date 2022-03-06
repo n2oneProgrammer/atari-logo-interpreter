@@ -14,7 +14,6 @@ export class ConsoleOutput {
     }
 
     addLine(linesText, type) {
-        console.log(linesText);
         linesText = linesText.replaceAll("  ", "&nbsp;&nbsp;");
         linesText = linesText.replaceAll("\n", "<br/>");
         this.lines.push({text: linesText, type: type});

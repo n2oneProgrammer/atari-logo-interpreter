@@ -8,6 +8,7 @@ const path = require('path');
 const Runner = require("./core/runner.js");
 const InterfaceCanvas = require("./core/utilities/interfaceCanvas.js");
 const Interface = require("./core/utilities/interface.js");
+const fs = require('fs');
 
 const env = process.env.NODE_ENV || 'production';
 
@@ -32,16 +33,19 @@ const createWindow = () => {
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
-        }
+        },
+        minHeight: 600,
+        minWidth: 800,
+        icon: './zulfik.png'
     });
 
     InterfaceCanvas.setWindow(mainWindow);
     const runner = new Runner("commandline");
 
     ipcMain.on('execute', (event, command) => {
-        let res = runner.start(command);
+        const res = runner.start(command);
         if (res.error !== null) {
-            let errorMsg = res.error.toString();
+            const errorMsg = res.error.toString();
             console.error(errorMsg);
             InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
         }
@@ -57,13 +61,47 @@ const createWindow = () => {
         const obj = Interface.proceduresInEdit.find(p => p.name === lastName);
         const node = obj.node;
         const context = obj.context;
-        Interface.setEditedMethod(lastName, newName, params, body, node, context);
+        const res = Interface.setEditedMethod(lastName, newName, params, body, node, context);
+
+        if (res.error !== null) {
+            const errorMsg = res.error.toString();
+            console.error(errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Błąd przy edycji procedury'});
+        } else {
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano zmiany'});
+        }
+    });
+    ipcMain.handle('open-save-canvas-dialog', async (event, imgURL) => {
+        let url = imgURL.split(";base64,").pop().toString();
+        console.log(url);
+        let options = {
+            title: "Zapisz obraz płótna",
+            defaultPath: "obrazek.png",
+            buttonLabel: "Zapisz obrazek",
+            filters: [
+                {name: 'Image', extensions: ['png']}
+            ]
+        };
+        let result = await dialog.showSaveDialog(options);
+        if (!result.canceled) {
+            fs.writeFile(result.filePath.toString(), url, {encoding: "base64"}, err => {
+                if (err) {
+                    InterfaceCanvas.mainWindow.webContents.send("add-error", err);
+                    return;
+                }
+
+                InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano obraz płótna'});
+            });
+        } else {
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Anulowano'});
+        }
     });
     ipcMain.handle('open-save-procedure-dialog', async (event) => {
         let options = {
-            title: "Save LOGO procedures",
-            defaultPath: "procedures.txt",
-            buttonLabel: "Save procedures",
+            title: "Zapisz listę procedur",
+            defaultPath: "procedury.txt",
+            buttonLabel: "Zapisz procedury",
             filters: [
                 {name: 'Text', extensions: ['txt']}
             ]
@@ -71,21 +109,22 @@ const createWindow = () => {
         let result = await dialog.showSaveDialog(options);
         if (!result.canceled) {
             runner.start(`SAVE ${result.filePath}`);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano listę procedur'});
         }
     });
     ipcMain.handle('open-load-procedure-dialog', async (event) => {
         let options = {
-            title: "Load LOGO procedures",
-            defaultPath: "procedures.txt",
-            buttonLabel: "Load procedures",
+            title: "Wgraj listę procedur",
+            defaultPath: "procedury.txt",
+            buttonLabel: "Wgraj procedury",
             filters: [
                 {name: 'Text', extensions: ['txt']}
             ]
         };
         let result = await dialog.showOpenDialog(options);
-        console.log(result);
         if (!result.canceled) {
             runner.start(`LOAD ${result.filePaths[0]}`);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Wgrano listę procedur'});
         }
     });
     mainWindow.loadFile('static/pages/index.html');

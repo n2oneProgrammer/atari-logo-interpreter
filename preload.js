@@ -9,7 +9,9 @@ contextBridge.exposeInMainWorld('logoInterpreter', {
     handleAddError: (callback) => ipcRenderer.on("add-error", callback),
     handleAddOutput: (callback) => ipcRenderer.on("add-output", callback),
     handleEditProcedure: (callback) => ipcRenderer.on("edit-procedure", callback),
+    handleShowPopup: (callback) => ipcRenderer.on("show-popup", callback),
     saveProcedure: (procedure) => ipcRenderer.invoke("save-procedures", procedure),
     openSaveProcedureDialog: () => ipcRenderer.invoke("open-save-procedure-dialog"),
+    openSaveCanvasDialog: (imgURL) => ipcRenderer.invoke("open-save-canvas-dialog", imgURL),
     openLoadProcedureDialog: () => ipcRenderer.invoke("open-load-procedure-dialog")
 });
