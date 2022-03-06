@@ -15,12 +15,13 @@
     <aside class="aside">
         <header class="aside__header">
             <section class="aside__logo logo">
-                <i class="fas fa-igloo"></i>
-                <span class="logo__logotype">aliapg</span>
+                <!-- <i class="fas fa-igloo"></i>
+                <span class="logo__logotype">aliapg</span> -->
+                <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
             </section>
             <section class="aside__options">
                 <div id="bar" class="aside__toolbar">
-                    <i id="bt-settings" class="fas fa-cog"></i>
+                    <i id="bt-settings" class="fa-solid fa-info"></i>
                     <i id="bt-download" class="aside__toolbar-icon fa-solid fa-download"></i>
                     <i id="bt-save" class="aside__toolbar-icon fa-solid fa-floppy-disk"></i>
                     <i id="bt-upload" class="aside__toolbar-icon fa-solid fa-upload"></i>
@@ -70,6 +71,9 @@
             <button id="bt-multiline" class="aside__terminal-options-button">
                 <i class="fa-solid fa-terminal"></i>
             </button>
+            <button id="bt-help" class="aside__terminal-options-button">
+                <i class="fa-solid fa-question"></i>
+            </button>
         </section>
         <section class="aside__input-container">
             <button class="aside__input-confirm main-button">run</button>
@@ -81,13 +85,20 @@
                     autocomplete="off"
             >
         </section>
-        <section id="settings" class="aside__settings settings">
-            <header class="settings__header">
-                <section class="settings__logo logo">
-                    <i class="fas fa-igloo"></i>
-                    <span class="logo__logotype">aliapg</span>
+        <section id="settings" class="aside__subsite subsite">
+            <header class="subsite__header">
+                <section class="subsite__logo logo">
+                    <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
                 </section>
                 <i id="bt-close-settings" class="fa-solid fa-xmark"></i>
+            </header>
+        </section>
+        <section id="section-help" class="aside__subsite subsite">
+            <header class="subsite__header">
+                <section class="subsite__logo logo">
+                    <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
+                </section>
+                <i id="bt-close-help" class="fa-solid fa-xmark"></i>
             </header>
         </section>
         <div id="popup">halo</div>
