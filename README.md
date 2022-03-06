@@ -36,9 +36,3 @@ Projekt **_ATARI Logo Interpreter_** powstał w ramach 2. edycji konkursu **Moto
 - Przy użyciu komendy **_npm run start_** możemy uruchomić naszą aplikacje na potrzeby deweloperskie
 
 - Można też zbudować aplikację i uruchomić plik _.exe_. Wtedy używamy polecenia **_npm run make_**. Gdy ten proces się ukończy, w folderze _out/atari-logo-interpreter-win32-x64_ znajdziemy wszystkie potrzebne pliki i możemy uruchomić plik _atari-logo-interpreter.exe_
-
-## Uruchomienie
-
-- Przy użyciu komendy **_npm run start_** możemy uruchomić naszą aplikacje na potrzeby deweloperskie
-
-- Można też zbudować aplikację i uruchomić plik _.exe_. Wtedy używamy polecenia **_npm run make_**. Gdy ten proces się ukończy, w folderze _out/atari-logo-interpreter-win32-x64_ znajdziemy wszystkie potrzebne pliki i możemy uruchomić plik _atari-logo-interpreter.exe_
