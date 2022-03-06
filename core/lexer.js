@@ -7,7 +7,6 @@ const Token = require("./token.js");
 
 module.exports = class Lexer {
     constructor(fn, text) {
-        this.rules = fn;
         this.text = text.toLowerCase();
         this.pos = new Position(-1, 0, -1, fn, text);
         this.char = null;
