@@ -39,11 +39,18 @@ class ProcedureEditor {
         });
 
         this.saveButton.addEventListener('click', () => {
-            this.procedureObjs = this.procedureObjs.filter(p => p.lastName !== this.currentProcedure);
+            this.procedureObjs = this.procedureObjs.filter(p => p.lastName !== this.currentProcedure.lastName);
             window.logoInterpreter.saveProcedure(this.currentProcedure);
             const pop = document.getElementById('popup');
             pop.textContent = 'Zapisano procedurę';
             pop.style.transform = 'translateX(0)';
+
+            if (this.procedureObjs.length > 0) {
+                this.currentProcedure = this.procedureObjs[0];
+            } else {
+                this.currentProcedure = null;
+            }
+
             this.reloadProcedures();
             setTimeout(() => pop.style.transform = 'translateX(-200%)', 1500);
         });
