@@ -3,6 +3,7 @@ import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
 import {ConsoleOutput} from "./ConsoleOutput.js";
 import ProcedureEditor from "./ProcedureEditor.js";
+import Popup from "./Popup.js";
 
 class ScreenManager {
     constructor() {
@@ -56,8 +57,10 @@ class ScreenManager {
             this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
         });
+        window.logoInterpreter.handleShowPopup((event, value) => {
+            Popup.show(value.message);
+        });
         window.logoInterpreter.handleEditProcedure((event, value) => {
-
             this.terminalButtons.editor.obj.click();
             const {name, agrNames, body, node, context} = value;
             ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
