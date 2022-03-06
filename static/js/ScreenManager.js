@@ -32,11 +32,15 @@ class ScreenManager {
         this.getHTMLNodes();
         this.setListeners();
         this.setHandlers();
-        this.terminalSections.history.scrollTop = this.terminalSections.history.scrollHeight;
+        this.scrollDown();
+    }
+
+    scrollDown() {
+        this.terminalSections.history.obj.scrollTop = this.terminalSections.history.obj.scrollHeight;
+        this.terminalSections.logs.obj.scrollTop = this.terminalSections.logs.obj.scrollHeight;
     }
 
     setHandlers() {
-        console.log(this.terminalButtons);
         window.logoInterpreter.handleCreateLine(async (event, value) => {
             await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
@@ -52,10 +56,12 @@ class ScreenManager {
         window.logoInterpreter.handleAddError((event, value) => {
             this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "ERROR");
+            this.scrollDown();
         });
         window.logoInterpreter.handleAddOutput((event, value) => {
             this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
+            this.scrollDown();
         });
         window.logoInterpreter.handleShowPopup((event, value) => {
             Popup.show(value.message);
@@ -120,10 +126,9 @@ class ScreenManager {
             } else if (e.key === "ArrowUp") {
                 console.log(this.commandLine.value);
                 this.commandLine.value = CommandHistory.getInstance().goUp(this.commandLine.value);
-                console.log("UP");
             } else if (e.key === "ArrowDown") {
-                console.log("DOWN");
                 this.commandLine.value = CommandHistory.getInstance().goDown();
+                
             } else {
                 CommandHistory.getInstance().reset(this.commandLine.value);
             }
@@ -170,6 +175,7 @@ class ScreenManager {
         CommandHistory.getInstance().addCommand(command);
         window.logoInterpreter.execute(command);
         this.commandLine.value = "";
+        this.scrollDown();
     }
 
 

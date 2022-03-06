@@ -37,6 +37,19 @@ class ProcedureEditor {
             console.log(this.currentProcedure);
             this.reloadProcedures();
         });
+        this.bodyTextarea.addEventListener('keydown', e => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                let start = e.target.selectionStart;
+                let end = e.target.selectionEnd;
+
+                e.target.value = e.target.value.substring(0, start) +
+                    "\t" + e.target.value.substring(end);
+
+                e.target.selectionStart =
+                    e.target.selectionEnd = start + 1;
+            }
+        });
         this.procedures.addEventListener('change', e => {
             this.currentProcedure = this.procedureObjs.find(p => p.lastName === e.target.value);
             console.log(this.procedureObjs);
@@ -48,7 +61,6 @@ class ProcedureEditor {
             this.procedureObjs = this.procedureObjs.filter(p => p.lastName !== this.currentProcedure.lastName);
 
             window.logoInterpreter.saveProcedure(this.currentProcedure);
-            Popup.show('Zapisano procedurę');
 
             if (this.procedureObjs.length > 0) {
                 this.currentProcedure = this.procedureObjs[0];
@@ -100,7 +112,6 @@ class ProcedureEditor {
 
         this.overlay.style.display = 'none';
         this.ul.innerHTML = '';
-        console.log(this.currentProcedure.lastName);
         this.procedureName.value = this.currentProcedure.newName;
 
         const addArgumentSpan = document.createElement('span');
@@ -132,12 +143,13 @@ class ProcedureEditor {
             input.classList.add('procedure-argument-input');
             input.type = 'text';
             input.value = n;
-            input.addEventListener('input', e => {
+            input.addEventListener('blur', e => {
                 this.resizeInput(e.target);
                 for (let i = 0; i < this.currentProcedure.params.length; i++) {
                     if (this.currentProcedure.params[i] === n)
                         this.currentProcedure.params[i] = e.target.value;
                 }
+                this.reloadProcedures();
             });
             this.resizeInput(input);
 

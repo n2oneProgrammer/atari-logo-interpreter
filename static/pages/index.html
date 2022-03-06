@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>ALI | index</title>
+    <title>Atari Logo Interpreter | by Wyprawa na Mordor</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
@@ -15,9 +15,7 @@
     <aside class="aside">
         <header class="aside__header">
             <section class="aside__logo logo">
-                <!-- <i class="fas fa-igloo"></i>
-                <span class="logo__logotype">aliapg</span> -->
-                <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
+                <img class="aside__logo-image" src="../img/zulfik.png" alt="Logo image">
             </section>
             <section class="aside__options">
                 <div id="bar" class="aside__toolbar">
@@ -88,18 +86,84 @@
         <section id="settings" class="aside__subsite subsite">
             <header class="subsite__header">
                 <section class="subsite__logo logo">
-                    <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
+                    <img class="aside__logo-image" src="../img/zulfik.png" alt="Logo image">
                 </section>
                 <i id="bt-close-settings" class="fa-solid fa-xmark"></i>
             </header>
+            <section class="aside__subsite-content">
+                <ul>
+                    <li>
+                        <p class="desc">Aplikacja ta została przygotowana w&nbsp;ramach konkursu "Motorola Science Cup".
+                        Jest to wariacja interpretera ATARI Logo z 1983 roku.
+                        Język ten jest łatwy do przyswojenia dla najmłodszych użytkowników.
+                        W implementacji ATARI pojawia się zółwik, którym można sterować.
+                        Przy poruszaniu się pozostawia za sobą linię.</p>
+                    </li>
+                    <li>
+                        <h2>Twórcy</h2>
+                        <ul>
+                            <li>Michał Piotrkowski</li>
+                            <li>Michał Wawrzeń</li>
+                            <li>Mateusz Mrowiec</li>
+                            <li>Dominik Wojtasik</li>
+                            <li>Adrian Poradzisz</li>
+                        </ul>
+                    </li>
+                </ul>
+        
+            </section>
         </section>
         <section id="section-help" class="aside__subsite subsite">
             <header class="subsite__header">
                 <section class="subsite__logo logo">
-                    <img class="aside__logo-image" src="../img/zulf.svg" alt="Logo image">
+                    <img class="aside__logo-image" src="../img/zulfik.png" alt="Logo image">
                 </section>
                 <i id="bt-close-help" class="fa-solid fa-xmark"></i>
             </header>
+            <section class="aside__subsite-content">
+                <p>CS (CLEAR SCREEN) – czyszczenie planszy</p>
+                <p>HT (HIDE TURTLE) – ukrywanie ikony żółwia</p>
+                <p>ST (SHOW TURTLE) – pokazywanie ikony żółwia</p>
+                <p>FD (FORWARD) {V} – ruch żółwia o zadaną liczbę kroków do przodu</p>
+                <p>BK (BACKWARDS) {V} – cofnięcie się o wskazaną liczbę kroków</p>
+                <p>LT (LEFT TURTLE) {V} – obrót żółwia o zadany kąt (stopnie) w lewo</p>
+                <p>RT (RIGHT TURTLE) {V} – obrót żółwia o zadany kąt (stopnie) w prawo</p>
+                <p>PU (PEN UP) – żółw nie zostawia śladu</p>
+                <p>PD (PEN DOWN) – żółw zostawia ślad</p>
+                <p>SETC {COLOR} – zmiana koloru żółwia (ID)</p>
+                <p>SETPN {P_ID} – wybór pisaka (1 z 3 pisaków)</p>
+                <p>SETPC {P_ID} {COLOR}  – kolor pisaka</p>
+                <p>REPEAT {V} [{CODE}]  – komenda wykonująca zestaw instrukcji podają liczbę razy</p>
+                <p>TELL {Z_ID} lub TELL [{Z_ID}…] – komenda wskazująca danego żółwia (gdy taki nie istnieje, zostanie dodany z podanym ID</p>
+                <p>ASK [{Z_ID}…][{CODE}] – wybranie żółwi/a oraz wykonanie podanych rozkazów</p>
+                <p>WHO – zwraca ID żółwia (tylko w przypadku wybrania jednego żółwia; gdy jest w EACH to zwraca kolejne ID żółwi)</p>
+                <p>EACH [{CODE}] – wykonuje instrukcje dla aktualnie wybranych żółwi</p>
+                <p>LOAD {PATH} – wczytywanie metod z pliku</p>
+                <p>SAVE {PATH} – zapis metod do pliku</p>
+                
+                <hr>
+
+                <p class="title">
+                    Procedura bezargumentowa:
+                    TO nazwa
+                    ...
+                    END
+                </p>
+                <span>
+                    Wywołanie procedury:
+                    nazwa
+                </span>
+                <p class="title">
+                    Procedura z argumentami:
+                    TO nazwa :a :b
+                    ...
+                    END
+                </p>
+                <span>
+                    Wywołanie procedury:
+                    nazwa 1 2
+                </span>
+            </section>
         </section>
         <div id="popup">halo</div>
     </aside>
