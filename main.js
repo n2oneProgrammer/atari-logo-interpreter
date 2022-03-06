@@ -110,7 +110,6 @@ const createWindow = () => {
             ]
         };
         let result = await dialog.showOpenDialog(options);
-        console.log(result);
         if (!result.canceled) {
             runner.start(`LOAD ${result.filePaths[0]}`);
         }
