@@ -112,6 +112,7 @@ const createWindow = () => {
         let result = await dialog.showOpenDialog(options);
         if (!result.canceled) {
             runner.start(`LOAD ${result.filePaths[0]}`);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Wgrano listę procedur'});
         }
     });
     mainWindow.loadFile('static/pages/index.html');
