@@ -30,7 +30,11 @@ class ProcedureEditor {
             this.currentProcedure.newName = e.target.value;
             this.reloadProcedures();
         });
-
+        this.bodyTextarea.addEventListener('input', e => {
+            this.currentProcedure.body = e.target.value;
+            console.log(this.currentProcedure);
+            this.reloadProcedures();
+        });
         this.procedures.addEventListener('change', e => {
             this.currentProcedure = this.procedureObjs.find(p => p.lastName === e.target.value);
             console.log(this.procedureObjs);
@@ -113,7 +117,7 @@ class ProcedureEditor {
         addArgumentSpan.appendChild(i);
         this.ul.appendChild(addArgumentSpan);
 
-        this.bodyTextarea.innerHTML = this.currentProcedure.body;
+        this.bodyTextarea.value = this.currentProcedure.body;
 
         this.displayArguments();
         this.uniqValues();
