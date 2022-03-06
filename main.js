@@ -90,6 +90,9 @@ const createWindow = () => {
             title: "Save LOGO procedures",
             defaultPath: "procedures.txt",
             buttonLabel: "Save procedures",
+            title: "Zapisz listę procedur",
+            defaultPath: "procedury.txt",
+            buttonLabel: "Zapisz procedury",
             filters: [
                 {name: 'Text', extensions: ['txt']}
             ]
@@ -104,6 +107,9 @@ const createWindow = () => {
             title: "Load LOGO procedures",
             defaultPath: "procedures.txt",
             buttonLabel: "Load procedures",
+            title: "Wgraj listę procedur",
+            defaultPath: "procedury.txt",
+            buttonLabel: "Wgraj procedury",
             filters: [
                 {name: 'Text', extensions: ['txt']}
             ]
