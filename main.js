@@ -33,16 +33,19 @@ const createWindow = () => {
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
-        }
+        },
+        minHeight: 600,
+        minWidth: 800,
+        icon: './zulfik.png'
     });
 
     InterfaceCanvas.setWindow(mainWindow);
     const runner = new Runner("commandline");
 
     ipcMain.on('execute', (event, command) => {
-        let res = runner.start(command);
+        const res = runner.start(command);
         if (res.error !== null) {
-            let errorMsg = res.error.toString();
+            const errorMsg = res.error.toString();
             console.error(errorMsg);
             InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
         }
@@ -58,7 +61,16 @@ const createWindow = () => {
         const obj = Interface.proceduresInEdit.find(p => p.name === lastName);
         const node = obj.node;
         const context = obj.context;
-        Interface.setEditedMethod(lastName, newName, params, body, node, context);
+        const res = Interface.setEditedMethod(lastName, newName, params, body, node, context);
+
+        if (res.error !== null) {
+            const errorMsg = res.error.toString();
+            console.error(errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("add-error", errorMsg);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Błąd przy edycji procedury'});
+        } else {
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano zmiany'});
+        }
     });
     ipcMain.handle('open-save-canvas-dialog', async (event, imgURL) => {
         let url = imgURL.split(";base64,").pop().toString();
