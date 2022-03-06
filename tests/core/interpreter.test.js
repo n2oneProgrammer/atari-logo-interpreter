@@ -474,9 +474,12 @@ describe('Interpreter', () => {
         expect(result.error).toBeInstanceOf(RuntimeError);
     })
 
-    it("Visit EdNode Error", () => {
+    it("Visit EdNode", () => {
         let context = new Context("<global>");
         context.symbolTable = new SymbolTable();
+        const spy = jest.spyOn(Interface, 'getMethodToEdit').mockImplementation((path) => {
+            return new RuntimeResult().success(null);
+        });
 
         let interpreter = new Interpeter(null);
         let edNode = new EdNode([new VarNode(new Token(Token.TYPE.IDENTIFIER, 'func', null, new Position(0, 0, -1, "fn", "text")))]);
@@ -496,8 +499,8 @@ describe('Interpreter', () => {
 
         expect(result.value).toEqual(null);
         expect(result.error).toEqual(null);
-        expect(Interface.getMethodToEdit).toBeCalledTimes(1);
-        expect(Interface.getMethodToEdit).toBeCalledWith("func", [], "t", edNode, context);
+        expect(spy).toBeCalledTimes(1);
+        expect(spy).toBeCalledWith("func", [], "t", edNode, context);
     })
 
 

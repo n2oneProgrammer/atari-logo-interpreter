@@ -30,12 +30,12 @@
             </section>
         </header>
         <section class="aside__terminal">
-            <section id="section-history" class="aside__terminal-section aside__history">
-                <section class="aside__history-commands"></section>
-            </section>
             <section id="section-logs" class="aside__terminal-section aside__logs">
                 <section class="aside__logs-logs">
                 </section>
+            </section>
+            <section id="section-history" class="aside__terminal-section aside__history">
+                <section class="aside__history-commands"></section>
             </section>
             <section id="section-multiline" class="aside__multiline-section aside__multiline">
                 <textarea class="aside__multiline-multiline">
@@ -53,14 +53,15 @@
                     >
                     <ul id="procedure-arguments" class="aside__editor-arguments"></ul>
                     <textarea id="editor-textarea" class="aside__editor-textarea"></textarea>
+                    <button id="save-procedure" class="main-button">zapisz</button>
                 </section>
             </section>
         </section>
         <section class="aside__terminal-options">
-            <button id="bt-logs" class="aside__terminal-options-button">
+            <button id="bt-logs" class="aside__terminal-options-button aside__terminal-options-button--active">
                 <i class="fa-solid fa-list"></i>
             </button>
-            <button id="bt-history" class="aside__terminal-options-button aside__terminal-options-button--active">
+            <button id="bt-history" class="aside__terminal-options-button">
                 <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
             <button id="bt-editor" class="aside__terminal-options-button">
@@ -74,7 +75,7 @@
             </button>
         </section>
         <section class="aside__input-container">
-            <button class="aside__input-confirm">run</button>
+            <button class="aside__input-confirm main-button">run</button>
             <input
                     class="aside__input"
                     type="text"

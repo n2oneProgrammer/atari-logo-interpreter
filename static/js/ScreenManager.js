@@ -2,6 +2,7 @@ import CanvasManager from "./CanvasManager.js";
 import DrawableLine from "./drawableLine.js";
 import {CommandHistory} from "./CommandHistory.js";
 import {ConsoleOutput} from "./ConsoleOutput.js";
+import ProcedureEditor from "./ProcedureEditor.js";
 
 class ScreenManager {
     constructor() {
@@ -34,6 +35,7 @@ class ScreenManager {
     }
 
     setHandlers() {
+        console.log(this.terminalButtons);
         window.logoInterpreter.handleCreateLine(async (event, value) => {
             await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
@@ -47,10 +49,18 @@ class ScreenManager {
             await CanvasManager.getInstance().clearCanvas();
         });
         window.logoInterpreter.handleAddError((event, value) => {
+            this.terminalButtons.logs.click();
             ConsoleOutput.getInstance().addLine(value, "ERROR");
         });
         window.logoInterpreter.handleAddOutput((event, value) => {
+            this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
+        });
+        window.logoInterpreter.handleEditProcedure((event, value) => {
+
+            this.terminalButtons.editor.obj.click();
+            const {name, agrNames, body, node, context} = value;
+            ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
         });
     }
 
@@ -77,6 +87,8 @@ class ScreenManager {
         this.terminalButtons.help.obj.addEventListener('click', () => this.show(this.help));
         this.toolbarButtons.download.obj.addEventListener('click', () => CanvasManager.getInstance().saveCanvas());
         this.toolbarButtons.close_settings.obj.addEventListener('click', () => this.hide(this.settings));
+        this.toolbarButtons.save.obj.addEventListener('click', () => window.logoInterpreter.openSaveProcedureDialog());
+        this.toolbarButtons.upload.obj.addEventListener('click', () => window.logoInterpreter.openLoadProcedureDialog());
         this.toolbarButtons.close_help.obj.addEventListener('click', () => {
             this.hide(this.help);
             Object.values(this.terminalButtons).forEach(({obj}) => {
@@ -85,10 +97,32 @@ class ScreenManager {
             this.terminalButtons['logs'].obj.classList.add('aside__terminal-options-button--active');
             Object.values(this.terminalSections).forEach(({obj}) => this.hide(obj));
         });
+        this.multiCommandLine.addEventListener("keydown", (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                let start = e.target.selectionStart;
+                let end = e.target.selectionEnd;
 
-        this.commandLine.addEventListener("keypress", (e) => {
+                e.target.value = e.target.value.substring(0, start) +
+                    "\t" + e.target.value.substring(end);
+
+                e.target.selectionStart =
+                    e.target.selectionEnd = start + 1;
+            }
+        });
+
+        this.commandLine.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 this.executeCommand();
+            } else if (e.key === "ArrowUp") {
+                console.log(this.commandLine.value);
+                this.commandLine.value = CommandHistory.getInstance().goUp(this.commandLine.value);
+                console.log("UP");
+            } else if (e.key === "ArrowDown") {
+                console.log("DOWN");
+                this.commandLine.value = CommandHistory.getInstance().goDown();
+            } else {
+                CommandHistory.getInstance().reset(this.commandLine.value);
             }
         });
         this.commandLineButton.addEventListener("click", () => {
@@ -124,7 +158,6 @@ class ScreenManager {
     }
 
     executeCommand() {
-
         let command = this.commandLine.value;
         if (this.isMultiline) {
             command = this.multiCommandLine.value;
