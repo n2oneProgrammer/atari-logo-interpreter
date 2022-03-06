@@ -1,3 +1,5 @@
+import Popup from './Popup.js';
+
 class ProcedureEditor {
 
     static #instance = null;
@@ -44,10 +46,9 @@ class ProcedureEditor {
 
         this.saveButton.addEventListener('click', () => {
             this.procedureObjs = this.procedureObjs.filter(p => p.lastName !== this.currentProcedure.lastName);
+
             window.logoInterpreter.saveProcedure(this.currentProcedure);
-            const pop = document.getElementById('popup');
-            pop.textContent = 'Zapisano procedurę';
-            pop.style.transform = 'translateX(0)';
+            Popup.show('Zapisano procedurę');
 
             if (this.procedureObjs.length > 0) {
                 this.currentProcedure = this.procedureObjs[0];
@@ -56,7 +57,6 @@ class ProcedureEditor {
             }
 
             this.reloadProcedures();
-            setTimeout(() => pop.style.transform = 'translateX(-200%)', 1500);
         });
     }
 
@@ -73,7 +73,6 @@ class ProcedureEditor {
         const obj = {lastName: name, newName: name, params: agrNames, body};
         this.procedureObjs.push(obj);
         this.currentProcedure = obj;
-        console.log(this.procedureObjs);
         this.reloadProcedures();
     }
 
