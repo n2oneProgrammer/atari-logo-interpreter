@@ -34,6 +34,7 @@ class ScreenManager {
     }
 
     setHandlers() {
+        console.log(this.terminalButtons);
         window.logoInterpreter.handleCreateLine(async (event, value) => {
             await CanvasManager.getInstance().addDrawableObject(new DrawableLine(value.x, value.y, value.x2, value.y2, value.width, value.color));
         });
@@ -47,12 +48,16 @@ class ScreenManager {
             await CanvasManager.getInstance().clearCanvas();
         });
         window.logoInterpreter.handleAddError((event, value) => {
+            this.terminalButtons.logs.click();
             ConsoleOutput.getInstance().addLine(value, "ERROR");
         });
         window.logoInterpreter.handleAddOutput((event, value) => {
+            this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "NORMAL");
         });
         window.logoInterpreter.handleEditProcedure((event, value) => {
+
+            this.terminalButtons.editor.obj.click();
             const {name, agrNames, body, node, context} = value;
             ProcedureEditor.getInstance().setProcedure(name, agrNames, body, node, context);
         });
@@ -143,7 +148,6 @@ class ScreenManager {
     }
 
     executeCommand() {
-
         let command = this.commandLine.value;
         if (this.isMultiline) {
             command = this.multiCommandLine.value;
