@@ -6,6 +6,11 @@ const RuntimeResult = require("./runtimeResult.js");
 const {
     RuntimeError
 } = require("../error.js");
+const Token = require("../token.js");
+const {
+    IllegalCharError
+} = require("../error.js");
+const Position = require("../position.js");
 
 module.exports = class Interface {
 
@@ -32,6 +37,27 @@ module.exports = class Interface {
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {
+
+        newName = newName.toLowerCase();
+        for (let i = 0; i < newName.length; i++) {
+            if (Token.LETTERS_DIGITS.indexOf(newName[i]) === -1) {
+                return new RuntimeResult().failure(
+                    new IllegalCharError(new Position(i, 0, i, "edit in procedure name", newName), new Position(i, 0, i + 1, "edit", newName), `"${newName[i]}"`)
+                );
+            }
+        }
+
+        for (let i = 0; i < this.proceduresInEdit.length; i++) {
+            agrNames[i] = agrNames[i].toLowerCase();
+            for (let j = 0; j < agrNames[i].length; j++) {
+                if (Token.LETTERS_DIGITS.indexOf(agrNames[i][j]) === -1) {
+                    return new RuntimeResult().failure(
+                        new IllegalCharError(new Position(j, 0, j, "edit in prarameter", agrNames[i]), new Position(j, 0, j + 1, "edit", agrNames[i]), `"${agrNames[i][j]}"`)
+                    );
+                }
+            }
+        }
+
         const Lexer = require("../lexer.js");
         const Parser = require("../parser.js");
 
