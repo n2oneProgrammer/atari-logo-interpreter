@@ -33,7 +33,7 @@ module.exports = class Interface {
             node,
             context
         });
-        return new RuntimeResult().success(null) // TODO: this shoud return value from calling method Interface.setEditedMethod
+        return new RuntimeResult().success(null)
     }
 
     static setEditedMethod(lastName, newName, agrNames, body, node, context) {
@@ -47,7 +47,7 @@ module.exports = class Interface {
             }
         }
 
-        for (let i = 0; i < this.proceduresInEdit.length; i++) {
+        for (let i = 0; i < agrNames; i++) {
             agrNames[i] = agrNames[i].toLowerCase();
             for (let j = 0; j < agrNames[i].length; j++) {
                 if (Token.LETTERS_DIGITS.indexOf(agrNames[i][j]) === -1) {
