@@ -43,7 +43,7 @@ module.exports = class Interface {
             if (Token.LETTERS_DIGITS.indexOf(newName[i]) === -1) {
                 return new RuntimeResult().failure(
                     new IllegalCharError(new Position(i, 0, i, "edit in procedure name", newName), new Position(i, 0, i + 1, "edit", newName), `"${newName[i]}"`)
-                )
+                );
             }
         }
 
@@ -53,7 +53,7 @@ module.exports = class Interface {
                 if (Token.LETTERS_DIGITS.indexOf(agrNames[i][j]) === -1) {
                     return new RuntimeResult().failure(
                         new IllegalCharError(new Position(j, 0, j, "edit in prarameter", agrNames[i]), new Position(j, 0, j + 1, "edit", agrNames[i]), `"${agrNames[i][j]}"`)
-                    )
+                    );
                 }
             }
         }
