@@ -87,9 +87,6 @@ const createWindow = () => {
     });
     ipcMain.handle('open-save-procedure-dialog', async (event) => {
         let options = {
-            title: "Save LOGO procedures",
-            defaultPath: "procedures.txt",
-            buttonLabel: "Save procedures",
             title: "Zapisz listę procedur",
             defaultPath: "procedury.txt",
             buttonLabel: "Zapisz procedury",
@@ -100,13 +97,11 @@ const createWindow = () => {
         let result = await dialog.showSaveDialog(options);
         if (!result.canceled) {
             runner.start(`SAVE ${result.filePath}`);
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano listę procedur'});
         }
     });
     ipcMain.handle('open-load-procedure-dialog', async (event) => {
         let options = {
-            title: "Load LOGO procedures",
-            defaultPath: "procedures.txt",
-            buttonLabel: "Load procedures",
             title: "Wgraj listę procedur",
             defaultPath: "procedury.txt",
             buttonLabel: "Wgraj procedury",
