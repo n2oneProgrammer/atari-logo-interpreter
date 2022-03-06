@@ -8,6 +8,7 @@ const path = require('path');
 const Runner = require("./core/runner.js");
 const InterfaceCanvas = require("./core/utilities/interfaceCanvas.js");
 const Interface = require("./core/utilities/interface.js");
+const fs = require('fs');
 
 const env = process.env.NODE_ENV || 'production';
 
