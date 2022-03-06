@@ -153,6 +153,8 @@ class ScreenManager {
                 }
 
                 this.show(this.terminalSections[name].obj, 'flex');
+                if (name === 'editor')
+                    ProcedureEditor.getInstance().init();
             });
         });
     }

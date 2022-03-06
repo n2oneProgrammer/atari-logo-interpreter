@@ -19,6 +19,9 @@ class ProcedureEditor {
         this.procedures = document.getElementById('procedures');
         this.bodyTextarea = document.getElementById('editor-textarea');
         this.saveButton = document.getElementById('save-procedure');
+        this.editorSection = document.getElementById('section-editor');
+        this.overlay = document.getElementById('editor-overlay');
+        this.overlay.style.display = 'none';
     }
 
     addListeners() {
@@ -35,6 +38,11 @@ class ProcedureEditor {
 
         this.saveButton.addEventListener('click', () => {
             window.logoInterpreter.saveProcedure(this.currentProcedure);
+            const pop = document.getElementById('popup');
+            pop.textContent = 'Zapisano procedurę';
+            pop.style.transform = 'translateX(0)';
+
+            setTimeout(() => pop.style.transform = 'translateX(-200%)', 1500);
         });
     }
 
@@ -55,6 +63,13 @@ class ProcedureEditor {
     }
 
     init() {
+
+        if (!this.procedureObjs.length) {
+            this.overlay.style.display = 'grid';
+            return;
+        }
+
+        this.overlay.style.display = 'none';
         this.ul.innerHTML = '';
         console.log(this.currentProcedure.lastName);
         this.procedureName.value = this.currentProcedure.newName;
