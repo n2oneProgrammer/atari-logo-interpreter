@@ -49,7 +49,7 @@ class ScreenManager {
             await CanvasManager.getInstance().clearCanvas();
         });
         window.logoInterpreter.handleAddError((event, value) => {
-            this.terminalButtons.logs.click();
+            this.terminalButtons.logs.obj.click();
             ConsoleOutput.getInstance().addLine(value, "ERROR");
         });
         window.logoInterpreter.handleAddOutput((event, value) => {
