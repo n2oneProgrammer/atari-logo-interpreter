@@ -22,26 +22,29 @@ class ProcedureEditor {
         this.editorSection = document.getElementById('section-editor');
         this.overlay = document.getElementById('editor-overlay');
         this.overlay.style.display = 'none';
+        this.init();
     }
 
     addListeners() {
         this.procedureName.addEventListener('input', e => {
             this.currentProcedure.newName = e.target.value;
-            this.init();
+            this.reloadProcedures();
         });
 
         this.procedures.addEventListener('change', e => {
-            this.currentProcedure = this.procedureObjs.find(p => p.name === e.target.value);
+            this.currentProcedure = this.procedureObjs.find(p => p.lastName === e.target.value);
+            console.log(this.procedureObjs);
             this.params = this.currentProcedure.params;
-            this.init();
+            this.reloadProcedures();
         });
 
         this.saveButton.addEventListener('click', () => {
+            this.procedureObjs = this.procedureObjs.filter(p => p.lastName !== this.currentProcedure);
             window.logoInterpreter.saveProcedure(this.currentProcedure);
             const pop = document.getElementById('popup');
             pop.textContent = 'Zapisano procedurę';
             pop.style.transform = 'translateX(0)';
-
+            this.reloadProcedures();
             setTimeout(() => pop.style.transform = 'translateX(-200%)', 1500);
         });
     }
@@ -56,14 +59,30 @@ class ProcedureEditor {
     }
 
     setProcedure(name, agrNames, body) {
-        const obj = { lastName: name, newName: name, params: agrNames, body };
+        const obj = {lastName: name, newName: name, params: agrNames, body};
         this.procedureObjs.push(obj);
         this.currentProcedure = obj;
-        this.init();
+        console.log(this.procedureObjs);
+        this.reloadProcedures();
     }
 
     init() {
+        this.reloadProcedures();
+        this.addListeners();
+    }
 
+    setProcedures() {
+        this.procedures.innerHTML = '';
+        this.procedureObjs.forEach(({lastName}) => {
+            const option = document.createElement('option');
+            option.innerText = lastName;
+            if (this.currentProcedure.lastName === lastName)
+                option.selected = true;
+            this.procedures.appendChild(option);
+        });
+    }
+
+    reloadProcedures() {
         if (!this.procedureObjs.length) {
             this.overlay.style.display = 'grid';
             return;
@@ -81,29 +100,17 @@ class ProcedureEditor {
         i.classList.add('fa-solid', 'fa-plus');
         i.addEventListener('click', () => {
             this.currentProcedure.params.push('name');
-            this.init();
+            this.reloadProcedures();
         });
 
         addArgumentSpan.appendChild(i);
         this.ul.appendChild(addArgumentSpan);
 
         this.bodyTextarea.innerHTML = this.currentProcedure.body;
-        
+
         this.displayArguments();
         this.uniqValues();
         this.setProcedures();
-        this.addListeners();
-    }
-
-    setProcedures() {
-        this.procedures.innerHTML = '';
-        this.procedureObjs.forEach(({ lastName }) => {
-            const option = document.createElement('option');
-            option.innerText = lastName;
-            if (this.currentProcedure.lastName === lastName)
-                option.selected = true;
-            this.procedures.appendChild(option);
-        });
     }
 
     displayArguments() {
@@ -128,7 +135,7 @@ class ProcedureEditor {
             i.classList.add('fa-solid', 'fa-xmark');
             i.addEventListener('click', () => {
                 this.currentProcedure.params = this.currentProcedure.params.filter(p => p !== n);
-                this.init();
+                this.reloadProcedures();
             });
 
             li.appendChild(input);
