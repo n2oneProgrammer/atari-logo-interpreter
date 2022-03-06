@@ -59,6 +59,31 @@ const createWindow = () => {
         const context = obj.context;
         Interface.setEditedMethod(lastName, newName, params, body, node, context);
     });
+    ipcMain.handle('open-save-canvas-dialog', async (event, imgURL) => {
+        let url = imgURL.split(";base64,").pop().toString();
+        console.log(url);
+        let options = {
+            title: "Zapisz obraz płótna",
+            defaultPath: "obrazek.png",
+            buttonLabel: "Zapisz obrazek",
+            filters: [
+                {name: 'Image', extensions: ['png']}
+            ]
+        };
+        let result = await dialog.showSaveDialog(options);
+        if (!result.canceled) {
+            fs.writeFile(result.filePath.toString(), url, {encoding: "base64"}, err => {
+                if (err) {
+                    InterfaceCanvas.mainWindow.webContents.send("add-error", err);
+                    return;
+                }
+
+                InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Zapisano obraz płótna'});
+            });
+        } else {
+            InterfaceCanvas.mainWindow.webContents.send("show-popup", {message: 'Anulowano'});
+        }
+    });
     ipcMain.handle('open-save-procedure-dialog', async (event) => {
         let options = {
             title: "Save LOGO procedures",
